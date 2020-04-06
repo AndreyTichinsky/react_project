@@ -10,3 +10,9 @@
 .DS_Store
 .AppleDouble
 .LSOverride
+
+## ignore history
+.history
+
+node_modules
+dist
