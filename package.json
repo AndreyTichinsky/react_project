@@ -6,6 +6,7 @@
   "scripts": {
     "build": "npx webpack --mode production",
     "test": "jest",
+    "calc": "npx ts-node src/lesson2",
     "lint": "npx eslint --ext .js,.jsx,.ts,.tsx --fix src/"
   },
   "husky": {
