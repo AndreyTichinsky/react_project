@@ -1,6 +1,7 @@
 {
     "env": {
         "browser": true,
+        "node": true,
         "es6": true,
         "jest": true
     },
@@ -26,5 +27,21 @@
     ],
     "rules": {
       "prettier/prettier": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts",
+          "**/*.tsx"
+        ],
+        "rules": {
+          "no-unused-vars": [
+            "off"
+          ],
+          "no-undef": [
+            "off"
+          ]
+        }
+      }
+    ]
 }
