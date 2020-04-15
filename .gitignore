@@ -15,4 +15,5 @@
 .history
 
 node_modules
+storybook-static
 dist
