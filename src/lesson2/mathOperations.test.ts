@@ -69,15 +69,15 @@ describe("mathOperations test cases", () => {
     expect(square(10)).toBe(100);
   });
 
-  it("sin 1 to equal 0.8414709848078965", () => {
-    expect(sin(1)).toBe(0.8414709848078965);
+  it("sin Math.PI/2 to equal 1", () => {
+    expect(sin(Math.PI / 2)).toBe(1);
   });
 
-  it("cos 1 to equal 0.5403023058681398", () => {
-    expect(cos(1)).toBe(0.5403023058681398);
+  it("cos 2 * Math.PI to equal 1", () => {
+    expect(cos(2 * Math.PI)).toBe(1);
   });
 
-  it("tan 1 to equal 1.5574077246549023", () => {
-    expect(tan(1)).toBe(1.5574077246549023);
+  it("tan 0 to equal 0", () => {
+    expect(tan(0)).toBe(0);
   });
 });
