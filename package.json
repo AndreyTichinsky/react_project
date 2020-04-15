@@ -8,12 +8,18 @@
     "test": "jest",
     "calc": "npx ts-node src/lesson2",
     "lint": "npx eslint --ext .js,.jsx,.ts,.tsx --fix src/",
-    "start": "npx webpack-dev-server --mode development --open --hot"
+    "start": "npx webpack-dev-server --mode development --open --hot",
+    "loki:update": "npm run build-storybook && npx loki update --requireReference --reactUri file:./storybook-static",
+    "loki:approve": "npx loki approve",
+    "test:loki": "npm run build-storybook && npx loki --requireReference --reactUri file:./storybook-static",
+    "storybook": "start-storybook -p 9009",
+    "build-storybook": "build-storybook",
+    "check": "npm test && npm run lint"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test && npm run lint",
-      "pre-push": "npm test && npm run lint"
+      "pre-commit": "npm run check",
+      "pre-push": "npm run check"
     }
   },
   "repository": {
@@ -28,6 +34,12 @@
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.9.0",
+    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-knobs": "^5.3.18",
+    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/react": "^5.3.18",
+    "@types/enzyme": "^3.10.5",
     "@types/jest": "^25.2.1",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
@@ -35,6 +47,8 @@
     "@typescript-eslint/parser": "^2.26.0",
     "babel-jest": "^25.2.6",
     "babel-loader": "^8.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-config-standard": "^14.1.1",
@@ -46,6 +60,7 @@
     "html-webpack-plugin": "^4.0.4",
     "husky": "^4.2.3",
     "jest": "^25.2.7",
+    "loki": "^0.20.3",
     "prettier": "2.0.2",
     "ts-node": "^8.8.2",
     "typescript": "^3.8.3",
@@ -56,5 +71,20 @@
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
+  },
+  "loki": {
+    "configurations": {
+      "chrome.laptop": {
+        "target": "chrome.docker",
+        "width": 1366,
+        "height": 768,
+        "deviceScaleFactor": 1,
+        "mobile": false
+      },
+      "chrome.iphone7": {
+        "target": "chrome.docker",
+        "preset": "iPhone 7"
+      }
+    }
   }
 }
