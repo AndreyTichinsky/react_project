@@ -4,6 +4,9 @@
     "allowJs": true,
     "module": "commonjs",
     "target": "es5",
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": "./",
+    "strict": true,
+    "esModuleInterop": true
   }
 }
