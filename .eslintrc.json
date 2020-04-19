@@ -5,9 +5,16 @@
         "es6": true,
         "jest": true
     },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
     "extends": [
         "eslint:recommended",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -23,10 +30,18 @@
     },
     "plugins": [
         "@typescript-eslint",
-        "prettier"
+        "prettier",
+        "react"
     ],
     "rules": {
-      "prettier/prettier": "error"
+      "prettier/prettier": "error",
+      "@typescript-eslint/no-explicit-any": 0,
+      "react/prop-types": 0,
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error",
+      "@typescript-eslint/no-use-before-define": 0,
+      "@typescript-eslint/no-unused-vars": 0,
+      "@typescript-eslint/explicit-function-return-type": 0
     },
     "overrides": [
       {
