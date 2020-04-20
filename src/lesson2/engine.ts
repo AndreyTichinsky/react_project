@@ -10,6 +10,12 @@ import { isNumber, checkLengthEqualsOne } from "./helpers";
 const [FIRST, SECOND, THIRD] = mathPriorities;
 
 export const engine = (splittedLine: SplittedString) => {
+  const queue = [
+    { cb: functionCalc, priority: null },
+    { cb: priorityCalc, priority: FIRST },
+    { cb: priorityCalc, priority: SECOND },
+    { cb: thirdPriorityCalc, priority: null },
+  ];
   splittedLine = splittedLine.join(" ").replace(/\(|\)/g, "").trim().split(" ");
   let gotResult = false;
   const queueWork = queue.reduce((acc, { cb, priority }, idx, arr) => {
@@ -70,10 +76,3 @@ export const thirdPriorityCalc = (
     return acc;
   }, Number(splittedLine[0]));
 };
-
-const queue = [
-  { cb: functionCalc, priority: null },
-  { cb: priorityCalc, priority: FIRST },
-  { cb: priorityCalc, priority: SECOND },
-  { cb: thirdPriorityCalc, priority: null },
-];

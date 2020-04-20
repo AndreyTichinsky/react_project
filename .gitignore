@@ -1,5 +1,5 @@
 ## ignore vscode stuff
-.vscode/*
+.vscode
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -15,4 +15,5 @@
 .history
 
 node_modules
+storybook-static
 dist
