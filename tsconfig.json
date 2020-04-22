@@ -1,11 +1,18 @@
 {
   "compilerOptions": {
     "sourceMap": true,
-    "allowJs": true,
     "module": "commonjs",
+    "baseUrl": ".",
+    "paths": {
+      "types/*": [
+        "src/types/*"
+      ]
+    },
+    "types": [
+      "@emotion/core"
+    ],
     "target": "es5",
     "jsx": "react",
-    "baseUrl": "./",
     "strict": true,
     "esModuleInterop": true
   }
