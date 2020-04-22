@@ -53,6 +53,8 @@
     "@typescript-eslint/parser": "^2.26.0",
     "babel-jest": "^25.2.6",
     "babel-loader": "^8.1.0",
+    "babel-plugin-emotion": "^10.0.33",
+    "css-loader": "^3.5.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
@@ -67,6 +69,7 @@
     "html-webpack-plugin": "^4.0.4",
     "husky": "^4.2.3",
     "jest": "^25.2.7",
+    "jest-emotion": "^10.0.32",
     "loki": "^0.20.3",
     "prettier": "2.0.2",
     "react-docgen-typescript-loader": "^3.7.2",
@@ -81,6 +84,8 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
