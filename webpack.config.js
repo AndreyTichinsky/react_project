@@ -1,11 +1,14 @@
 const path = require('path');
-
+const webpackRules = require("./webpackRules");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: './src/index.tsx',
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    alias: {
+      types: path.resolve(__dirname, "src/types"),
+    },
   },
   output: {
     filename: 'index.js',
@@ -14,10 +17,10 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|js)x?$/,
-        exclude: /node_modules/,
-        loader: require.resolve("babel-loader")
-      }
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      ...webpackRules
     ]
   },
     plugins: [
