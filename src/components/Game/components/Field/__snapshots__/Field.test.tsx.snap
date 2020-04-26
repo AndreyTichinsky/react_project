@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Field empty Field test 1`] = `
+.emotion-4 {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #000;
+}
+
+.emotion-0 {
+  width: 50px;
+  height: 50px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.emotion-1 {
+  width: 50px;
+  height: 50px;
+  top: 0px;
+  left: 50px;
+  position: absolute;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.emotion-2 {
+  width: 50px;
+  height: 50px;
+  top: 50px;
+  left: 0px;
+  position: absolute;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.emotion-3 {
+  width: 50px;
+  height: 50px;
+  top: 50px;
+  left: 50px;
+  position: absolute;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+<div
+  className="emotion-4"
+>
+  <div
+    className="cell cell_0_0 emotion-0"
+    onClick={[Function]}
+    x={0}
+    y={0}
+  />
+  <div
+    className="cell cell_0_1 emotion-1"
+    onClick={[Function]}
+    x={1}
+    y={0}
+  />
+  <div
+    className="cell cell_1_0 emotion-2"
+    onClick={[Function]}
+    x={0}
+    y={1}
+  />
+  <div
+    className="cell cell_1_1 emotion-3"
+    onClick={[Function]}
+    x={1}
+    y={1}
+  />
+</div>
+`;
+
+exports[`Field partial filled cell test 1`] = `
+.emotion-4 {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 1px solid #000;
+}
+
+.emotion-1 {
+  width: 50px;
+  height: 50px;
+  top: 0px;
+  left: 50px;
+  position: absolute;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.emotion-2 {
+  width: 50px;
+  height: 50px;
+  top: 50px;
+  left: 0px;
+  position: absolute;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.emotion-0 {
+  width: 50px;
+  height: 50px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  background-color: #000000;
+}
+
+.emotion-3 {
+  width: 50px;
+  height: 50px;
+  top: 50px;
+  left: 50px;
+  position: absolute;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  background-color: #000000;
+}
+
+<div
+  className="emotion-4"
+>
+  <div
+    className="cell cell_0_0 emotion-0"
+    onClick={[Function]}
+    x={0}
+    y={0}
+  />
+  <div
+    className="cell cell_0_1 emotion-1"
+    onClick={[Function]}
+    x={1}
+    y={0}
+  />
+  <div
+    className="cell cell_1_0 emotion-2"
+    onClick={[Function]}
+    x={0}
+    y={1}
+  />
+  <div
+    className="cell cell_1_1 emotion-3"
+    onClick={[Function]}
+    x={1}
+    y={1}
+  />
+</div>
+`;
