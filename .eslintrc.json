@@ -57,6 +57,16 @@
             "off"
           ]
         }
+      },
+      {
+        "files": [
+          "*.stories.tsx"
+        ],
+        "rules": {
+          "no-restricted-syntax": [
+            "off"
+          ]
+        }
       }
     ]
 }
