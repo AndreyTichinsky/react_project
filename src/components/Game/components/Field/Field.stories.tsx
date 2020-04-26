@@ -10,15 +10,16 @@ export default {
 };
 const elementClicked = action("Cell clicked (element)");
 
-export const emptyField = () => [
-  <Field
-    key="jsx"
-    cellSize={number("cellSize", 50)}
-    onClick={elementClicked}
-    field={object("field", [
-      [false, false, false],
-      [false, false, false],
-      [false, false, false],
-    ])}
-  />,
-];
+export const emptyField = () => {
+  return (
+    <Field
+      cellSize={number("cellSize", 50)}
+      onClick={elementClicked}
+      field={object("field", [
+        [false, false, false],
+        [false, false, false],
+        [false, false, false],
+      ])}
+    />
+  );
+};

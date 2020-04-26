@@ -9,13 +9,14 @@ export default {
   decorators: [withKnobs],
 };
 
-export const emptyCell = () => [
-  <Cell
-    key="jsx"
-    isAlive={boolean("isAlive", false)}
-    x={number("x", 0)}
-    y={number("y", 0)}
-    cellSize={number("cellSize", 25)}
-    onClick={action("Cell clicked")}
-  />,
-];
+export const emptyCell = () => {
+  return (
+    <Cell
+      isAlive={boolean("isAlive", false)}
+      x={number("x", 0)}
+      y={number("y", 0)}
+      cellSize={number("cellSize", 25)}
+      onClick={action("Cell clicked")}
+    />
+  );
+};

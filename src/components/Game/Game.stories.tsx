@@ -10,8 +10,8 @@ export default {
 
 export const instanceGame = () => (
   <Game
-    xSize={10}
-    ySize={10}
+    xSize={number("xSize", 10)}
+    ySize={number("ySize", 10)}
     cellSize={number("cellSize", 50)}
     fieldComponent={Field}
   />
