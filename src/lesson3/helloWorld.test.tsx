@@ -1,8 +1,8 @@
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import "../../internals/setupTests.ts";
 
-import { HelloWorld } from "./helloWorld";
+import { HelloWorld } from "./HelloWorld";
 
 describe("HelloWorld render check", function () {
   it("Default render", function () {
