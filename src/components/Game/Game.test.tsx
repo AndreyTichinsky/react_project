@@ -1,5 +1,5 @@
 import React from "react";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 
 import { Game } from "./Game";
 
@@ -10,54 +10,66 @@ describe("Game", () => {
     onClick: (x: number, y: number) => void;
   }> = () => null;
 
-  it("check Field Props", () => {
-    const field = shallow(
-      <Game fieldComponent={FakeComponent} xSize={2} ySize={2} cellSize={50} />
-    ).find(FakeComponent);
-    expect(field.props()).toEqual({
-      field: [
-        [false, false],
-        [false, false],
-      ],
-      onClick: expect.any(Function),
+  it("check Game Props", () => {
+    const wrapper = mount(
+      <Game
+        fieldComponent={FakeComponent}
+        xSize={2}
+        ySize={2}
+        cellSize={50}
+        updateSpeed={500}
+        gameInProgress={false}
+      />
+    );
+    expect(wrapper.props()).toEqual({
+      xSize: 2,
+      ySize: 2,
       cellSize: 50,
+      updateSpeed: 500,
+      gameInProgress: false,
+      fieldComponent: FakeComponent,
     });
   });
 
-  it("field update after onClick", () => {
-    const wrapper = shallow(
-      <Game fieldComponent={FakeComponent} xSize={3} ySize={3} cellSize={50} />
+  it("update props", () => {
+    const wrapper = mount(
+      <Game
+        fieldComponent={FakeComponent}
+        xSize={2}
+        ySize={2}
+        cellSize={50}
+        updateSpeed={500}
+        gameInProgress={false}
+      />
     );
-    expect(wrapper.find(FakeComponent).props()).toEqual({
-      field: [
-        [false, false, false],
-        [false, false, false],
-        [false, false, false],
-      ],
-      onClick: expect.any(Function),
-      cellSize: 50,
+    wrapper.setProps({
+      xSize: 5,
+      ySize: 5,
     });
-    wrapper.find(FakeComponent).props().onClick(0, 0);
-    wrapper.update();
-    expect(wrapper.find(FakeComponent).props()).toEqual({
-      field: [
-        [true, false, false],
-        [false, false, false],
-        [false, false, false],
-      ],
-      onClick: expect.any(Function),
+    expect(wrapper.props()).toEqual({
+      xSize: 5,
+      ySize: 5,
       cellSize: 50,
+      updateSpeed: 500,
+      gameInProgress: false,
+      fieldComponent: FakeComponent,
     });
-    wrapper.find(FakeComponent).props().onClick(2, 1);
-    wrapper.update();
-    expect(wrapper.find(FakeComponent).props()).toEqual({
-      field: [
-        [true, false, false],
-        [false, false, true],
-        [false, false, false],
-      ],
-      onClick: expect.any(Function),
-      cellSize: 50,
+  });
+
+  it("game in progress button text", () => {
+    const wrapper = mount(
+      <Game
+        fieldComponent={FakeComponent}
+        xSize={2}
+        ySize={2}
+        cellSize={50}
+        updateSpeed={500}
+        gameInProgress={false}
+      />
+    );
+    wrapper.setProps({
+      gameInProgress: true,
     });
+    expect(wrapper.find("button.progress_button").text()).toEqual("Stop");
   });
 });
