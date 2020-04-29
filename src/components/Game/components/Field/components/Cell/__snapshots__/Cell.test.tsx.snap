@@ -9,6 +9,8 @@ exports[`Cell empty cell test 1`] = `
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
+  -webkit-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
   background-color: #ffffff;
 }
 
@@ -29,6 +31,8 @@ exports[`Cell filled cell test 1`] = `
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
+  -webkit-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
   background-color: #000000;
 }
 
