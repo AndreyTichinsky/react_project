@@ -16,6 +16,8 @@ exports[`Field empty Field test 1`] = `
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
+  -webkit-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
   background-color: #ffffff;
 }
 
@@ -27,6 +29,8 @@ exports[`Field empty Field test 1`] = `
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
+  -webkit-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
   background-color: #ffffff;
 }
 
@@ -38,6 +42,8 @@ exports[`Field empty Field test 1`] = `
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
+  -webkit-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
   background-color: #ffffff;
 }
 
@@ -49,6 +55,8 @@ exports[`Field empty Field test 1`] = `
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
+  -webkit-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
   background-color: #ffffff;
 }
 
@@ -98,6 +106,8 @@ exports[`Field partial filled cell test 1`] = `
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
+  -webkit-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
   background-color: #ffffff;
 }
 
@@ -109,6 +119,8 @@ exports[`Field partial filled cell test 1`] = `
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
+  -webkit-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
   background-color: #ffffff;
 }
 
@@ -120,6 +132,8 @@ exports[`Field partial filled cell test 1`] = `
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
+  -webkit-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
   background-color: #000000;
 }
 
@@ -131,6 +145,8 @@ exports[`Field partial filled cell test 1`] = `
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
+  -webkit-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
   background-color: #000000;
 }
 
