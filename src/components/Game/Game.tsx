@@ -44,15 +44,12 @@ const mergeMatrices = (
     bLenY = newMatrix.length,
     copyA = oldMatrix.map((row) => [...row]),
     copyB = newMatrix.map((row) => [...row]);
-  let mainArr: BooleanMatrix = copyA,
-    secArr: BooleanMatrix = copyB;
+  let mainArr: BooleanMatrix = copyA;
   if (aLenY >= bLenY) {
     copyA.splice(bLenY);
   } else if (aLenY < bLenY) {
     mainArr = copyB;
-    secArr = copyA;
   }
-  let result: BooleanMatrix;
   if (aLenX >= bLenX) {
     mainArr = mainArr.map((row, i) => {
       if (copyA[i] && copyB[i]) {
@@ -116,7 +113,7 @@ export class Game extends React.Component<GameProps, GameState> {
     this.timerId = null;
   }
 
-  componentDidUpdate(prevProps: GameProps, prevState: GameState) {
+  componentDidUpdate(prevProps: GameProps) {
     if (
       (prevProps.xSize !== this.props.xSize ||
         prevProps.ySize !== this.props.ySize) &&

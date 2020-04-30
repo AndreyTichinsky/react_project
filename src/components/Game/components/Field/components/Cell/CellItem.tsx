@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { css, keyframes } from "@emotion/core";
+import { css } from "@emotion/core";
 
 const BaseCell = css`
   position: absolute;

@@ -15,10 +15,8 @@ export class Cell extends React.Component<CellProps, CellState> {
   }
 
   componentDidMount() {
-    this.setState((state) => {
-      return {
-        decideWhichAnimation: this.props.isAlive,
-      };
+    this.setState({
+      decideWhichAnimation: this.props.isAlive,
     });
   }
 
