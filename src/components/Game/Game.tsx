@@ -38,21 +38,41 @@ const mergeMatrices = (
   oldMatrix: BooleanMatrix,
   newMatrix: BooleanMatrix
 ): BooleanMatrix => {
-  const copyOld = oldMatrix.map((row) => [...row]);
-  const copyNew = newMatrix.map((row) => [...row]);
-  const result = copyNew.map((row, i) => {
-    return row.map((cell, j) => {
-      if (copyOld[i] && copyOld[i][j] !== undefined) {
-        return copyOld[i][j];
+  const aLenX = oldMatrix[0].length,
+    aLenY = oldMatrix.length,
+    bLenX = newMatrix[0].length,
+    bLenY = newMatrix.length,
+    copyA = oldMatrix.map((row) => [...row]),
+    copyB = newMatrix.map((row) => [...row]);
+  let mainArr: BooleanMatrix = copyA,
+    secArr: BooleanMatrix = copyB;
+  if (aLenY >= bLenY) {
+    copyA.splice(bLenY);
+  } else if (aLenY < bLenY) {
+    mainArr = copyB;
+    secArr = copyA;
+  }
+  let result: BooleanMatrix;
+  if (aLenX >= bLenX) {
+    mainArr = mainArr.map((row, i) => {
+      if (copyA[i] && copyB[i]) {
+        return copyA[i].slice(0, bLenX);
       }
-      return cell;
+      return mainArr[i];
     });
-  });
-  return result;
+  } else if (aLenX < bLenX) {
+    mainArr = mainArr.map((row, i) => {
+      if (copyA[i] && copyB[i]) {
+        return copyA[i].slice(0, aLenX).concat(copyB[i].slice(aLenX));
+      }
+      return mainArr[i];
+    });
+  }
+  return mainArr;
 };
 
-const calculatePercentage = (matrix: BooleanMatrix): number => {
-  const counter = matrix.reduce((mainAcc, row) => {
+const matrixSum = (matrix: BooleanMatrix): number => {
+  return matrix.reduce((mainAcc, row) => {
     return (
       mainAcc +
       row.reduce((subAcc, el) => {
@@ -60,10 +80,15 @@ const calculatePercentage = (matrix: BooleanMatrix): number => {
       }, 0)
     );
   }, 0);
-  return Math.floor((counter / (matrix.length * matrix[0].length)) * 100);
 };
 
-export const isNumber = (item: number): boolean => !isNaN(Number(item));
+const calculatePercentage = (matrix: BooleanMatrix): number => {
+  return Math.floor(
+    (matrixSum(matrix) / (matrix.length * matrix[0].length)) * 100
+  );
+};
+
+export const isNumber = (item: number): boolean => !Number.isNaN(item);
 
 const assertSizeValue = (value: number): boolean => {
   return isNumber(value) && value > 0;
@@ -139,29 +164,29 @@ export class Game extends React.Component<GameProps, GameState> {
 
   handleGenerator = (event: React.FormEvent) => {
     event.preventDefault();
-    const newMatrix = makeMatrix(this.state.xSize, this.state.ySize, false);
-    this.setState({
-      fieldState: newMatrix,
-      initialPercent: calculatePercentage(newMatrix),
+    this.setState((state: GameState) => {
+      const newMatrix = makeMatrix(state.xSize, state.ySize, false);
+      return {
+        fieldState: newMatrix,
+        initialPercent: calculatePercentage(newMatrix),
+      };
     });
   };
 
   handleProgress = (event: React.FormEvent) => {
     event.preventDefault();
-    this.setState((state) => {
-      return {
-        gameInProgress: !state.gameInProgress,
-      };
+    this.setState({
+      gameInProgress: !this.state.gameInProgress,
     });
     if (this.state.gameInProgress) {
       clearInterval(this.timerId);
       this.timerId = null;
-    } else {
-      this.timerId = setInterval(
-        this.setNewGeneration.bind(this),
-        this.state.updateSpeed
-      );
+      return;
     }
+    this.timerId = setInterval(
+      this.setNewGeneration.bind(this),
+      this.state.updateSpeed
+    );
   };
 
   handleUpdate = (event: React.FormEvent) => {
