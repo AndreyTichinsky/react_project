@@ -2,7 +2,7 @@
 
 exports[`Field empty Field test 1`] = `
 .emotion-4 {
-  position: absolute;
+  position: relative;
   width: 100px;
   height: 100px;
   border: 1px solid #000;
@@ -92,7 +92,7 @@ exports[`Field empty Field test 1`] = `
 
 exports[`Field partial filled cell test 1`] = `
 .emotion-4 {
-  position: absolute;
+  position: relative;
   width: 100px;
   height: 100px;
   border: 1px solid #000;
