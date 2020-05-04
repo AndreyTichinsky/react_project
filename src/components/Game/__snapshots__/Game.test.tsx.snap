@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Game game snapshot test before submit username 1`] = `
+.emotion-1 {
+  min-height: 500px;
+  background-color: #fff;
+  position: relative;
+  margin: 50px auto 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 100px;
+}
+
+.emotion-0 {
+  width: 100px;
+  margin-right: 10px;
+}
+
+<div
+  className="emotion-1"
+>
+  <fieldset
+    disabled={true}
+  >
+    <form>
+      <button
+        className="progress_button emotion-0"
+        onClick={[Function]}
+      >
+        Start
+      </button>
+      <label>
+        Speed:
+        <select
+          onChange={[Function]}
+          value="slow"
+        >
+          <option
+            value="slow"
+          >
+            slow
+          </option>
+          <option
+            value="normal"
+          >
+            normal
+          </option>
+          <option
+            value="fast"
+          >
+            fast
+          </option>
+        </select>
+      </label>
+    </form>
+  </fieldset>
+</div>
+`;
