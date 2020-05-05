@@ -92,7 +92,7 @@ export const mergeMatrices = (
   let mainArr: BooleanMatrix = copyA;
   if (aLenY >= bLenY) {
     copyA.splice(bLenY);
-  } else if (aLenY < bLenY) {
+  } else {
     mainArr = copyB;
   }
   if (aLenX >= bLenX) {
@@ -102,7 +102,7 @@ export const mergeMatrices = (
       }
       return mainArr[i];
     });
-  } else if (aLenX < bLenX) {
+  } else {
     mainArr = mainArr.map((row, i) => {
       if (copyA[i] && copyB[i]) {
         return copyA[i].slice(0, aLenX).concat(copyB[i].slice(aLenX));
