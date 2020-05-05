@@ -1,114 +1,75 @@
 import React from "react";
+import { Field, Menu, Entrance } from "./components";
+import * as helper from "./GameHelper";
 import type { BooleanMatrix } from "types/game";
+import type { HandlerControllerEvent } from "types/menu";
+import styled from "@emotion/styled";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-
-type FieldComponentInterface = React.FC<{
-  field: BooleanMatrix;
-  cellSize: number;
-  onClick: (x: number, y: number) => void;
-}>;
 
 interface GameProps {
   xSize: number;
   ySize: number;
   cellSize: number;
-  updateSpeed: number;
+  updateSpeed: string;
   gameInProgress: boolean;
-  fieldComponent: FieldComponentInterface;
+  nameIsSubmited: boolean;
+  [index: string]: any;
 }
+
 interface GameState {
   xSize: number;
   ySize: number;
-  updateSpeed: number;
+  updateSpeed: string;
   initialPercent: number;
   gameInProgress: boolean;
+  username: string;
+  nameIsSubmited: boolean;
   fieldState: BooleanMatrix;
+  [index: string]: any;
 }
 
-const makeMatrix = (y: number, x: number, empty: boolean): BooleanMatrix => {
-  return Array.from({ length: y }).map(() => {
-    return Array.from({ length: x }).map(() => {
-      return empty ? false : Math.random() > 0.5;
-    });
-  }) as BooleanMatrix;
-};
+interface GameWrapperStyle {
+  xSize: number;
+  cellSize: number;
+}
 
-const mergeMatrices = (
-  oldMatrix: BooleanMatrix,
-  newMatrix: BooleanMatrix
-): BooleanMatrix => {
-  const aLenX = oldMatrix[0].length,
-    aLenY = oldMatrix.length,
-    bLenX = newMatrix[0].length,
-    bLenY = newMatrix.length,
-    copyA = oldMatrix.map((row) => [...row]),
-    copyB = newMatrix.map((row) => [...row]);
-  let mainArr: BooleanMatrix = copyA;
-  if (aLenY >= bLenY) {
-    copyA.splice(bLenY);
-  } else if (aLenY < bLenY) {
-    mainArr = copyB;
-  }
-  if (aLenX >= bLenX) {
-    mainArr = mainArr.map((row, i) => {
-      if (copyA[i] && copyB[i]) {
-        return copyA[i].slice(0, bLenX);
-      }
-      return mainArr[i];
-    });
-  } else if (aLenX < bLenX) {
-    mainArr = mainArr.map((row, i) => {
-      if (copyA[i] && copyB[i]) {
-        return copyA[i].slice(0, aLenX).concat(copyB[i].slice(aLenX));
-      }
-      return mainArr[i];
-    });
-  }
-  return mainArr;
-};
+interface Speed {
+  [index: string]: number;
+}
 
-const matrixSum = (matrix: BooleanMatrix): number => {
-  return matrix.reduce((mainAcc, row) => {
-    return (
-      mainAcc +
-      row.reduce((subAcc, el) => {
-        return subAcc + Number(el);
-      }, 0)
-    );
-  }, 0);
-};
-
-const calculatePercentage = (matrix: BooleanMatrix): number => {
-  return Math.floor(
-    (matrixSum(matrix) / (matrix.length * matrix[0].length)) * 100
-  );
-};
-
-export const isNumber = (item: number): boolean => !Number.isNaN(item);
-
-const assertSizeValue = (value: number): boolean => {
-  return isNumber(value) && value > 0;
-};
-
-const assertZero = (value: number | null): boolean => {
-  console.warn("Warning: size must be positive non-zero number");
-  return value !== null && value !== 0;
-};
+const GameWrapper = styled.div`
+  min-height: 500px;
+  background-color: #fff;
+  position: relative;
+  margin: 50px auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-width: ${(props: GameWrapperStyle) => props.xSize * props.cellSize}px;
+`;
 
 export class Game extends React.Component<GameProps, GameState> {
-  private FieldComponent: FieldComponentInterface;
   private timerId: any;
+  [index: string]: any;
+  private speed: Speed;
   constructor(props: GameProps) {
     super(props);
-    this.FieldComponent = props.fieldComponent;
     this.state = {
+      username: "Guest",
       initialPercent: 0,
       xSize: props.xSize,
       ySize: props.ySize,
       updateSpeed: props.updateSpeed,
       gameInProgress: props.gameInProgress,
-      fieldState: makeMatrix(props.ySize, props.xSize, true),
+      nameIsSubmited: props.nameIsSubmited,
+      fieldState: helper.makeMatrix(props.ySize, props.xSize, 0),
+    };
+    this.speed = {
+      slow: 500,
+      normal: 350,
+      fast: 200,
     };
     this.timerId = null;
   }
@@ -117,19 +78,25 @@ export class Game extends React.Component<GameProps, GameState> {
     if (
       (prevProps.xSize !== this.props.xSize ||
         prevProps.ySize !== this.props.ySize) &&
-      assertZero(this.props.ySize) &&
-      assertZero(this.props.xSize)
+      helper.assertZero(this.props.ySize) &&
+      helper.assertZero(this.props.xSize)
     ) {
       this.updateMatrix(this.props.xSize, this.props.ySize);
     }
-    if (prevProps.updateSpeed !== this.props.updateSpeed) {
+    this.updateStateIfPropsDifferent(prevProps, this.props, "updateSpeed");
+    this.updateStateIfPropsDifferent(prevProps, this.props, "gameInProgress");
+    this.updateStateIfPropsDifferent(prevProps, this.props, "nameIsSubmited");
+    this.updateStateIfPropsDifferent(prevProps, this.props, "initialPercent");
+  }
+
+  updateStateIfPropsDifferent(
+    prevProps: GameProps,
+    curProps: GameProps,
+    compareProp: string
+  ) {
+    if (prevProps[compareProp] !== curProps[compareProp]) {
       this.setState({
-        updateSpeed: this.props.updateSpeed,
-      });
-    }
-    if (prevProps.gameInProgress !== this.props.gameInProgress) {
-      this.setState({
-        gameInProgress: this.props.gameInProgress,
+        [compareProp]: curProps[compareProp],
       });
     }
   }
@@ -149,23 +116,59 @@ export class Game extends React.Component<GameProps, GameState> {
   }
 
   updateMatrix(xSize: number, ySize: number) {
-    const newMatrix = makeMatrix(xSize, ySize, false);
-    const mergedMatrix = mergeMatrices(this.state.fieldState, newMatrix);
+    const newMatrix = helper.makeMatrix(ySize, xSize, 0);
+    const mergedMatrix = helper.mergeMatrices(this.state.fieldState, newMatrix);
     this.setState({
       xSize,
       ySize,
       fieldState: mergedMatrix,
-      initialPercent: calculatePercentage(mergedMatrix),
     });
   }
+
+  handlerController = (
+    event: HandlerControllerEvent,
+    handlerName: string
+  ): void => {
+    this[handlerName](event);
+  };
+
+  handleUsername = (event: React.ChangeEvent) => {
+    const target = event.target as HTMLFormElement;
+    this.setState({
+      username: target.value,
+    });
+  };
+
+  submitUsername = (event: React.FormEvent) => {
+    event.preventDefault();
+    this.setState({
+      nameIsSubmited: true,
+    });
+  };
+
+  handleFilledPercent = (event: React.ChangeEvent) => {
+    const target = event.target as HTMLFormElement;
+    if (!helper.isNumber(target.value)) {
+      throw new Error("Not a number");
+    }
+    if (!helper.assertPercentValue(target.value)) {
+      throw new Error("Value must be between 0 and 100");
+    }
+    this.setState({
+      initialPercent: Number(target.value),
+    });
+  };
 
   handleGenerator = (event: React.FormEvent) => {
     event.preventDefault();
     this.setState((state: GameState) => {
-      const newMatrix = makeMatrix(state.xSize, state.ySize, false);
+      const newMatrix = helper.makeMatrix(
+        state.ySize,
+        state.xSize,
+        this.state.initialPercent
+      );
       return {
         fieldState: newMatrix,
-        initialPercent: calculatePercentage(newMatrix),
       };
     });
   };
@@ -176,21 +179,20 @@ export class Game extends React.Component<GameProps, GameState> {
       gameInProgress: !this.state.gameInProgress,
     });
     if (this.state.gameInProgress) {
-      clearInterval(this.timerId);
-      this.timerId = null;
+      this.clearTimer();
       return;
     }
     this.timerId = setInterval(
       this.setNewGeneration.bind(this),
-      this.state.updateSpeed
+      this.speed[this.state.updateSpeed]
     );
   };
 
   handleUpdate = (event: React.FormEvent) => {
     event.preventDefault();
     if (
-      !assertSizeValue(this.state.xSize) ||
-      !assertSizeValue(this.state.ySize)
+      !helper.assertSizeValue(this.state.xSize) ||
+      !helper.assertSizeValue(this.state.ySize)
     ) {
       throw new Error("invalid value: size must be positive non-zero number");
     }
@@ -199,7 +201,7 @@ export class Game extends React.Component<GameProps, GameState> {
 
   handleXSizeChange = (event: React.ChangeEvent) => {
     const target = event.target as HTMLFormElement;
-    if (!isNumber(target.value)) {
+    if (!helper.isNumber(target.value)) {
       throw new Error("Not a number");
     }
     this.setState({
@@ -209,11 +211,37 @@ export class Game extends React.Component<GameProps, GameState> {
 
   handleYSizeChange = (event: React.ChangeEvent) => {
     const target = event.target as HTMLFormElement;
-    if (!isNumber(target.value)) {
+    if (!helper.isNumber(target.value)) {
       throw new Error("Not a number");
     }
     this.setState({
       ySize: Number(target.value),
+    });
+  };
+
+  selectHandler = (event: React.ChangeEvent) => {
+    const target = event.target as HTMLFormElement;
+    this.setState((state) => {
+      if (state.gameInProgress) {
+        this.clearTimer();
+        this.timerId = setInterval(
+          this.setNewGeneration.bind(this),
+          this.speed[target.value]
+        );
+      }
+      return {
+        updateSpeed: target.value,
+      };
+    });
+  };
+
+  handleReset = (event: React.FormEvent) => {
+    event.preventDefault();
+    this.setState((state) => {
+      return {
+        fieldState: helper.makeMatrix(state.ySize, state.xSize, 0),
+        initialPercent: 0,
+      };
     });
   };
 
@@ -228,70 +256,53 @@ export class Game extends React.Component<GameProps, GameState> {
   };
 
   render() {
-    const FieldComponent = this.FieldComponent;
     return (
-      <>
-        <form
-          css={css`
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-          `}
-        >
-          <div>Percent of filled cells: {this.state.initialPercent}%</div>
-          <label>
-            xSize:
-            <input
-              name="xSize"
-              type="text"
-              value={this.state.xSize}
-              onChange={this.handleXSizeChange}
-            />
-          </label>
-          <label>
-            ySize:
-            <input
-              name="ySize"
-              type="text"
-              value={this.state.ySize}
-              onChange={this.handleYSizeChange}
-            />
-          </label>
-          <button
-            className="update_button"
-            onClick={this.handleUpdate}
-            css={css`
-              width: 152px;
-            `}
-          >
-            Update
-          </button>
-          <button
-            className="progress_button"
-            onClick={this.handleProgress}
-            css={css`
-              width: 152px;
-            `}
-          >
-            {this.state.gameInProgress ? "Stop" : "Start"}
-          </button>
-          <button
-            className="generator_button"
-            onClick={this.handleGenerator}
-            css={css`
-              width: 152px;
-            `}
-          >
-            Generate new generation
-          </button>
-        </form>
-        <FieldComponent
+      <GameWrapper cellSize={this.props.cellSize} xSize={this.props.xSize}>
+        <Menu
+          initialPercent={this.state.initialPercent}
+          xSize={this.state.xSize}
+          ySize={this.state.ySize}
+          eventHandler={this.handlerController}
+          isDisabled={this.state.gameInProgress || !this.state.nameIsSubmited}
+        />
+        <Field
           field={this.state.fieldState}
           onClick={this.onClick}
           cellSize={this.props.cellSize}
         />
-      </>
+        <fieldset disabled={!this.state.nameIsSubmited}>
+          <form>
+            <button
+              className="progress_button"
+              onClick={this.handleProgress}
+              css={css`
+                width: 100px;
+                margin-right: 10px;
+              `}
+            >
+              {this.state.gameInProgress ? "Stop" : "Start"}
+            </button>
+            <label>
+              Speed:
+              <select
+                className="speed_select"
+                value={this.state.updateSpeed}
+                onChange={this.selectHandler}
+              >
+                <option value="slow">slow</option>
+                <option value="normal">normal</option>
+                <option value="fast">fast</option>
+              </select>
+            </label>
+          </form>
+        </fieldset>
+        {this.state.nameIsSubmited || (
+          <Entrance
+            username={this.state.username}
+            eventHandler={this.handlerController}
+          />
+        )}
+      </GameWrapper>
     );
   }
 }

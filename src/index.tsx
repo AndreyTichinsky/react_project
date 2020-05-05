@@ -1,16 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { Game, Field } from "./components/";
+import { Game } from "./components/";
 
 ReactDOM.render(
   <Game
-    xSize={10}
-    ySize={10}
-    cellSize={50}
-    fieldComponent={Field}
-    updateSpeed={500}
+    xSize={20}
+    ySize={20}
+    cellSize={20}
+    updateSpeed={"slow"}
     gameInProgress={false}
+    nameIsSubmited={false}
   />,
   document.getElementById("root")
 );

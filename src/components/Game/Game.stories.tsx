@@ -1,6 +1,6 @@
 import React from "react";
-import { withKnobs, number, boolean } from "@storybook/addon-knobs";
-import { Field } from "./components";
+import { withKnobs, number, boolean, text } from "@storybook/addon-knobs";
+
 import { Game } from "./Game";
 
 export default {
@@ -13,8 +13,8 @@ export const instanceGame = () => (
     xSize={number("xSize", 10)}
     ySize={number("ySize", 10)}
     cellSize={number("cellSize", 50)}
-    fieldComponent={Field}
-    updateSpeed={number("updateSpeed", 500)}
+    updateSpeed={text("updateSpeed", "slow")}
     gameInProgress={boolean("gameInProgress", false)}
+    nameIsSubmited={boolean("nameIsSubmited", false)}
   />
 );
