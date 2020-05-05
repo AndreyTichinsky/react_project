@@ -1,29 +1,11 @@
 import React from "react";
+import { Field, Menu, Entrance } from "./components";
 import * as helper from "./GameHelper";
 import type { BooleanMatrix } from "types/game";
 import type { HandlerControllerEvent } from "types/menu";
 import styled from "@emotion/styled";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-
-type FieldComponentInterface = React.FC<{
-  field: BooleanMatrix;
-  cellSize: number;
-  onClick: (x: number, y: number) => void;
-}>;
-
-type MenuComponentInterface = React.FC<{
-  initialPercent: number;
-  xSize: number;
-  ySize: number;
-  isDisabled: boolean;
-  eventHandler: (ev: HandlerControllerEvent, name: string) => void;
-}>;
-
-type EntranceComponentInterface = React.FC<{
-  username: string;
-  eventHandler: (ev: HandlerControllerEvent, name: string) => void;
-}>;
 
 interface GameProps {
   xSize: number;
@@ -32,9 +14,7 @@ interface GameProps {
   updateSpeed: string;
   gameInProgress: boolean;
   nameIsSubmited: boolean;
-  fieldComponent: FieldComponentInterface;
-  menuComponent: MenuComponentInterface;
-  entranceComponent: EntranceComponentInterface;
+  [index: string]: any;
 }
 
 interface GameState {
@@ -46,6 +26,7 @@ interface GameState {
   username: string;
   nameIsSubmited: boolean;
   fieldState: BooleanMatrix;
+  [index: string]: any;
 }
 
 interface GameWrapperStyle {
@@ -70,17 +51,11 @@ const GameWrapper = styled.div`
 `;
 
 export class Game extends React.Component<GameProps, GameState> {
-  private FieldComponent: FieldComponentInterface;
-  private MenuComponent: MenuComponentInterface;
-  private EntranceComponent: EntranceComponentInterface;
   private timerId: any;
   [index: string]: any;
   private speed: Speed;
   constructor(props: GameProps) {
     super(props);
-    this.FieldComponent = props.fieldComponent;
-    this.MenuComponent = props.menuComponent;
-    this.EntranceComponent = props.entranceComponent;
     this.state = {
       username: "Guest",
       initialPercent: 0,
@@ -108,19 +83,20 @@ export class Game extends React.Component<GameProps, GameState> {
     ) {
       this.updateMatrix(this.props.xSize, this.props.ySize);
     }
-    if (prevProps.updateSpeed !== this.props.updateSpeed) {
+    this.updateStateIfPropsDifferent(prevProps, this.props, "updateSpeed");
+    this.updateStateIfPropsDifferent(prevProps, this.props, "gameInProgress");
+    this.updateStateIfPropsDifferent(prevProps, this.props, "nameIsSubmited");
+    this.updateStateIfPropsDifferent(prevProps, this.props, "initialPercent");
+  }
+
+  updateStateIfPropsDifferent(
+    prevProps: GameProps,
+    curProps: GameProps,
+    compareProp: string
+  ) {
+    if (prevProps[compareProp] !== curProps[compareProp]) {
       this.setState({
-        updateSpeed: this.props.updateSpeed,
-      });
-    }
-    if (prevProps.gameInProgress !== this.props.gameInProgress) {
-      this.setState({
-        gameInProgress: this.props.gameInProgress,
-      });
-    }
-    if (prevProps.nameIsSubmited !== this.props.nameIsSubmited) {
-      this.setState({
-        nameIsSubmited: this.props.nameIsSubmited,
+        [compareProp]: curProps[compareProp],
       });
     }
   }
@@ -280,26 +256,21 @@ export class Game extends React.Component<GameProps, GameState> {
   };
 
   render() {
-    const FieldComponent = this.FieldComponent;
-    const MenuComponent = this.MenuComponent;
-    const EntranceComponent = this.EntranceComponent;
     return (
       <GameWrapper cellSize={this.props.cellSize} xSize={this.props.xSize}>
-        <MenuComponent
+        <Menu
           initialPercent={this.state.initialPercent}
           xSize={this.state.xSize}
           ySize={this.state.ySize}
           eventHandler={this.handlerController}
           isDisabled={this.state.gameInProgress || !this.state.nameIsSubmited}
         />
-        <FieldComponent
+        <Field
           field={this.state.fieldState}
           onClick={this.onClick}
           cellSize={this.props.cellSize}
         />
-        <fieldset
-          disabled={this.state.gameInProgress || !this.state.nameIsSubmited}
-        >
+        <fieldset disabled={!this.state.nameIsSubmited}>
           <form>
             <button
               className="progress_button"
@@ -326,10 +297,10 @@ export class Game extends React.Component<GameProps, GameState> {
           </form>
         </fieldset>
         {this.state.nameIsSubmited || (
-          <EntranceComponent
+          <Entrance
             username={this.state.username}
             eventHandler={this.handlerController}
-          ></EntranceComponent>
+          />
         )}
       </GameWrapper>
     );

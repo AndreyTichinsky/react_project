@@ -2,30 +2,8 @@ import React from "react";
 import { mount, shallow } from "enzyme";
 import { Game } from "./Game";
 import { calculatePercentage } from "./GameHelper";
-import type { HandlerControllerEvent } from "types/menu";
-
-const fieldFakeComponent: React.FC<{
-  field: boolean[][];
-  cellSize: number;
-  onClick: (x: number, y: number) => void;
-}> = () => null;
-
-const menuFakeComponent: React.FC<{
-  initialPercent: number;
-  xSize: number;
-  ySize: number;
-  eventHandler: (ev: HandlerControllerEvent, name: string) => void;
-}> = () => null;
-
-const entranceFakeComponent: React.FC<{
-  username: string;
-  eventHandler: (ev: HandlerControllerEvent, name: string) => void;
-}> = () => null;
 
 const defaultProps = {
-  fieldComponent: fieldFakeComponent,
-  menuComponent: menuFakeComponent,
-  entranceComponent: entranceFakeComponent,
   xSize: 2,
   ySize: 2,
   cellSize: 50,
@@ -34,8 +12,14 @@ const defaultProps = {
   nameIsSubmited: false,
 };
 
+const formEvent = {
+  preventDefault: (): void => {
+    void 0;
+  },
+} as React.FormEvent;
+
 describe("Game", () => {
-  it("check Game Props", () => {
+  it("when init game expect props equality to defaultProps", () => {
     const wrapper = mount(<Game {...defaultProps} />);
     expect(wrapper.props()).toEqual({
       xSize: 2,
@@ -44,13 +28,10 @@ describe("Game", () => {
       updateSpeed: "slow",
       gameInProgress: false,
       nameIsSubmited: false,
-      fieldComponent: fieldFakeComponent,
-      menuComponent: menuFakeComponent,
-      entranceComponent: entranceFakeComponent,
     });
   });
 
-  it("update props", () => {
+  it("when set new props expect equality to certain props", () => {
     const wrapper = mount(<Game {...defaultProps} />);
     wrapper.setProps({
       xSize: 5,
@@ -63,13 +44,10 @@ describe("Game", () => {
       updateSpeed: "slow",
       gameInProgress: false,
       nameIsSubmited: false,
-      fieldComponent: fieldFakeComponent,
-      menuComponent: menuFakeComponent,
-      entranceComponent: entranceFakeComponent,
     });
   });
 
-  it("game in progress button text", () => {
+  it("when set gameInProgress property to true expect progress button to change text to 'stop'", () => {
     const wrapper = mount(<Game {...defaultProps} />);
     wrapper.setProps({
       gameInProgress: true,
@@ -77,13 +55,13 @@ describe("Game", () => {
     expect(wrapper.find("button.progress_button").text()).toEqual("Stop");
   });
 
-  it("progress button test", () => {
+  it("when simulate click to progress button expect gameInProgress to be truthy", () => {
     const wrapper = mount(<Game {...defaultProps} />);
     wrapper.find("button.progress_button").simulate("click");
-    expect(wrapper.state("gameInProgress")).toBeTruthy;
+    expect(wrapper.state("gameInProgress")).toBeTruthy();
   });
 
-  it("select speed test", () => {
+  it("when speed select change to value 'fast' expect updateSpeed to equals 'fast'", () => {
     const wrapper = mount(<Game {...defaultProps} />);
     wrapper
       .find("select.speed_select")
@@ -91,14 +69,8 @@ describe("Game", () => {
     expect(wrapper.state("updateSpeed")).toEqual("fast");
   });
 
-  const formEvent = {
-    preventDefault: (): void => {
-      void 0;
-    },
-  } as React.FormEvent;
-
   // handlers testing
-  it("handleReset test", () => {
+  it("when invoke handleReset expect fieldState to be empty", () => {
     const wrapper = shallow<Game>(<Game {...defaultProps} />);
     wrapper.setState({
       fieldState: [
@@ -113,7 +85,7 @@ describe("Game", () => {
     ]);
   });
 
-  it("handleUpdate test", () => {
+  it("when invoke handleUpdate expect fieldState update its size", () => {
     const wrapper = shallow<Game>(<Game {...defaultProps} />);
     expect(wrapper.state("xSize")).toBe(2);
     expect(wrapper.state("ySize")).toBe(2);
@@ -132,14 +104,14 @@ describe("Game", () => {
     expect(wrapper.state("ySize")).toEqual(4);
   });
 
-  it("handleProgress test", () => {
+  it("when invoke handleProgress expect gameInProgress to be truthy", () => {
     const wrapper = shallow<Game>(<Game {...defaultProps} />);
     expect(wrapper.state("gameInProgress")).toBeFalsy();
     wrapper.instance().handleProgress(formEvent);
     expect(wrapper.state("gameInProgress")).toBeTruthy();
   });
 
-  it("handleGenerator test", () => {
+  it("when invoke handleGenerator expect generated matrix to equals state properties", () => {
     const wrapper = shallow<Game>(<Game {...defaultProps} />);
     expect(wrapper.state("xSize")).toBe(2);
     expect(wrapper.state("ySize")).toBe(2);
@@ -156,13 +128,13 @@ describe("Game", () => {
     expect(testMatrix.length).toEqual(4);
     expect(testMatrix[0].length).toEqual(4);
   });
-  it("submitUsername test", () => {
+  it("when invoke submitUsername expect nameIsSubmited to be truthy", () => {
     const wrapper = shallow<Game>(<Game {...defaultProps} />);
     expect(wrapper.state("nameIsSubmited")).toBeFalsy();
     wrapper.instance().submitUsername(formEvent);
     expect(wrapper.state("nameIsSubmited")).toBeTruthy();
   });
-  it("handleUsername test", () => {
+  it("when invoke handleUsername expect username state to equals event target value", () => {
     const wrapper = shallow<Game>(<Game {...defaultProps} />);
     expect(wrapper.state("username")).toEqual("Guest");
     const mockEvent = {
@@ -174,7 +146,7 @@ describe("Game", () => {
     wrapper.instance().handleUsername(mockEvent);
     expect(wrapper.state("username")).toEqual("John Doe");
   });
-  it("handleFilledPercent test", () => {
+  it("when invoke handleFilledPercent expect initialPercent state to equals event target value", () => {
     const wrapper = shallow<Game>(<Game {...defaultProps} />);
     expect(wrapper.state("initialPercent")).toEqual(0);
     const mockEvent = {
@@ -186,7 +158,7 @@ describe("Game", () => {
     wrapper.instance().handleFilledPercent(mockEvent);
     expect(wrapper.state("initialPercent")).toEqual(50);
   });
-  it("handleXSizeChange test", () => {
+  it("when invoke handleXSizeChange expect xSize state to equals event target value", () => {
     const wrapper = shallow<Game>(<Game {...defaultProps} />);
     expect(wrapper.state("xSize")).toEqual(2);
     const mockEvent = {
@@ -198,7 +170,7 @@ describe("Game", () => {
     wrapper.instance().handleXSizeChange(mockEvent);
     expect(wrapper.state("xSize")).toEqual(4);
   });
-  it("handleYSizeChange test", () => {
+  it("when invoke handleYSizeChange expect ySize state to equals event target value", () => {
     const wrapper = shallow<Game>(<Game {...defaultProps} />);
     expect(wrapper.state("ySize")).toEqual(2);
     const mockEvent = {
