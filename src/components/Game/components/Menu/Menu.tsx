@@ -1,5 +1,6 @@
-import React, { FC, useState, useCallback } from "react";
+import React from "react";
 import type { HandlerControllerEvent } from "types/menu";
+import { GameButton } from "./GameButton";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
@@ -18,119 +19,94 @@ const baseLabel = css`
   justify-content: space-between;
 `;
 
-const baseMenuButton = css`
-  width: auto;
-`;
-
 const disabledForm = css`
   color: grey;
 `;
 
-export const Menu: FC<MenuProps> = ({
-  initialPercent,
-  xSize,
-  ySize,
-  eventHandler,
-  isDisabled,
-}) => {
-  const [stateInitialPercent, setInitialPercent] = useState(initialPercent);
-  const [stateXSize, setXSize] = useState(xSize);
-  const [stateYSize, setYSize] = useState(ySize);
-  const onChange = useCallback((ev, eventName) => {
-    switch (eventName) {
-      case "handleXSizeChange":
-        setXSize(ev.target.value);
-        break;
-      case "handleYSizeChange":
-        setYSize(ev.target.value);
-        break;
-      case "handleFilledPercent":
-        setInitialPercent(ev.target.value);
-        break;
-    }
-    eventHandler(ev, eventName);
-  }, []);
-  return (
-    <fieldset disabled={isDisabled}>
-      <form
-        css={css`
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          ${isDisabled ? disabledForm : ""};
-        `}
-      >
-        <label
+export class Menu extends React.Component<MenuProps> {
+  constructor(props: MenuProps) {
+    super(props);
+  }
+  render() {
+    return (
+      <fieldset disabled={this.props.isDisabled}>
+        <form
           css={css`
-            ${baseLabel};
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            ${this.props.isDisabled ? disabledForm : ""};
           `}
         >
-          xSize:
-          <input
-            className="xSize_input"
-            name="xSize"
-            type="text"
-            value={stateXSize}
-            onChange={(ev) => onChange(ev, "handleXSizeChange")}
+          <label
+            css={css`
+              ${baseLabel};
+            `}
+          >
+            xSize:
+            <input
+              className="xSize_input"
+              name="xSize"
+              type="text"
+              value={this.props.xSize}
+              onChange={(ev) =>
+                this.props.eventHandler(ev, "handleXSizeChange")
+              }
+            />
+          </label>
+          <label
+            css={css`
+              ${baseLabel};
+            `}
+          >
+            ySize:
+            <input
+              className="ySize_input"
+              name="ySize"
+              type="text"
+              value={this.props.ySize}
+              onChange={(ev) =>
+                this.props.eventHandler(ev, "handleYSizeChange")
+              }
+            />
+          </label>
+          <GameButton
+            className="update_button"
+            onChange={this.props.eventHandler.bind(this)}
+            eventName="handleUpdate"
+            buttonText="Update size"
           />
-        </label>
-        <label
-          css={css`
-            ${baseLabel};
-          `}
-        >
-          ySize:
-          <input
-            className="ySize_input"
-            name="ySize"
-            type="text"
-            value={stateYSize}
-            onChange={(ev) => onChange(ev, "handleYSizeChange")}
+          <label
+            css={css`
+              ${baseLabel};
+            `}
+          >
+            Filled %:
+            <input
+              className="filled_percent"
+              name="filledPercent"
+              type="text"
+              value={this.props.initialPercent}
+              onChange={(ev) =>
+                this.props.eventHandler(ev, "handleFilledPercent")
+              }
+            />
+          </label>
+          <GameButton
+            className="generator_button"
+            onChange={this.props.eventHandler}
+            eventName="handleGenerator"
+            buttonText="Random generation"
           />
-        </label>
-        <button
-          className="update_button"
-          onClick={(ev) => onChange(ev, "handleUpdate")}
-          css={css`
-            ${baseMenuButton};
-          `}
-        >
-          Update size
-        </button>
-        <label
-          css={css`
-            ${baseLabel};
-          `}
-        >
-          Filled %:
-          <input
-            className="filled_percent"
-            name="filledPercent"
-            type="text"
-            value={stateInitialPercent}
-            onChange={(ev) => onChange(ev, "handleFilledPercent")}
+          <GameButton
+            className="reset_button"
+            onChange={this.props.eventHandler}
+            eventName="handleReset"
+            buttonText="Reset"
           />
-        </label>
-        <button
-          className="generator_button"
-          onClick={(ev) => onChange(ev, "handleGenerator")}
-          css={css`
-            ${baseMenuButton};
-          `}
-        >
-          Random generation
-        </button>
-        <button
-          className="reset_button"
-          onClick={(ev) => onChange(ev, "handleReset")}
-          css={css`
-            ${baseMenuButton};
-          `}
-        >
-          Reset
-        </button>
-      </form>
-    </fieldset>
-  );
-};
+        </form>
+      </fieldset>
+    );
+  }
+}
