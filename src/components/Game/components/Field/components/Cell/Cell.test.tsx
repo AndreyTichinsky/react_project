@@ -23,17 +23,4 @@ describe("Cell", () => {
         .toJSON()
     ).toMatchSnapshot();
   });
-  it("check prop decideWhichAnimation value 1", () => {
-    const wrapper = mount(
-      <Cell isAlive={false} x={0} y={0} cellSize={50} onClick={jest.fn()} />
-    );
-    expect(wrapper.state("decideWhichAnimation")).toEqual(false);
-  });
-  it("check prop decideWhichAnimation value 2", () => {
-    const wrapper = mount(
-      <Cell isAlive={false} x={0} y={0} cellSize={50} onClick={jest.fn()} />
-    );
-    wrapper.setProps({ isAlive: true });
-    expect(wrapper.state("decideWhichAnimation")).toEqual(true);
-  });
 });
