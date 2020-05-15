@@ -5,9 +5,9 @@ import { Game } from "./components/";
 
 ReactDOM.render(
   <Game
-    xSize={20}
-    ySize={20}
-    cellSize={20}
+    xSize={50}
+    ySize={50}
+    cellSize={10}
     updateSpeed={"slow"}
     gameInProgress={false}
     nameIsSubmited={false}

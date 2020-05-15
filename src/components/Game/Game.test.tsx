@@ -93,7 +93,7 @@ describe("Game", () => {
       xSize: 4,
       ySize: 4,
     });
-    wrapper.instance().handleUpdate(formEvent);
+    wrapper.instance().handleUpdate();
     expect(wrapper.state("fieldState")).toStrictEqual([
       [false, false, false, false],
       [false, false, false, false],
@@ -167,7 +167,7 @@ describe("Game", () => {
         value: "4",
       },
     } as React.ChangeEvent<HTMLInputElement>;
-    wrapper.instance().handleXSizeChange(mockEvent);
+    wrapper.instance().handleSize(mockEvent, "handleXSizeChange");
     expect(wrapper.state("xSize")).toEqual(4);
   });
   it("when invoke handleYSizeChange expect ySize state to equals event target value", () => {
@@ -179,7 +179,7 @@ describe("Game", () => {
         value: "4",
       },
     } as React.ChangeEvent<HTMLInputElement>;
-    wrapper.instance().handleYSizeChange(mockEvent);
+    wrapper.instance().handleSize(mockEvent, "handleYSizeChange");
     expect(wrapper.state("ySize")).toEqual(4);
   });
 });

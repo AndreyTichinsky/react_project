@@ -3,9 +3,9 @@ import { Field, Menu, Entrance } from "./components";
 import * as helper from "./GameHelper";
 import type { BooleanMatrix } from "types/game";
 import type { HandlerControllerEvent } from "types/menu";
-import styled from "@emotion/styled";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import { GameWrapper, gameFieldset, progressButton } from "./Game.styled";
 
 interface GameProps {
   xSize: number;
@@ -29,31 +29,19 @@ interface GameState {
   [index: string]: any;
 }
 
-interface GameWrapperStyle {
-  xSize: number;
-  cellSize: number;
-}
-
 interface Speed {
   [index: string]: number;
 }
 
-const GameWrapper = styled.div`
-  min-height: 500px;
-  background-color: #fff;
-  position: relative;
-  margin: 50px auto 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-width: ${(props: GameWrapperStyle) => props.xSize * props.cellSize}px;
-`;
+export interface Cache {
+  [index: string]: number[][];
+}
 
 export class Game extends React.Component<GameProps, GameState> {
   private timerId: any;
   [index: string]: any;
   private speed: Speed;
+  private cachedNeighbours: Cache;
   constructor(props: GameProps) {
     super(props);
     this.state = {
@@ -72,6 +60,11 @@ export class Game extends React.Component<GameProps, GameState> {
       fast: 200,
     };
     this.timerId = null;
+    this.cachedNeighbours = {};
+  }
+
+  componentDidMount() {
+    this.cachedNeighbours = helper.cacheNeighbours(this.state.fieldState);
   }
 
   componentDidUpdate(prevProps: GameProps) {
@@ -81,7 +74,7 @@ export class Game extends React.Component<GameProps, GameState> {
       helper.assertZero(this.props.ySize) &&
       helper.assertZero(this.props.xSize)
     ) {
-      this.updateMatrix(this.props.xSize, this.props.ySize);
+      this.updateMatrixAndSave(this.props.xSize, this.props.ySize);
     }
     this.updateStateIfPropsDifferent(prevProps, this.props, "updateSpeed");
     this.updateStateIfPropsDifferent(prevProps, this.props, "gameInProgress");
@@ -108,6 +101,14 @@ export class Game extends React.Component<GameProps, GameState> {
   setNewGeneration() {
     // dummy for next feature
     console.log("In progress");
+    this.setState((state) => {
+      return {
+        fieldState: helper.generationGenerator(
+          state.fieldState,
+          this.cachedNeighbours
+        ),
+      };
+    });
   }
 
   clearTimer() {
@@ -115,9 +116,13 @@ export class Game extends React.Component<GameProps, GameState> {
     this.timerId = null;
   }
 
-  updateMatrix(xSize: number, ySize: number) {
+  getMergedMatrix(xSize: number, ySize: number) {
     const newMatrix = helper.makeMatrix(ySize, xSize, 0);
-    const mergedMatrix = helper.mergeMatrices(this.state.fieldState, newMatrix);
+    return helper.mergeMatrices(this.state.fieldState, newMatrix);
+  }
+
+  updateMatrixAndSave(xSize: number, ySize: number) {
+    const mergedMatrix = this.getMergedMatrix(xSize, ySize);
     this.setState({
       xSize,
       ySize,
@@ -129,7 +134,15 @@ export class Game extends React.Component<GameProps, GameState> {
     event: HandlerControllerEvent,
     handlerName: string
   ): void => {
-    this[handlerName](event);
+    switch (handlerName) {
+      case "handleXSizeChange":
+      case "handleYSizeChange":
+        this.handleSize(event, handlerName);
+        break;
+      default:
+        this[handlerName](event);
+        break;
+    }
   };
 
   handleUsername = (event: React.ChangeEvent) => {
@@ -188,35 +201,48 @@ export class Game extends React.Component<GameProps, GameState> {
     );
   };
 
-  handleUpdate = (event: React.FormEvent) => {
-    event.preventDefault();
+  handleUpdate() {
     if (
       !helper.assertSizeValue(this.state.xSize) ||
       !helper.assertSizeValue(this.state.ySize)
     ) {
       throw new Error("invalid value: size must be positive non-zero number");
     }
-    this.updateMatrix(this.state.xSize, this.state.ySize);
-  };
+    this.updateMatrixAndSave(this.state.xSize, this.state.ySize);
+  }
 
-  handleXSizeChange = (event: React.ChangeEvent) => {
+  handleSize = (event: HandlerControllerEvent, handlerName: string) => {
     const target = event.target as HTMLFormElement;
-    if (!helper.isNumber(target.value)) {
+    const value = Number(target.value);
+    if (!helper.isNumber(value)) {
       throw new Error("Not a number");
     }
-    this.setState({
-      xSize: Number(target.value),
-    });
-  };
-
-  handleYSizeChange = (event: React.ChangeEvent) => {
-    const target = event.target as HTMLFormElement;
-    if (!helper.isNumber(target.value)) {
-      throw new Error("Not a number");
+    if (!helper.assertSizeValue(value)) {
+      this.setState(() => {
+        let prop = "ySize";
+        if (handlerName === "handleXSizeChange") prop = "xSize";
+        return {
+          [prop]: value,
+        };
+      });
+      throw new Error("invalid value: size must be positive non-zero number");
     }
-    this.setState({
-      ySize: Number(target.value),
-    });
+    switch (handlerName) {
+      case "handleYSizeChange":
+        this.setState((state) => {
+          const matrix = this.getMergedMatrix(state.xSize, value);
+          this.cachedNeighbours = helper.cacheNeighbours(matrix);
+          return { ySize: value, fieldState: matrix };
+        });
+        break;
+      case "handleXSizeChange":
+        this.setState((state) => {
+          const matrix = this.getMergedMatrix(value, state.ySize);
+          this.cachedNeighbours = helper.cacheNeighbours(matrix);
+          return { xSize: value, fieldState: matrix };
+        });
+        break;
+    }
   };
 
   selectHandler = (event: React.ChangeEvent) => {
@@ -270,14 +296,18 @@ export class Game extends React.Component<GameProps, GameState> {
           onClick={this.onClick}
           cellSize={this.props.cellSize}
         />
-        <fieldset disabled={!this.state.nameIsSubmited}>
+        <fieldset
+          css={css`
+            ${gameFieldset}
+          `}
+          disabled={!this.state.nameIsSubmited}
+        >
           <form>
             <button
               className="progress_button"
               onClick={this.handleProgress}
               css={css`
-                width: 100px;
-                margin-right: 10px;
+                ${progressButton}
               `}
             >
               {this.state.gameInProgress ? "Stop" : "Start"}
