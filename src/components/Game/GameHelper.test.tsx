@@ -17,8 +17,8 @@ describe("Game helpers testing", () => {
       [false, false],
     ]);
   });
-  it("generateRandomToggleArray test length of output array", () => {
-    const toggleArray = helper.generateRandomToggleArray(
+  it("shuffle test length of output array", () => {
+    const shuffleArray = helper.shuffle(
       [
         [0, 1],
         [1, 2],
@@ -29,7 +29,7 @@ describe("Game helpers testing", () => {
       ],
       3
     );
-    expect(toggleArray.length).toEqual(3);
+    expect(shuffleArray.length).toEqual(3);
   });
   it("mergeMatrices test", () => {
     const matrixMain = [
