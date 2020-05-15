@@ -1,8 +1,10 @@
 import React from "react";
 import type { HandlerControllerEvent } from "types/menu";
-import { GameButton } from "./GameButton";
+import { MenuButton } from "./components/MenuButton";
+import { MenuInputWithLabel } from "./components/MenuInputWithLabel";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import { menuForm, disabledForm, MenuWrapper } from "./Menu.styled";
 
 export interface MenuProps {
   initialPercent: number;
@@ -12,101 +14,68 @@ export interface MenuProps {
   eventHandler: (event: HandlerControllerEvent, name: string) => void;
 }
 
-const baseLabel = css`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const disabledForm = css`
-  color: grey;
-`;
-
 export class Menu extends React.Component<MenuProps> {
   constructor(props: MenuProps) {
     super(props);
   }
   render() {
     return (
-      <fieldset disabled={this.props.isDisabled}>
-        <form
-          css={css`
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            ${this.props.isDisabled ? disabledForm : ""};
-          `}
-        >
-          <label
+      <MenuWrapper>
+        <fieldset disabled={this.props.isDisabled}>
+          <form
             css={css`
-              ${baseLabel};
+              ${menuForm};
+              ${this.props.isDisabled ? disabledForm : ""};
             `}
           >
-            xSize:
-            <input
+            <MenuInputWithLabel
+              labelText="xSize"
               className="xSize_input"
               name="xSize"
-              type="text"
+              type="number"
+              min="0"
+              max="50"
               value={this.props.xSize}
-              onChange={(ev) =>
-                this.props.eventHandler(ev, "handleXSizeChange")
-              }
+              eventName="handleXSizeChange"
+              eventHandler={this.props.eventHandler}
             />
-          </label>
-          <label
-            css={css`
-              ${baseLabel};
-            `}
-          >
-            ySize:
-            <input
+            <MenuInputWithLabel
+              labelText="ySize"
               className="ySize_input"
               name="ySize"
-              type="text"
+              type="number"
+              min="0"
+              max="50"
               value={this.props.ySize}
-              onChange={(ev) =>
-                this.props.eventHandler(ev, "handleYSizeChange")
-              }
+              eventName="handleYSizeChange"
+              eventHandler={this.props.eventHandler}
             />
-          </label>
-          <GameButton
-            className="update_button"
-            onChange={this.props.eventHandler.bind(this)}
-            eventName="handleUpdate"
-            buttonText="Update size"
-          />
-          <label
-            css={css`
-              ${baseLabel};
-            `}
-          >
-            Filled %:
-            <input
+            <MenuInputWithLabel
+              labelText="Filled %"
               className="filled_percent"
               name="filledPercent"
-              type="text"
+              type="number"
+              min="0"
+              max="100"
               value={this.props.initialPercent}
-              onChange={(ev) =>
-                this.props.eventHandler(ev, "handleFilledPercent")
-              }
+              eventName="handleFilledPercent"
+              eventHandler={this.props.eventHandler}
             />
-          </label>
-          <GameButton
-            className="generator_button"
-            onChange={this.props.eventHandler}
-            eventName="handleGenerator"
-            buttonText="Random generation"
-          />
-          <GameButton
-            className="reset_button"
-            onChange={this.props.eventHandler}
-            eventName="handleReset"
-            buttonText="Reset"
-          />
-        </form>
-      </fieldset>
+            <MenuButton
+              className="generator_button"
+              eventHandler={this.props.eventHandler}
+              eventName="handleGenerator"
+              buttonText="Random generation"
+            />
+            <MenuButton
+              className="reset_button"
+              eventHandler={this.props.eventHandler}
+              eventName="handleReset"
+              buttonText="Reset"
+            />
+          </form>
+        </fieldset>
+      </MenuWrapper>
     );
   }
 }
