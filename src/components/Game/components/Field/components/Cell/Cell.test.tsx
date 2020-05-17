@@ -9,7 +9,14 @@ describe("Cell", () => {
     expect(
       renderer
         .create(
-          <Cell isAlive={false} x={0} y={0} cellSize={50} onClick={jest.fn()} />
+          <Cell
+            animationSpeed={500}
+            isAlive={false}
+            x={0}
+            y={0}
+            cellSize={50}
+            onClick={jest.fn()}
+          />
         )
         .toJSON()
     ).toMatchSnapshot();
@@ -18,7 +25,14 @@ describe("Cell", () => {
     expect(
       renderer
         .create(
-          <Cell isAlive={true} x={0} y={0} cellSize={50} onClick={jest.fn()} />
+          <Cell
+            animationSpeed={500}
+            isAlive={true}
+            x={0}
+            y={0}
+            cellSize={50}
+            onClick={jest.fn()}
+          />
         )
         .toJSON()
     ).toMatchSnapshot();

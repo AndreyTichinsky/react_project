@@ -9,22 +9,9 @@ export default {
   decorators: [withKnobs],
 };
 
-const onChange = action("change (element)");
-const onSubmit = action("submit (element)");
-
 export const instanceEntrance = () => (
   <Entrance
     username={text("username", "Guest")}
-    eventHandler={(event, eventName) => {
-      switch (eventName) {
-        case "handleUsername":
-          onChange(eventName);
-          break;
-        case "submitUsername":
-          onSubmit(eventName);
-          event.preventDefault();
-          break;
-      }
-    }}
+    eventHandler={action("change")}
   />
 );

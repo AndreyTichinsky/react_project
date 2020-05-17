@@ -14,6 +14,7 @@ describe("Field", () => {
             ]}
             cellSize={50}
             onClick={jest.fn()}
+            animationSpeed={500}
           />
         )
         .toJSON()
@@ -30,6 +31,7 @@ describe("Field", () => {
             ]}
             cellSize={50}
             onClick={jest.fn()}
+            animationSpeed={500}
           />
         )
         .toJSON()

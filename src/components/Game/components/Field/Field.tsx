@@ -4,7 +4,12 @@ import type { FieldProps } from "types/field";
 
 import { Cell } from "./components";
 
-export const Field: FC<FieldProps> = ({ field, onClick, cellSize }) => (
+export const Field: FC<FieldProps> = ({
+  field,
+  onClick,
+  cellSize,
+  animationSpeed,
+}) => (
   <FieldWrapper cellSize={cellSize} field={field}>
     {field.map((row, y) => [
       ...row.map((isAlive: boolean, x) => (
@@ -15,6 +20,7 @@ export const Field: FC<FieldProps> = ({ field, onClick, cellSize }) => (
           cellSize={cellSize}
           isAlive={isAlive}
           onClick={onClick}
+          animationSpeed={animationSpeed}
         />
       )),
     ])}

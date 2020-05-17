@@ -1,4 +1,5 @@
 import React from "react";
+import type { HandlerNameType } from "types/game";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import {
@@ -15,8 +16,8 @@ interface MenuInputWithLabelProps {
   min: string;
   max: string;
   value: number;
-  eventName: string;
-  eventHandler: (ev: React.FormEvent, eventName: string) => void;
+  eventName: HandlerNameType;
+  eventHandler: (ev: React.FormEvent, eventName: HandlerNameType) => void;
 }
 
 export const MenuInputWithLabel: React.FC<MenuInputWithLabelProps> = ({
@@ -33,11 +34,7 @@ export const MenuInputWithLabel: React.FC<MenuInputWithLabelProps> = ({
         ${resetFieldset};
       `}
     >
-      <label
-        css={css`
-          ${baseLabel};
-        `}
-      >
+      <label css={baseLabel}>
         {labelText}:
         <input
           {...props}

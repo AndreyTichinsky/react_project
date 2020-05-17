@@ -1,5 +1,6 @@
 import React from "react";
 import type { HandlerControllerEvent } from "types/menu";
+import type { HandlerNameType } from "types/game";
 import { MenuButton } from "./components/MenuButton";
 import { MenuInputWithLabel } from "./components/MenuInputWithLabel";
 /** @jsx jsx */
@@ -11,7 +12,7 @@ export interface MenuProps {
   xSize: number;
   ySize: number;
   isDisabled: boolean;
-  eventHandler: (event: HandlerControllerEvent, name: string) => void;
+  eventHandler: (event: HandlerControllerEvent, name: HandlerNameType) => void;
 }
 
 export class Menu extends React.Component<MenuProps> {
