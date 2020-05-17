@@ -1,5 +1,5 @@
 import React from "react";
-import { Field, Menu, Entrance } from "./components";
+import { Field, Menu } from "./components";
 import * as helper from "./GameHelper";
 import type { BooleanMatrix, HandlerNameType } from "types/game";
 import type { HandlerControllerEvent } from "types/menu";
@@ -143,20 +143,6 @@ export class Game extends React.Component<GameProps, GameState> {
         this[handlerName](event);
         break;
     }
-  };
-
-  handleUsername = (event: HandlerControllerEvent) => {
-    const target = event.target as HTMLFormElement;
-    this.setState({
-      username: target.value,
-    });
-  };
-
-  submitUsername = (event: HandlerControllerEvent) => {
-    event.preventDefault();
-    this.setState({
-      nameIsSubmited: true,
-    });
   };
 
   handleFilledPercent = (event: HandlerControllerEvent) => {
@@ -322,12 +308,6 @@ export class Game extends React.Component<GameProps, GameState> {
             </label>
           </form>
         </fieldset>
-        {this.state.nameIsSubmited || (
-          <Entrance
-            username={this.state.username}
-            eventHandler={this.handlerController}
-          />
-        )}
       </GameWrapper>
     );
   }
