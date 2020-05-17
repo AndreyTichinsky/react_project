@@ -17,15 +17,15 @@ export const makeFilledMatrix = (
   x: number,
   filledPercent: number
 ): BooleanMatrix => {
-  const cellsAmount = x * y,
-    filledCellsAmount = Math.round((filledPercent * cellsAmount) / 100),
-    arrayOfIdxs: number[][] = [],
-    ratio = filledCellsAmount / cellsAmount;
-  const bool = ratio >= 50;
+  const cellsAmount = x * y;
+  const filledCellsAmount = Math.round((filledPercent * cellsAmount) / 100);
+  const arrayOfIdxs: number[][] = [];
+  const ratio = filledCellsAmount / cellsAmount;
+  const isFilled = ratio >= 50;
   const rawArray = Array.from({ length: y }).map((row, i) => {
     return Array.from({ length: x }).map((cell, j) => {
       arrayOfIdxs.push([i, j]);
-      return bool;
+      return isFilled;
     });
   });
   const arrayOfFilledCells = shuffle(arrayOfIdxs, filledCellsAmount);
@@ -37,18 +37,21 @@ export const makeFilledMatrix = (
 };
 
 export const shuffle = (arr: number[][], filledCellsAmount: number) => {
-  const copy = arr.slice();
-  let currentIdx = copy.length,
+  const arrayCopy = arr.slice();
+  let currentIdx = arrayCopy.length,
     randomIdx;
 
   while (currentIdx !== 0) {
     randomIdx = Math.floor(Math.random() * currentIdx);
     currentIdx--;
 
-    [copy[currentIdx], copy[randomIdx]] = [copy[randomIdx], copy[currentIdx]];
+    [arrayCopy[currentIdx], arrayCopy[randomIdx]] = [
+      arrayCopy[randomIdx],
+      arrayCopy[currentIdx],
+    ];
   }
 
-  return copy.slice(0, filledCellsAmount);
+  return arrayCopy.slice(0, filledCellsAmount);
 };
 
 export const makeEmptyMatrix = (y: number, x: number): BooleanMatrix => {

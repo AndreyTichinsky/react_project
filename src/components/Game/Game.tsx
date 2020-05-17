@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, Menu, Entrance } from "./components";
 import * as helper from "./GameHelper";
-import type { BooleanMatrix } from "types/game";
+import type { BooleanMatrix, HandlerNameType } from "types/game";
 import type { HandlerControllerEvent } from "types/menu";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -132,7 +132,7 @@ export class Game extends React.Component<GameProps, GameState> {
 
   handlerController = (
     event: HandlerControllerEvent,
-    handlerName: string
+    handlerName: HandlerNameType
   ): void => {
     switch (handlerName) {
       case "handleXSizeChange":
@@ -145,21 +145,21 @@ export class Game extends React.Component<GameProps, GameState> {
     }
   };
 
-  handleUsername = (event: React.ChangeEvent) => {
+  handleUsername = (event: HandlerControllerEvent) => {
     const target = event.target as HTMLFormElement;
     this.setState({
       username: target.value,
     });
   };
 
-  submitUsername = (event: React.FormEvent) => {
+  submitUsername = (event: HandlerControllerEvent) => {
     event.preventDefault();
     this.setState({
       nameIsSubmited: true,
     });
   };
 
-  handleFilledPercent = (event: React.ChangeEvent) => {
+  handleFilledPercent = (event: HandlerControllerEvent) => {
     const target = event.target as HTMLFormElement;
     if (!helper.isNumber(target.value)) {
       throw new Error("Not a number");
@@ -172,7 +172,7 @@ export class Game extends React.Component<GameProps, GameState> {
     });
   };
 
-  handleGenerator = (event: React.FormEvent) => {
+  handleGenerator = (event: HandlerControllerEvent) => {
     event.preventDefault();
     this.setState((state: GameState) => {
       const newMatrix = helper.makeMatrix(
@@ -186,7 +186,7 @@ export class Game extends React.Component<GameProps, GameState> {
     });
   };
 
-  handleProgress = (event: React.FormEvent) => {
+  handleProgress = (event: HandlerControllerEvent) => {
     event.preventDefault();
     this.setState({
       gameInProgress: !this.state.gameInProgress,
@@ -230,22 +230,24 @@ export class Game extends React.Component<GameProps, GameState> {
     switch (handlerName) {
       case "handleYSizeChange":
         this.setState((state) => {
-          const matrix = this.getMergedMatrix(state.xSize, value);
-          this.cachedNeighbours = helper.cacheNeighbours(matrix);
-          return { ySize: value, fieldState: matrix };
+          return this.updateStateMatrix(state.xSize, value);
         });
         break;
       case "handleXSizeChange":
         this.setState((state) => {
-          const matrix = this.getMergedMatrix(value, state.ySize);
-          this.cachedNeighbours = helper.cacheNeighbours(matrix);
-          return { xSize: value, fieldState: matrix };
+          return this.updateStateMatrix(value, state.ySize);
         });
         break;
     }
   };
 
-  selectHandler = (event: React.ChangeEvent) => {
+  updateStateMatrix(x: number, y: number) {
+    const matrix = this.getMergedMatrix(x, y);
+    this.cachedNeighbours = helper.cacheNeighbours(matrix);
+    return { ySize: y, xSize: x, fieldState: matrix };
+  }
+
+  selectHandler = (event: HandlerControllerEvent) => {
     const target = event.target as HTMLFormElement;
     this.setState((state) => {
       if (state.gameInProgress) {
@@ -261,7 +263,7 @@ export class Game extends React.Component<GameProps, GameState> {
     });
   };
 
-  handleReset = (event: React.FormEvent) => {
+  handleReset = (event: HandlerControllerEvent) => {
     event.preventDefault();
     this.setState((state) => {
       return {
@@ -295,20 +297,14 @@ export class Game extends React.Component<GameProps, GameState> {
           field={this.state.fieldState}
           onClick={this.onClick}
           cellSize={this.props.cellSize}
+          animationSpeed={this.speed[this.state.updateSpeed]}
         />
-        <fieldset
-          css={css`
-            ${gameFieldset}
-          `}
-          disabled={!this.state.nameIsSubmited}
-        >
+        <fieldset css={gameFieldset} disabled={!this.state.nameIsSubmited}>
           <form>
             <button
               className="progress_button"
               onClick={this.handleProgress}
-              css={css`
-                ${progressButton}
-              `}
+              css={progressButton}
             >
               {this.state.gameInProgress ? "Stop" : "Start"}
             </button>

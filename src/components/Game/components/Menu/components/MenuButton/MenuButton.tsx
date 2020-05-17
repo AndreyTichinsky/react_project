@@ -1,13 +1,14 @@
 import React from "react";
+import type { HandlerNameType } from "types/game";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { menuButton } from "./MenuButton.styled";
 
 interface MenuButtonProps {
   className: string;
-  eventName: string;
+  eventName: HandlerNameType;
   buttonText: string;
-  eventHandler: (ev: React.FormEvent, eventName: string) => void;
+  eventHandler: (ev: React.FormEvent, eventName: HandlerNameType) => void;
 }
 
 export const MenuButton: React.FC<MenuButtonProps> = ({
@@ -20,9 +21,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
     <button
       className={className}
       onClick={(ev) => eventHandler(ev, eventName)}
-      css={css`
-        ${menuButton}
-      `}
+      css={menuButton}
     >
       {buttonText}
     </button>
