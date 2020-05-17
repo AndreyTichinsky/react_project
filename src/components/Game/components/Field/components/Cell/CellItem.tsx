@@ -5,7 +5,6 @@ const BaseCell = css`
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
-  transition: background-color 0.3s ease;
 `;
 
 const aliveCell = css`
@@ -21,7 +20,7 @@ interface Props {
   cellSize: number;
   x: number;
   y: number;
-  decideWhichAnimation: boolean;
+  animationSpeed: number;
 }
 
 export const CellItem = styled.div`
@@ -30,7 +29,9 @@ export const CellItem = styled.div`
   top: ${({ cellSize, y }: Props) => cellSize * y}px;
   left: ${({ cellSize, x }: Props) => cellSize * x}px;
   ${BaseCell};
-  ${({ decideWhichAnimation }: Props) => {
-    return decideWhichAnimation ? aliveCell : deathCell;
-  }};
+  transition: background-color
+    ${({ animationSpeed }: Props) => animationSpeed}ms ease;
+  ${({ isAlive }: Props) => {
+    return isAlive ? aliveCell : deathCell;
+  }}
 `;

@@ -1,4 +1,5 @@
 import type { BooleanMatrix } from "types/game";
+import { Cache } from "./Game";
 
 export const makeMatrix = (
   y: number,
@@ -16,39 +17,41 @@ export const makeFilledMatrix = (
   x: number,
   filledPercent: number
 ): BooleanMatrix => {
-  const cellsAmount = x * y,
-    filledCellsAmount = Math.round((filledPercent * cellsAmount) / 100),
-    percentStep = 100 / cellsAmount,
-    emptyCellsArr: number[][] = [];
-  let filledCells = 0;
-  let coef = filledPercent;
+  const cellsAmount = x * y;
+  const filledCellsAmount = Math.round((filledPercent * cellsAmount) / 100);
+  const arrayOfIdxs: number[][] = [];
+  const ratio = filledCellsAmount / cellsAmount;
+  const isFilled = ratio >= 50;
   const rawArray = Array.from({ length: y }).map((row, i) => {
     return Array.from({ length: x }).map((cell, j) => {
-      if (filledCells === filledCellsAmount) {
-        return false;
-      }
-      let result = false;
-      if (coef >= Math.floor(Math.random() * 101)) {
-        result = true;
-        filledCells++;
-        coef -= percentStep;
-      } else {
-        emptyCellsArr.push([i, j]);
-        coef += percentStep;
-      }
-      return result;
+      arrayOfIdxs.push([i, j]);
+      return isFilled;
     });
   });
-  if (filledCells < filledCellsAmount) {
-    const toggleArray = generateRandomToggleArray(
-      emptyCellsArr,
-      filledCellsAmount - filledCells
-    );
-    toggleArray.forEach(([i, j]) => {
-      rawArray[i][j] = !rawArray[i][j];
-    });
-  }
+  const arrayOfFilledCells = shuffle(arrayOfIdxs, filledCellsAmount);
+  arrayOfFilledCells.forEach(([i, j], index) => {
+    rawArray[i][j] = !rawArray[i][j];
+  });
+
   return rawArray;
+};
+
+export const shuffle = (arr: number[][], filledCellsAmount: number) => {
+  const arrayCopy = arr.slice();
+  let currentIdx = arrayCopy.length,
+    randomIdx;
+
+  while (currentIdx !== 0) {
+    randomIdx = Math.floor(Math.random() * currentIdx);
+    currentIdx--;
+
+    [arrayCopy[currentIdx], arrayCopy[randomIdx]] = [
+      arrayCopy[randomIdx],
+      arrayCopy[currentIdx],
+    ];
+  }
+
+  return arrayCopy.slice(0, filledCellsAmount);
 };
 
 export const makeEmptyMatrix = (y: number, x: number): BooleanMatrix => {
@@ -57,26 +60,6 @@ export const makeEmptyMatrix = (y: number, x: number): BooleanMatrix => {
       return false;
     });
   });
-};
-
-export const generateRandomToggleArray = (
-  array: number[][],
-  amountDiff: number
-) => {
-  const arrLen = array.length,
-    step = Math.floor(arrLen / amountDiff),
-    result = [];
-  for (let i = 0; i < arrLen; i += step) {
-    if (amountDiff > result.length) {
-      if (arrLen <= i + step) {
-        result.push(array[i]);
-      } else {
-        const randomId = Math.floor(Math.random() * step);
-        result.push(array[i + randomId]);
-      }
-    }
-  }
-  return result;
 };
 
 export const mergeMatrices = (
@@ -130,7 +113,9 @@ export const calculatePercentage = (matrix: BooleanMatrix): number => {
   );
 };
 
-export const isNumber = (item: number): boolean => !Number.isNaN(item);
+export const isNumber = (item: number): boolean => {
+  return !Number.isNaN(item);
+};
 
 export const assertSizeValue = (value: number): boolean => {
   return isNumber(value) && value > 0;
@@ -143,4 +128,59 @@ export const assertZero = (value: number | null): boolean => {
 
 export const assertPercentValue = (value: number): boolean => {
   return value >= 0 && value <= 100;
+};
+
+export const generationGenerator = (
+  matrix: BooleanMatrix,
+  cache: Cache
+): BooleanMatrix => {
+  const nextGenMatrix: BooleanMatrix = matrix.map((row, i) => {
+    return row.map((cell, j) => {
+      let counter = 0;
+      cache[`${i}_${j}`].forEach(([y, x]) => {
+        counter += matrix[y][x] ? 1 : 0;
+      });
+      return (
+        (cell && (counter === 2 || counter === 3)) || (!cell && counter === 3)
+      );
+    });
+  });
+  return nextGenMatrix;
+};
+
+export const cacheNeighbours = (matrix: BooleanMatrix) => {
+  const cache: Cache = {};
+  const matrixYLen = matrix.length;
+  const matrixXLen = matrix[0].length;
+  matrix.forEach((row, i) => {
+    row.forEach((cell, j) => {
+      cache[`${i}_${j}`] = getNeighbours(j, i, matrixXLen, matrixYLen);
+    });
+  });
+  return cache;
+};
+
+export const getNeighbours = (
+  x: number,
+  y: number,
+  xLen: number,
+  yLen: number
+) => {
+  const pattern = [
+    [y - 1, x - 1],
+    [y - 1, x],
+    [y - 1, x + 1],
+    [y, x - 1],
+    [y, x + 1],
+    [y + 1, x - 1],
+    [y + 1, x],
+    [y + 1, x + 1],
+  ];
+  return pattern.map(([Y, X]) => {
+    if (Y >= xLen) Y %= xLen;
+    if (X >= yLen) X %= yLen;
+    if (Y < 0) Y = xLen + Y;
+    if (X < 0) X = yLen + X;
+    return [Y, X];
+  });
 };
