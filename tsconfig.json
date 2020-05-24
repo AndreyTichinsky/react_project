@@ -2,10 +2,16 @@
   "compilerOptions": {
     "sourceMap": true,
     "module": "commonjs",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "types/*": [
         "src/types/*"
+      ],
+      "components/*": [
+        "src/components/*"
+      ],
+      "@/*": [
+        "src/*"
       ]
     },
     "types": [
