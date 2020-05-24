@@ -8,11 +8,17 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
       types: path.resolve(__dirname, "src/types"),
+      components: path.resolve(__dirname, "src/components"),
+      "@": path.resolve(__dirname, "src"),
     },
+  },
+  devServer: {
+    historyApiFallback: true
   },
   output: {
     filename: 'index.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/'
   },
   module: {
     rules: [
