@@ -1,5 +1,6 @@
 import React from "react";
 import { withKnobs, number, boolean, text } from "@storybook/addon-knobs";
+import { action } from "@storybook/addon-actions";
 
 import { Game } from "./Game";
 
@@ -16,5 +17,7 @@ export const instanceGame = () => (
     updateSpeed={text("updateSpeed", "slow")}
     gameInProgress={boolean("gameInProgress", false)}
     nameIsSubmited={boolean("nameIsSubmited", false)}
+    username={"Guest"}
+    onLogout={action("Logged out")}
   />
 );

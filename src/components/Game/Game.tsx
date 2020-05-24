@@ -13,7 +13,8 @@ interface GameProps {
   cellSize: number;
   updateSpeed: string;
   gameInProgress: boolean;
-  nameIsSubmited: boolean;
+  username: string;
+  onLogout: (ev: React.FormEvent) => void;
   [index: string]: any;
 }
 
@@ -24,7 +25,6 @@ interface GameState {
   initialPercent: number;
   gameInProgress: boolean;
   username: string;
-  nameIsSubmited: boolean;
   fieldState: BooleanMatrix;
   [index: string]: any;
 }
@@ -45,13 +45,12 @@ export class Game extends React.Component<GameProps, GameState> {
   constructor(props: GameProps) {
     super(props);
     this.state = {
-      username: "Guest",
+      username: props.username,
       initialPercent: 0,
       xSize: props.xSize,
       ySize: props.ySize,
       updateSpeed: props.updateSpeed,
       gameInProgress: props.gameInProgress,
-      nameIsSubmited: props.nameIsSubmited,
       fieldState: helper.makeMatrix(props.ySize, props.xSize, 0),
     };
     this.speed = {
@@ -78,7 +77,6 @@ export class Game extends React.Component<GameProps, GameState> {
     }
     this.updateStateIfPropsDifferent(prevProps, this.props, "updateSpeed");
     this.updateStateIfPropsDifferent(prevProps, this.props, "gameInProgress");
-    this.updateStateIfPropsDifferent(prevProps, this.props, "nameIsSubmited");
     this.updateStateIfPropsDifferent(prevProps, this.props, "initialPercent");
   }
 
@@ -272,12 +270,16 @@ export class Game extends React.Component<GameProps, GameState> {
   render() {
     return (
       <GameWrapper cellSize={this.props.cellSize} xSize={this.props.xSize}>
+        <form onSubmit={(ev) => this.props.onLogout(ev)}>
+          <label>Hello, {this.state.username}!</label>
+          <button className="logout_button">logout</button>
+        </form>
         <Menu
           initialPercent={this.state.initialPercent}
           xSize={this.state.xSize}
           ySize={this.state.ySize}
           eventHandler={this.handlerController}
-          isDisabled={this.state.gameInProgress || !this.state.nameIsSubmited}
+          isDisabled={this.state.gameInProgress}
         />
         <Field
           field={this.state.fieldState}
@@ -285,7 +287,7 @@ export class Game extends React.Component<GameProps, GameState> {
           cellSize={this.props.cellSize}
           animationSpeed={this.speed[this.state.updateSpeed]}
         />
-        <fieldset css={gameFieldset} disabled={!this.state.nameIsSubmited}>
+        <fieldset css={gameFieldset}>
           <form>
             <button
               className="progress_button"
