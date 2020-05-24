@@ -9,16 +9,11 @@ export default {
   decorators: [withKnobs],
 };
 
-const onSubmit = action("submit (element)");
-
 export const instanceMenuButton = () => (
   <MenuButton
     className="button"
-    eventName="buttonClick"
+    eventName="handleGenerator"
     buttonText={"MenuButton"}
-    eventHandler={(event, eventName) => {
-      onSubmit(eventName);
-      event.preventDefault();
-    }}
+    eventHandler={action("on submit")}
   />
 );
