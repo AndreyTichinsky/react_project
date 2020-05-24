@@ -20,9 +20,7 @@ export const instanceMenuInputWithLabel = () => (
     min="0"
     max="100"
     value={number("value", 10)}
-    eventName="changeInput"
-    eventHandler={(event, eventName) => {
-      onChange(eventName);
-    }}
+    eventName="handleFilledPercent"
+    eventHandler={action("eventHandler invoke")}
   />
 );
