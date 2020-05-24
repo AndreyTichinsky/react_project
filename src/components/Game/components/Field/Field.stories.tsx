@@ -14,6 +14,7 @@ export const emptyField = () => {
   return (
     <Field
       cellSize={number("cellSize", 50)}
+      animationSpeed={number("animationSpeed", 500)}
       onClick={elementClicked}
       field={object("field", [
         [false, false, false],
