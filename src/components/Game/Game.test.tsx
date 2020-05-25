@@ -3,7 +3,7 @@ import { mount, shallow } from "enzyme";
 import { Game } from "./Game";
 import { calculatePercentage } from "./GameHelper";
 
-const mock = jest.fn();
+const mock = () => void 0;
 
 const defaultProps = {
   xSize: 2,

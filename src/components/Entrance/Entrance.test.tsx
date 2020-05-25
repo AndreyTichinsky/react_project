@@ -18,8 +18,4 @@ describe("Entrance tests", () => {
     wrapper.find("button.submit_username_button").simulate("click");
     expect(wrapper.prop("username")).toStrictEqual("Guest");
   });
-  it("initial prop username to equals default value", () => {
-    const wrapper = mount(<Entrance {...defaultProps} />);
-    expect(wrapper.prop("username")).toBe("Guest");
-  });
 });
