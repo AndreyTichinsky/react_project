@@ -1,10 +1,11 @@
 import React from "react";
-import { mount } from "enzyme";
+import { mount, shallow } from "enzyme";
 import { Entrance } from "./Entrance";
 
 const defaultProps = {
   username: "Guest",
-  eventHandler: jest.fn(),
+  submitHandler: jest.fn(),
+  handleUsername: jest.fn(),
 };
 
 describe("Entrance tests", () => {

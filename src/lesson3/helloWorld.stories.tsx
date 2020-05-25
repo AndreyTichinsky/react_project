@@ -1,7 +1,7 @@
 import React from "react";
 import { withKnobs, text } from "@storybook/addon-knobs";
 
-import { HelloWorld } from "./HelloWorld";
+import { HelloWorld } from "./helloWorld";
 
 export default {
   title: "Hello World!",

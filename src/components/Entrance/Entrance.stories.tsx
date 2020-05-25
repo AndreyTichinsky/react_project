@@ -12,6 +12,7 @@ export default {
 export const instanceEntrance = () => (
   <Entrance
     username={text("username", "Guest")}
-    eventHandler={action("change")}
+    submitHandler={action("onSubmit")}
+    handleUsername={action("onChange")}
   />
 );

@@ -3,13 +3,16 @@ import { mount, shallow } from "enzyme";
 import { Game } from "./Game";
 import { calculatePercentage } from "./GameHelper";
 
+const mock = () => void 0;
+
 const defaultProps = {
   xSize: 2,
   ySize: 2,
   cellSize: 50,
   updateSpeed: "slow",
   gameInProgress: false,
-  nameIsSubmited: false,
+  username: "Guest",
+  onLogout: mock,
 };
 
 const formEvent = {
@@ -27,7 +30,8 @@ describe("Game", () => {
       cellSize: 50,
       updateSpeed: "slow",
       gameInProgress: false,
-      nameIsSubmited: false,
+      username: "Guest",
+      onLogout: mock,
     });
   });
 
@@ -43,7 +47,8 @@ describe("Game", () => {
       cellSize: 50,
       updateSpeed: "slow",
       gameInProgress: false,
-      nameIsSubmited: false,
+      username: "Guest",
+      onLogout: mock,
     });
   });
 
@@ -127,24 +132,6 @@ describe("Game", () => {
     expect(percent).toEqual(50);
     expect(testMatrix.length).toEqual(4);
     expect(testMatrix[0].length).toEqual(4);
-  });
-  it("when invoke submitUsername expect nameIsSubmited to be truthy", () => {
-    const wrapper = shallow<Game>(<Game {...defaultProps} />);
-    expect(wrapper.state("nameIsSubmited")).toBeFalsy();
-    wrapper.instance().submitUsername(formEvent);
-    expect(wrapper.state("nameIsSubmited")).toBeTruthy();
-  });
-  it("when invoke handleUsername expect username state to equals event target value", () => {
-    const wrapper = shallow<Game>(<Game {...defaultProps} />);
-    expect(wrapper.state("username")).toEqual("Guest");
-    const mockEvent = {
-      target: {
-        name: "username",
-        value: "John Doe",
-      },
-    } as React.ChangeEvent<HTMLInputElement>;
-    wrapper.instance().handleUsername(mockEvent);
-    expect(wrapper.state("username")).toEqual("John Doe");
   });
   it("when invoke handleFilledPercent expect initialPercent state to equals event target value", () => {
     const wrapper = shallow<Game>(<Game {...defaultProps} />);
