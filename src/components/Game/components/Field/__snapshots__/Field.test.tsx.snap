@@ -9,8 +9,8 @@ exports[`Field empty Field test 1`] = `
 }
 
 .emotion-0 {
-  width: 50px;
-  height: 50px;
+  width: 10px;
+  height: 10px;
   top: 0px;
   left: 0px;
   position: absolute;
@@ -22,10 +22,10 @@ exports[`Field empty Field test 1`] = `
 }
 
 .emotion-1 {
-  width: 50px;
-  height: 50px;
+  width: 10px;
+  height: 10px;
   top: 0px;
-  left: 50px;
+  left: 10px;
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
@@ -35,9 +35,9 @@ exports[`Field empty Field test 1`] = `
 }
 
 .emotion-2 {
-  width: 50px;
-  height: 50px;
-  top: 50px;
+  width: 10px;
+  height: 10px;
+  top: 10px;
   left: 0px;
   position: absolute;
   border: 1px solid #000;
@@ -48,10 +48,10 @@ exports[`Field empty Field test 1`] = `
 }
 
 .emotion-3 {
-  width: 50px;
-  height: 50px;
-  top: 50px;
-  left: 50px;
+  width: 10px;
+  height: 10px;
+  top: 10px;
+  left: 10px;
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
@@ -98,11 +98,24 @@ exports[`Field partial filled cell test 1`] = `
   border: 1px solid #000;
 }
 
-.emotion-1 {
-  width: 50px;
-  height: 50px;
+.emotion-0 {
+  width: 10px;
+  height: 10px;
   top: 0px;
-  left: 50px;
+  left: 0px;
+  position: absolute;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  -webkit-transition: background-color 500ms ease;
+  transition: background-color 500ms ease;
+  background-color: #ffffff;
+}
+
+.emotion-1 {
+  width: 10px;
+  height: 10px;
+  top: 0px;
+  left: 10px;
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
@@ -112,9 +125,9 @@ exports[`Field partial filled cell test 1`] = `
 }
 
 .emotion-2 {
-  width: 50px;
-  height: 50px;
-  top: 50px;
+  width: 10px;
+  height: 10px;
+  top: 10px;
   left: 0px;
   position: absolute;
   border: 1px solid #000;
@@ -124,30 +137,17 @@ exports[`Field partial filled cell test 1`] = `
   background-color: #ffffff;
 }
 
-.emotion-0 {
-  width: 50px;
-  height: 50px;
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  border: 1px solid #000;
-  box-sizing: border-box;
-  -webkit-transition: background-color 500ms ease;
-  transition: background-color 500ms ease;
-  background-color: #000000;
-}
-
 .emotion-3 {
-  width: 50px;
-  height: 50px;
-  top: 50px;
-  left: 50px;
+  width: 10px;
+  height: 10px;
+  top: 10px;
+  left: 10px;
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
   -webkit-transition: background-color 500ms ease;
   transition: background-color 500ms ease;
-  background-color: #000000;
+  background-color: #ffffff;
 }
 
 <div
