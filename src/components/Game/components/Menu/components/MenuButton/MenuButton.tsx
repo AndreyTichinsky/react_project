@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import type { HandlerNameType } from "types/game";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -11,7 +11,7 @@ interface MenuButtonProps {
   eventHandler: (ev: React.FormEvent, eventName: HandlerNameType) => void;
 }
 
-export const MenuButton: React.FC<MenuButtonProps> = ({
+export const MenuButton: FC<MenuButtonProps> = ({
   className,
   eventHandler,
   eventName,
