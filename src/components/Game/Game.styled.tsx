@@ -18,13 +18,3 @@ export const GameWrapper = styled.div`
   flex-direction: column;
   min-width: ${(props: GameWrapperStyle) => props.xSize * props.cellSize}px;
 `;
-
-export const gameFieldset = css`
-  width: 260px;
-  height: 24px;
-`;
-
-export const progressButton = css`
-  width: 100px;
-  margin-right: 10px;
-`;

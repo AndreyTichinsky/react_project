@@ -1,172 +1,125 @@
 import React from "react";
-import { mount, shallow } from "enzyme";
-import { Game } from "./Game";
+import { mount } from "enzyme";
+import Game from "@/containers/Game";
 import { calculatePercentage } from "./GameHelper";
+import { configureStore } from "@reduxjs/toolkit";
+import { reducer, State } from "@/redux/reducers";
+import { Provider } from "react-redux";
+import {
+  setFieldState,
+  setInitialPercent,
+  setProgress,
+  setXSize,
+  setYSize,
+} from "@/redux/actions";
 
-const mock = () => void 0;
-
-const defaultProps = {
+const preloadedState: State = {
+  username: "Guest",
+  initialPercent: 0,
   xSize: 2,
   ySize: 2,
-  cellSize: 50,
+  cellSize: 10,
   updateSpeed: "slow",
   gameInProgress: false,
-  username: "Guest",
-  onLogout: mock,
+  fieldState: [
+    [false, false],
+    [false, false],
+  ],
 };
 
-const formEvent = {
-  preventDefault: (): void => {
-    void 0;
-  },
-} as React.FormEvent;
-
 describe("Game", () => {
-  it("when init game expect props equality to defaultProps", () => {
-    const wrapper = mount(<Game {...defaultProps} />);
-    expect(wrapper.props()).toEqual({
-      xSize: 2,
-      ySize: 2,
-      cellSize: 50,
-      updateSpeed: "slow",
-      gameInProgress: false,
-      username: "Guest",
-      onLogout: mock,
+  let store: any, wrapper: any;
+  beforeEach(() => {
+    store = configureStore({
+      reducer,
+      preloadedState,
+      devTools: true,
     });
+    wrapper = mount(
+      <Provider store={store}>
+        <Game />
+      </Provider>
+    );
+  });
+  afterEach(() => {
+    wrapper.unmount();
+    store = null;
   });
 
-  it("when set new props expect equality to certain props", () => {
-    const wrapper = mount(<Game {...defaultProps} />);
-    wrapper.setProps({
-      xSize: 5,
-      ySize: 5,
-    });
-    expect(wrapper.props()).toEqual({
-      xSize: 5,
-      ySize: 5,
-      cellSize: 50,
-      updateSpeed: "slow",
-      gameInProgress: false,
-      username: "Guest",
-      onLogout: mock,
-    });
+  it("when dispatch setXSize action then state equals to expect value", () => {
+    store.dispatch(setXSize(5));
+    expect(store.getState().xSize).toEqual(5);
   });
-
-  it("when set gameInProgress property to true expect progress button to change text to 'stop'", () => {
-    const wrapper = mount(<Game {...defaultProps} />);
-    wrapper.setProps({
-      gameInProgress: true,
-    });
+  it("when dispatch setYSize action then state equals to expect value", () => {
+    store.dispatch(setYSize(5));
+    expect(store.getState().ySize).toEqual(5);
+  });
+  it("when dispatch setProgress action then StartForm button change its text", () => {
+    store.dispatch(setProgress(true));
     expect(wrapper.find("button.progress_button").text()).toEqual("Stop");
   });
-
   it("when simulate click to progress button expect gameInProgress to be truthy", () => {
-    const wrapper = mount(<Game {...defaultProps} />);
     wrapper.find("button.progress_button").simulate("click");
-    expect(wrapper.state("gameInProgress")).toBeTruthy();
+    expect(store.getState().gameInProgress).toBeTruthy();
   });
-
   it("when speed select change to value 'fast' expect updateSpeed to equals 'fast'", () => {
-    const wrapper = mount(<Game {...defaultProps} />);
     wrapper
       .find("select.speed_select")
       .simulate("change", { target: { value: "fast" } });
-    expect(wrapper.state("updateSpeed")).toEqual("fast");
+    expect(store.getState().updateSpeed).toEqual("fast");
   });
-
-  // handlers testing
   it("when invoke handleReset expect fieldState to be empty", () => {
-    const wrapper = shallow<Game>(<Game {...defaultProps} />);
-    wrapper.setState({
-      fieldState: [
+    store.dispatch(
+      setFieldState([
         [true, true],
         [true, true],
-      ],
-    });
-    wrapper.instance().handleReset(formEvent);
-    expect(wrapper.state("fieldState")).toStrictEqual([
+      ])
+    );
+    wrapper.find("button.reset_button").simulate("click");
+    expect(store.getState().fieldState).toStrictEqual([
       [false, false],
       [false, false],
     ]);
   });
-
-  it("when invoke handleUpdate expect fieldState update its size", () => {
-    const wrapper = shallow<Game>(<Game {...defaultProps} />);
-    expect(wrapper.state("xSize")).toBe(2);
-    expect(wrapper.state("ySize")).toBe(2);
-    wrapper.setState({
-      xSize: 4,
-      ySize: 4,
-    });
-    wrapper.instance().handleUpdate();
-    expect(wrapper.state("fieldState")).toStrictEqual([
-      [false, false, false, false],
-      [false, false, false, false],
-      [false, false, false, false],
-      [false, false, false, false],
-    ]);
-    expect(wrapper.state("xSize")).toEqual(4);
-    expect(wrapper.state("ySize")).toEqual(4);
-  });
-
-  it("when invoke handleProgress expect gameInProgress to be truthy", () => {
-    const wrapper = shallow<Game>(<Game {...defaultProps} />);
-    expect(wrapper.state("gameInProgress")).toBeFalsy();
-    wrapper.instance().handleProgress(formEvent);
-    expect(wrapper.state("gameInProgress")).toBeTruthy();
-  });
-
-  it("when invoke handleGenerator expect generated matrix to equals state properties", () => {
-    const wrapper = shallow<Game>(<Game {...defaultProps} />);
-    expect(wrapper.state("xSize")).toBe(2);
-    expect(wrapper.state("ySize")).toBe(2);
-    expect(wrapper.state("initialPercent")).toBe(0);
-    wrapper.setState({
-      xSize: 4,
-      ySize: 4,
-      initialPercent: 50,
-    });
-    wrapper.instance().handleGenerator(formEvent);
-    const testMatrix = wrapper.state("fieldState");
+  it("when click random generator button expect generated matrix to equals state properties", () => {
+    store.dispatch(setXSize(4));
+    store.dispatch(setYSize(4));
+    store.dispatch(setInitialPercent(50));
+    wrapper.find("button.generator_button").simulate("click");
+    const testMatrix = store.getState().fieldState;
     const percent = calculatePercentage(testMatrix);
     expect(percent).toEqual(50);
     expect(testMatrix.length).toEqual(4);
     expect(testMatrix[0].length).toEqual(4);
   });
-  it("when invoke handleFilledPercent expect initialPercent state to equals event target value", () => {
-    const wrapper = shallow<Game>(<Game {...defaultProps} />);
-    expect(wrapper.state("initialPercent")).toEqual(0);
+  it("when simulate change filled_percent input expect initialPercent state to equals event target value", () => {
     const mockEvent = {
       target: {
         name: "filledPercent",
         value: "50",
       },
     } as React.ChangeEvent<HTMLInputElement>;
-    wrapper.instance().handleFilledPercent(mockEvent);
-    expect(wrapper.state("initialPercent")).toEqual(50);
+    wrapper.find("input.filled_percent").simulate("change", mockEvent);
+    expect(store.getState().initialPercent).toEqual(50);
   });
-  it("when invoke handleXSizeChange expect xSize state to equals event target value", () => {
-    const wrapper = shallow<Game>(<Game {...defaultProps} />);
-    expect(wrapper.state("xSize")).toEqual(2);
+  it("when simulate change xSize input expect xSize state to equals event target value", () => {
     const mockEvent = {
       target: {
         name: "xSize",
         value: "4",
       },
     } as React.ChangeEvent<HTMLInputElement>;
-    wrapper.instance().handleSize(mockEvent, "handleXSizeChange");
-    expect(wrapper.state("xSize")).toEqual(4);
+    wrapper.find("input.xSize_input").simulate("change", mockEvent);
+    expect(store.getState().xSize).toEqual(4);
   });
-  it("when invoke handleYSizeChange expect ySize state to equals event target value", () => {
-    const wrapper = shallow<Game>(<Game {...defaultProps} />);
-    expect(wrapper.state("ySize")).toEqual(2);
+  it("when simulate change ySize input expect ySize state to equals event target value", () => {
     const mockEvent = {
       target: {
         name: "ySize",
         value: "4",
       },
     } as React.ChangeEvent<HTMLInputElement>;
-    wrapper.instance().handleSize(mockEvent, "handleYSizeChange");
-    expect(wrapper.state("ySize")).toEqual(4);
+    wrapper.find("input.ySize_input").simulate("change", mockEvent);
+    expect(store.getState().ySize).toEqual(4);
   });
 });
