@@ -85,32 +85,35 @@ export class Game extends React.Component<GameProps, {}> {
   }
 
   componentDidUpdate(prevProps: GameProps) {
-    if (
-      (prevProps.xSize !== this.props.xSize ||
-        prevProps.ySize !== this.props.ySize) &&
-      helper.assertZero(this.props.ySize) &&
-      helper.assertZero(this.props.xSize)
-    ) {
-      this.updateMatrixAndSave(this.props.xSize, this.props.ySize);
+    // if (
+    //   (prevProps.xSize !== this.props.xSize ||
+    //     prevProps.ySize !== this.props.ySize) &&
+    //   helper.assertZero(this.props.ySize) &&
+    //   helper.assertZero(this.props.xSize)
+    // ) {
+    //   this.updateMatrixAndSave(this.props.xSize, this.props.ySize);
+    // }
+    // this.updateStateIfPropsDifferent({
+    //   prevProps,
+    //   curProps: this.props,
+    //   compareProp: "updateSpeed",
+    //   actionCreator: setSpeed,
+    // });
+    // this.updateStateIfPropsDifferent({
+    //   prevProps,
+    //   curProps: this.props,
+    //   compareProp: "gameInProgress",
+    //   actionCreator: setProgress,
+    // });
+    // this.updateStateIfPropsDifferent({
+    //   prevProps,
+    //   curProps: this.props,
+    //   compareProp: "initialPercent",
+    //   actionCreator: setInitialPercent,
+    // });
+    if (prevProps.gameInProgress && !this.props.gameInProgress) {
+      this.clearTimer();
     }
-    this.updateStateIfPropsDifferent({
-      prevProps,
-      curProps: this.props,
-      compareProp: "updateSpeed",
-      actionCreator: setSpeed,
-    });
-    this.updateStateIfPropsDifferent({
-      prevProps,
-      curProps: this.props,
-      compareProp: "gameInProgress",
-      actionCreator: setProgress,
-    });
-    this.updateStateIfPropsDifferent({
-      prevProps,
-      curProps: this.props,
-      compareProp: "initialPercent",
-      actionCreator: setInitialPercent,
-    });
   }
 
   setNewGeneration() {
@@ -237,6 +240,7 @@ export class Game extends React.Component<GameProps, {}> {
   };
 
   updateStateMatrix(x: number, y: number) {
+    console.warn(x, y);
     const matrix = this.getMergedMatrix(x, y);
     this.cachedNeighbours = helper.cacheNeighbours(matrix);
     return matrix;
