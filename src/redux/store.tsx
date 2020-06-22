@@ -1,6 +1,7 @@
-import { reducer } from "./reducers";
+import { reducer, State } from "./reducers";
 import { configureStore } from "@reduxjs/toolkit";
-import { State } from "./reducers";
+import createSagaMiddleware from "redux-saga";
+import { checkEnd } from "./saga";
 import * as helper from "@/components/Game/GameHelper";
 
 export const preloadedState: State = {
@@ -14,10 +15,15 @@ export const preloadedState: State = {
   fieldState: helper.makeMatrix(5, 5, 0),
 };
 
+const sagaMiddleware = createSagaMiddleware();
+
 export const store = configureStore({
   reducer,
   preloadedState,
+  middleware: [sagaMiddleware],
   devTools: true,
 });
+
+sagaMiddleware.run(checkEnd);
 
 export type AppDispatch = typeof store.dispatch;
