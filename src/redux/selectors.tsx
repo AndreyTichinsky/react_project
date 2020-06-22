@@ -2,9 +2,9 @@ import { createSelector } from "reselect";
 import { State } from "./reducers";
 import { BooleanMatrix } from "@/types/game";
 
-const getFieldUpdateSpeed = (state: State) => state.updateSpeed;
-const getFieldState = (state: State, props: any) => state.fieldState;
-const getCellProps = (state: State, props: any) => props;
+export const getFieldUpdateSpeed = (state: State) => state.updateSpeed;
+export const getFieldState = (state: State) => state.fieldState;
+export const getCellProps = (state: State, props: any) => props;
 
 interface Speed {
   [index: string]: number;
