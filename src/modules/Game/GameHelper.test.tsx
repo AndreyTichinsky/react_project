@@ -68,4 +68,36 @@ describe("Game helpers testing", () => {
     ];
     expect(helper.calculatePercentage(matrixMain)).toEqual(50);
   });
+  it("getNeighbours test", () => {
+    expect(helper.getNeighbours(0, 0, 10, 10)).toStrictEqual([
+      [9, 9],
+      [9, 0],
+      [9, 1],
+      [0, 9],
+      [0, 1],
+      [1, 9],
+      [1, 0],
+      [1, 1],
+    ]);
+    expect(helper.getNeighbours(0, 0, 9, 10)).toStrictEqual([
+      [9, 8],
+      [9, 0],
+      [9, 1],
+      [0, 8],
+      [0, 1],
+      [1, 8],
+      [1, 0],
+      [1, 1],
+    ]);
+    expect(helper.getNeighbours(0, 0, 10, 9)).toStrictEqual([
+      [8, 9],
+      [8, 0],
+      [8, 1],
+      [0, 9],
+      [0, 1],
+      [1, 9],
+      [1, 0],
+      [1, 1],
+    ]);
+  });
 });

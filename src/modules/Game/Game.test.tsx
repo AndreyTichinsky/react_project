@@ -1,6 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
-import Game from "@/containers/Game";
+import { Game } from "./Game";
 import { calculatePercentage } from "./GameHelper";
 import { configureStore } from "@reduxjs/toolkit";
 import { reducer, State } from "@/redux/reducers";

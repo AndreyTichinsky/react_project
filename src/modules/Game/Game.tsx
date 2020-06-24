@@ -1,16 +1,14 @@
-import React from "react";
-import Field from "@/containers/Field";
-import Menu from "@/containers/Menu";
-import LogoutForm from "@/containers/LogoutForm";
-import StartForm from "@/containers/StartForm";
+import React, { Component } from "react";
+import { Field } from "@/modules/Field";
+import { Menu } from "@/modules/Menu";
+import { LogoutForm } from "@/modules/LogoutForm";
+import { StartForm } from "@/modules/StartForm";
 import * as helper from "./GameHelper";
+import { Cache } from "./Game.interface";
 import type { BooleanMatrix, HandlerNameType } from "types/game";
 import type { HandlerControllerEvent } from "types/menu";
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import { GameWrapper } from "./Game.styled";
 import { AppDispatch } from "@/redux/store";
-import { AnyAction } from "redux";
 import {
   setFieldState,
   setInitialPercent,
@@ -21,6 +19,18 @@ import {
   setAnyState,
   ActionCreator,
 } from "@/redux/actions";
+import { connect } from "react-redux";
+import { State } from "@/redux/reducers";
+
+const mapStateToProps = (state: State) => ({
+  xSize: state.xSize,
+  ySize: state.ySize,
+  cellSize: state.cellSize,
+  initialPercent: state.initialPercent,
+  updateSpeed: state.updateSpeed,
+  gameInProgress: state.gameInProgress,
+  fieldState: state.fieldState,
+});
 
 interface GameProps {
   xSize: number;
@@ -39,11 +49,7 @@ interface Speed {
   [index: string]: number;
 }
 
-export interface Cache {
-  [index: string]: number[][];
-}
-
-export class Game extends React.Component<GameProps, {}> {
+export class GameComponent extends Component<GameProps, {}> {
   private timerId: any;
   [index: string]: any;
   private speed: Speed;
@@ -85,32 +91,6 @@ export class Game extends React.Component<GameProps, {}> {
   }
 
   componentDidUpdate(prevProps: GameProps) {
-    // if (
-    //   (prevProps.xSize !== this.props.xSize ||
-    //     prevProps.ySize !== this.props.ySize) &&
-    //   helper.assertZero(this.props.ySize) &&
-    //   helper.assertZero(this.props.xSize)
-    // ) {
-    //   this.updateMatrixAndSave(this.props.xSize, this.props.ySize);
-    // }
-    // this.updateStateIfPropsDifferent({
-    //   prevProps,
-    //   curProps: this.props,
-    //   compareProp: "updateSpeed",
-    //   actionCreator: setSpeed,
-    // });
-    // this.updateStateIfPropsDifferent({
-    //   prevProps,
-    //   curProps: this.props,
-    //   compareProp: "gameInProgress",
-    //   actionCreator: setProgress,
-    // });
-    // this.updateStateIfPropsDifferent({
-    //   prevProps,
-    //   curProps: this.props,
-    //   compareProp: "initialPercent",
-    //   actionCreator: setInitialPercent,
-    // });
     if (prevProps.gameInProgress && !this.props.gameInProgress) {
       this.clearTimer();
     }
@@ -282,3 +262,5 @@ export class Game extends React.Component<GameProps, {}> {
     );
   }
 }
+
+export const Game = connect(mapStateToProps)(GameComponent);

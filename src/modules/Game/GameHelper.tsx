@@ -1,5 +1,5 @@
 import type { BooleanMatrix } from "types/game";
-import { Cache } from "./Game";
+import { Cache } from "./Game.interface";
 
 export const makeMatrix = (
   y: number,
@@ -177,10 +177,10 @@ export const getNeighbours = (
     [y + 1, x + 1],
   ];
   return pattern.map(([Y, X]) => {
-    if (Y >= xLen) Y %= xLen;
-    if (X >= yLen) X %= yLen;
-    if (Y < 0) Y = xLen + Y;
-    if (X < 0) X = yLen + X;
+    if (Y >= yLen) Y %= yLen;
+    if (X >= xLen) X %= xLen;
+    if (Y < 0) Y = yLen + Y;
+    if (X < 0) X = xLen + X;
     return [Y, X];
   });
 };
