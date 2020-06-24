@@ -1,2 +1,2 @@
-export * from "./Game";
-export * from "./Entrance";
+export { MenuButton } from "./MenuButton";
+export { MenuInputWithLabel } from "./MenuInputWithLabel";
