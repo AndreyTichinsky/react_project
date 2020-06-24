@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { Field } from "./Field";
+import { FieldComponent } from "./Field";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
 
@@ -10,7 +10,7 @@ describe("Field", () => {
       renderer
         .create(
           <Provider store={store}>
-            <Field
+            <FieldComponent
               field={[
                 [false, false],
                 [false, false],
@@ -27,7 +27,7 @@ describe("Field", () => {
       renderer
         .create(
           <Provider store={store}>
-            <Field
+            <FieldComponent
               field={[
                 [true, false],
                 [false, true],

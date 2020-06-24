@@ -1,8 +1,7 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
 import { withKnobs, object, number } from "@storybook/addon-knobs";
-
-import { Field } from "./Field";
+import { FieldComponent } from "./Field";
 
 export default {
   title: "Field",
@@ -12,10 +11,8 @@ const elementClicked = action("Cell clicked (element)");
 
 export const emptyField = () => {
   return (
-    <Field
+    <FieldComponent
       cellSize={number("cellSize", 50)}
-      animationSpeed={number("animationSpeed", 500)}
-      onClick={elementClicked}
       field={object("field", [
         [false, false, false],
         [false, false, false],

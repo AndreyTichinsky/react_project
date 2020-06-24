@@ -16,7 +16,6 @@ export const emptyCell = () => {
       x={number("x", 0)}
       y={number("y", 0)}
       cellSize={number("cellSize", 25)}
-      onClick={action("Cell clicked")}
       animationSpeed={number("animationSpeed", 500)}
     />
   );

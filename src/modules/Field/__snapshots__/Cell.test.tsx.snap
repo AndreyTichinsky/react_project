@@ -2,8 +2,8 @@
 
 exports[`Cell empty cell test 1`] = `
 .emotion-0 {
-  width: 50px;
-  height: 50px;
+  width: 10px;
+  height: 10px;
   top: 0px;
   left: 0px;
   position: absolute;
@@ -24,8 +24,8 @@ exports[`Cell empty cell test 1`] = `
 
 exports[`Cell filled cell test 1`] = `
 .emotion-0 {
-  width: 50px;
-  height: 50px;
+  width: 10px;
+  height: 10px;
   top: 0px;
   left: 0px;
   position: absolute;
@@ -33,7 +33,7 @@ exports[`Cell filled cell test 1`] = `
   box-sizing: border-box;
   -webkit-transition: background-color 500ms ease;
   transition: background-color 500ms ease;
-  background-color: #000000;
+  background-color: #ffffff;
 }
 
 <div
