@@ -1,0 +1,1 @@
+export { MenuInputWithLabel } from "./MenuInputWithLabel";
