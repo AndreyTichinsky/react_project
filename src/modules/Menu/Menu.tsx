@@ -1,21 +1,21 @@
 import React, { FC } from "react";
-import type { HandlerControllerEvent } from "types/menu";
-import type { HandlerNameType } from "types/game";
-import { MenuButton } from "./components/MenuButton";
-import { MenuInputWithLabel } from "./components/MenuInputWithLabel";
+import { MenuProps } from "./Menu.interface";
+import { MenuButton } from "@/components/MenuButton";
+import { MenuInputWithLabel } from "@/components/MenuInputWithLabel";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { menuForm, disabledForm, MenuWrapper } from "./Menu.styled";
+import { connect } from "react-redux";
+import { State } from "@/redux/reducers";
 
-export interface MenuProps {
-  initialPercent: number;
-  xSize: number;
-  ySize: number;
-  isDisabled: boolean;
-  eventHandler: (event: HandlerControllerEvent, name: HandlerNameType) => void;
-}
+const mapStateToProps = (state: State) => ({
+  initialPercent: state.initialPercent,
+  xSize: state.xSize,
+  ySize: state.ySize,
+  isDisabled: state.gameInProgress,
+});
 
-export const Menu: FC<MenuProps> = (props) => {
+export const MenuComponent: FC<MenuProps> = (props) => {
   return (
     <MenuWrapper>
       <fieldset disabled={props.isDisabled}>
@@ -75,3 +75,5 @@ export const Menu: FC<MenuProps> = (props) => {
     </MenuWrapper>
   );
 };
+
+export const Menu = connect(mapStateToProps)(MenuComponent);

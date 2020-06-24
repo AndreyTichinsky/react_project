@@ -3,7 +3,7 @@ import type { HandlerControllerEvent } from "types/menu";
 import { action } from "@storybook/addon-actions";
 import { withKnobs, text, number } from "@storybook/addon-knobs";
 
-import { Menu } from "./Menu";
+import { MenuComponent } from "./Menu";
 
 export default {
   title: "Menu",
@@ -30,7 +30,7 @@ const handler = (ev: HandlerControllerEvent, eventName: string) => {
 
 export const enabledMenu = () => {
   return (
-    <Menu
+    <MenuComponent
       initialPercent={number("initialPercent", 0)}
       xSize={number("xSize", 10)}
       ySize={number("ySize", 10)}
@@ -41,7 +41,7 @@ export const enabledMenu = () => {
 };
 export const disabledMenu = () => {
   return (
-    <Menu
+    <MenuComponent
       initialPercent={number("initialPercent", 0)}
       xSize={number("xSize", 10)}
       ySize={number("ySize", 10)}
