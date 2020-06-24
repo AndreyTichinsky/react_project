@@ -3,6 +3,18 @@ import type { HandlerControllerEvent } from "types/menu";
 import { BaseEntrance, entranceLabelColor } from "./Entrance.styled";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import { connect } from "react-redux";
+import { setUsername } from "@/redux/actions";
+import { AppDispatch } from "@/redux/store";
+import { State } from "@/redux/reducers";
+
+const mapStateToProps = (state: State) => ({
+  username: state.username,
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  handleUsername: (username: string) => dispatch(setUsername(username)),
+});
 
 export interface EntranceProps {
   username: string;
@@ -10,7 +22,7 @@ export interface EntranceProps {
   handleUsername: (name: string) => void;
 }
 
-export const Entrance: FC<EntranceProps> = (props) => (
+export const EntranceComponent: FC<EntranceProps> = (props) => (
   <BaseEntrance>
     <form onSubmit={props.submitHandler}>
       <label
@@ -33,3 +45,8 @@ export const Entrance: FC<EntranceProps> = (props) => (
     </form>
   </BaseEntrance>
 );
+
+export const Entrance = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EntranceComponent);
