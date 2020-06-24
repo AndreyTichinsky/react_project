@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import { act } from "react-dom/test-utils";
-import RawGame from "@/containers/RawGame";
+import { RawGame } from "@/screens/RawGame";
 import { MemoryRouter, Route } from "react-router";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";

@@ -1,9 +1,10 @@
 import React, { useCallback } from "react";
-import Game from "@/containers/Game";
+import { Game } from "@/modules/Game";
 import { setUsername } from "@/redux/actions";
 import { useParams, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 
-export const RawGame: React.FC<{}> = ({ dispatch }: any) => {
+export const RawGameComponent: React.FC<{}> = ({ dispatch }: any) => {
   const { username } = useParams();
   dispatch(setUsername(username));
   const history = useHistory();
@@ -14,3 +15,5 @@ export const RawGame: React.FC<{}> = ({ dispatch }: any) => {
   }, []);
   return <Game username={username} onLogout={onLogout} />;
 };
+
+export const RawGame = connect()(RawGameComponent);

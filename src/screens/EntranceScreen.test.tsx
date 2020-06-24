@@ -1,5 +1,5 @@
 import React from "react";
-import EntranceScreen from "@/containers/EntranceScreen";
+import { EntranceScreen } from "@/screens/EntranceScreen";
 import { mount } from "enzyme";
 import { store } from "@/redux/store";
 import { Provider } from "react-redux";
