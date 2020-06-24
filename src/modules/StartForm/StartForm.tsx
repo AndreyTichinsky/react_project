@@ -1,15 +1,16 @@
 import React, { FC } from "react";
 import { gameFieldset, progressButton } from "./StartForm.styled";
-import type { HandlerControllerEvent } from "types/menu";
+import { StartFormProps } from "./StartForm.interface";
 
-export interface StartFormProps {
-  gameInProgress: boolean;
-  updateSpeed: string;
-  handleProgress: (ev: HandlerControllerEvent) => void;
-  selectHandler: (ev: HandlerControllerEvent) => void;
-}
+import { connect } from "react-redux";
+import { State } from "@/redux/reducers";
 
-export const StartForm: FC<StartFormProps> = (props) => {
+const mapStateToProps = (state: State) => ({
+  gameInProgress: state.gameInProgress,
+  updateSpeed: state.updateSpeed,
+});
+
+export const StartFormComponent: FC<StartFormProps> = (props) => {
   return (
     <fieldset css={gameFieldset}>
       <form>
@@ -36,3 +37,5 @@ export const StartForm: FC<StartFormProps> = (props) => {
     </fieldset>
   );
 };
+
+export const StartForm = connect(mapStateToProps)(StartFormComponent);
