@@ -1,4 +1,3 @@
-import { BooleanMatrix } from "../types/game";
 import { AnyAction } from "redux";
 
 export type ActionCreator = (payload: any) => AnyAction;

@@ -2,7 +2,7 @@ import { reducer, State } from "./reducers";
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { checkEnd } from "./saga";
-import * as helper from "@/components/Game/GameHelper";
+import * as helper from "@/modules/Game/GameHelper";
 
 export const preloadedState: State = {
   username: "Guest",

@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 import { State } from "./reducers";
-import { BooleanMatrix } from "@/types/game";
+import { BooleanMatrix } from "types/game";
 
 export const getFieldUpdateSpeed = (state: State) => state.updateSpeed;
 export const getFieldState = (state: State) => state.fieldState;

@@ -1,7 +1,7 @@
 import { select, take, put, call } from "redux-saga/effects";
 import { getFieldState } from "./selectors";
 import { setProgress } from "./actions";
-import { BooleanMatrix } from "@/types/game";
+import { BooleanMatrix } from "types/game";
 
 export function* checkEnd() {
   let lastFieldState: BooleanMatrix | any = null;
@@ -22,6 +22,8 @@ export const checkEquality = (
 ): boolean => {
   return (
     lastState !== null &&
+    lastState[0].length === curState[0].length &&
+    lastState.length === curState.length &&
     curState.every((row: any, i: number) =>
       row.every((cell: boolean, j: number) => cell === lastState[i][j])
     )
