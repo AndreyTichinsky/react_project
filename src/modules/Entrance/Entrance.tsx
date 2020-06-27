@@ -4,16 +4,15 @@ import { BaseEntrance, entranceLabelColor } from "./Entrance.styled";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { connect } from "react-redux";
-import { setUsername } from "@/redux/actions";
-import { AppDispatch } from "@/redux/store";
-import { State } from "@/redux/reducers";
+import { actions } from "./reducer";
+import { AppDispatch, State } from "@/redux/store";
 
 const mapStateToProps = (state: State) => ({
-  username: state.username,
+  username: state.entrance.username,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  handleUsername: (username: string) => dispatch(setUsername(username)),
+  handleUsername: (username: string) => dispatch(actions.setUsername(username)),
 });
 
 export interface EntranceProps {
