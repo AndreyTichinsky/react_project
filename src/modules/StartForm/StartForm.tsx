@@ -1,13 +1,12 @@
 import React, { FC } from "react";
 import { gameFieldset, progressButton } from "./StartForm.styled";
 import { StartFormProps } from "./StartForm.interface";
-
 import { connect } from "react-redux";
-import { State } from "@/redux/reducers";
+import { State } from "@/redux/store";
 
 const mapStateToProps = (state: State) => ({
-  gameInProgress: state.gameInProgress,
-  updateSpeed: state.updateSpeed,
+  gameInProgress: state.game.gameInProgress,
+  updateSpeed: state.game.updateSpeed,
 });
 
 export const StartFormComponent: FC<StartFormProps> = (props) => {

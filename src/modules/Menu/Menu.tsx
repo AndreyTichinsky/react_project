@@ -6,13 +6,13 @@ import { MenuInputWithLabel } from "@/components/MenuInputWithLabel";
 import { css, jsx } from "@emotion/core";
 import { menuForm, disabledForm, MenuWrapper } from "./Menu.styled";
 import { connect } from "react-redux";
-import { State } from "@/redux/reducers";
+import { State } from "@/redux/store";
 
 const mapStateToProps = (state: State) => ({
-  initialPercent: state.initialPercent,
-  xSize: state.xSize,
-  ySize: state.ySize,
-  isDisabled: state.gameInProgress,
+  initialPercent: state.game.initialPercent,
+  xSize: state.game.xSize,
+  ySize: state.game.ySize,
+  isDisabled: state.game.gameInProgress,
 });
 
 export const MenuComponent: FC<MenuProps> = (props) => {
