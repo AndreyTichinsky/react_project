@@ -153,7 +153,7 @@ export const cacheNeighbours = (matrix: BooleanMatrix) => {
   const matrixYLen = matrix.length;
   const matrixXLen = matrix[0].length;
   matrix.forEach((row, i) => {
-    row.forEach((cell, j) => {
+    row.forEach((_, j) => {
       cache[`${i}_${j}`] = getNeighbours(j, i, matrixXLen, matrixYLen);
     });
   });

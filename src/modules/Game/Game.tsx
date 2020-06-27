@@ -1,35 +1,22 @@
 import React, { Component } from "react";
-import { Field } from "@/modules/Field";
-import { Menu } from "@/modules/Menu";
-import { LogoutForm } from "@/modules/LogoutForm";
-import { StartForm } from "@/modules/StartForm";
+import { Field, Menu, LogoutForm, StartForm } from "@/modules";
 import * as helper from "./GameHelper";
 import { Cache } from "./Game.interface";
 import type { BooleanMatrix, HandlerNameType } from "types/game";
 import type { HandlerControllerEvent } from "types/menu";
 import { GameWrapper } from "./Game.styled";
-import { AppDispatch } from "@/redux/store";
-import {
-  setFieldState,
-  setInitialPercent,
-  setSpeed,
-  setProgress,
-  setXSize,
-  setYSize,
-  setAnyState,
-  ActionCreator,
-} from "@/redux/actions";
+import { AppDispatch, State } from "@/redux/store";
+import { actions } from "./reducer";
 import { connect } from "react-redux";
-import { State } from "@/redux/reducers";
 
 const mapStateToProps = (state: State) => ({
-  xSize: state.xSize,
-  ySize: state.ySize,
-  cellSize: state.cellSize,
-  initialPercent: state.initialPercent,
-  updateSpeed: state.updateSpeed,
-  gameInProgress: state.gameInProgress,
-  fieldState: state.fieldState,
+  xSize: state.game.xSize,
+  ySize: state.game.ySize,
+  cellSize: state.game.cellSize,
+  initialPercent: state.game.initialPercent,
+  updateSpeed: state.game.updateSpeed,
+  gameInProgress: state.game.gameInProgress,
+  fieldState: state.game.fieldState,
 });
 
 interface GameProps {
@@ -70,22 +57,6 @@ export class GameComponent extends Component<GameProps, {}> {
     this.cachedNeighbours = helper.cacheNeighbours(this.props.fieldState);
   }
 
-  updateStateIfPropsDifferent({
-    prevProps,
-    curProps,
-    compareProp,
-    actionCreator,
-  }: {
-    prevProps: GameProps;
-    curProps: GameProps;
-    compareProp: string;
-    actionCreator: ActionCreator;
-  }) {
-    if (prevProps[compareProp] !== curProps[compareProp]) {
-      this.dispatch(actionCreator(curProps[compareProp]));
-    }
-  }
-
   componentWillUnmount() {
     this.clearTimer();
   }
@@ -97,9 +68,8 @@ export class GameComponent extends Component<GameProps, {}> {
   }
 
   setNewGeneration() {
-    console.log("In progress");
     this.dispatch(
-      setFieldState(
+      actions.setFieldState(
         helper.generationGenerator(this.props.fieldState, this.cachedNeighbours)
       )
     );
@@ -118,7 +88,7 @@ export class GameComponent extends Component<GameProps, {}> {
   updateMatrixAndSave(xSize: number, ySize: number) {
     const mergedMatrix = this.getMergedMatrix(xSize, ySize);
     this.dispatch(
-      setAnyState({
+      actions.setAnyState({
         xSize,
         ySize,
         fieldState: mergedMatrix,
@@ -149,13 +119,13 @@ export class GameComponent extends Component<GameProps, {}> {
     if (!helper.assertPercentValue(target.value)) {
       throw new Error("Value must be between 0 and 100");
     }
-    this.dispatch(setInitialPercent(Number(target.value)));
+    this.dispatch(actions.setInitialPercent(Number(target.value)));
   };
 
   handleGenerator = (event: HandlerControllerEvent) => {
     event.preventDefault();
     this.dispatch(
-      setFieldState(
+      actions.setFieldState(
         helper.makeMatrix(
           this.props.ySize,
           this.props.xSize,
@@ -167,7 +137,7 @@ export class GameComponent extends Component<GameProps, {}> {
 
   handleProgress = (event: HandlerControllerEvent) => {
     event.preventDefault();
-    this.dispatch(setProgress(!this.props.gameInProgress));
+    this.dispatch(actions.setProgress(!this.props.gameInProgress));
     if (this.props.gameInProgress) {
       this.clearTimer();
       return;
@@ -196,10 +166,10 @@ export class GameComponent extends Component<GameProps, {}> {
     }
     switch (handlerName) {
       case "handleYSizeChange":
-        this.dispatch(setYSize(value));
+        this.dispatch(actions.setYSize(value));
         break;
       case "handleXSizeChange":
-        this.dispatch(setXSize(value));
+        this.dispatch(actions.setXSize(value));
         break;
     }
     if (!helper.assertSizeValue(value)) {
@@ -208,19 +178,18 @@ export class GameComponent extends Component<GameProps, {}> {
     switch (handlerName) {
       case "handleYSizeChange":
         this.dispatch(
-          setFieldState(this.updateStateMatrix(this.props.xSize, value))
+          actions.setFieldState(this.updateStateMatrix(this.props.xSize, value))
         );
         break;
       case "handleXSizeChange":
         this.dispatch(
-          setFieldState(this.updateStateMatrix(value, this.props.ySize))
+          actions.setFieldState(this.updateStateMatrix(value, this.props.ySize))
         );
         break;
     }
   };
 
   updateStateMatrix(x: number, y: number) {
-    console.warn(x, y);
     const matrix = this.getMergedMatrix(x, y);
     this.cachedNeighbours = helper.cacheNeighbours(matrix);
     return matrix;
@@ -235,13 +204,13 @@ export class GameComponent extends Component<GameProps, {}> {
         this.speed[target.value]
       );
     }
-    this.dispatch(setSpeed(target.value));
+    this.dispatch(actions.setSpeed(target.value));
   };
 
   handleReset = (event: HandlerControllerEvent) => {
     event.preventDefault();
     this.dispatch(
-      setAnyState({
+      actions.setAnyState({
         fieldState: helper.makeMatrix(this.props.ySize, this.props.xSize, 0),
         initialPercent: 0,
       })
