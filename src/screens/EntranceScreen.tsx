@@ -1,11 +1,11 @@
 import React, { useCallback, FC } from "react";
 import { useHistory } from "react-router-dom";
-import { Entrance } from "@/modules/Entrance";
+import { Entrance, EntranceState } from "@/modules/Entrance";
 import { connect } from "react-redux";
-import { State } from "@/redux/reducers";
+import { State } from "@/redux/store";
 
 const mapStateToProps = (state: State) => ({
-  username: state.username,
+  username: state.entrance.username,
 });
 
 export const EntranceScreenComponent: FC<{}> = (props: any) => {
