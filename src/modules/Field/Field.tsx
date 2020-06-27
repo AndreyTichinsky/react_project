@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { FieldWrapper } from "./Field.styled";
 import { connect } from "react-redux";
-import { State } from "@/redux/reducers";
+import { State } from "@/redux/store";
 
 import { Cell } from "./Cell";
 
@@ -11,8 +11,8 @@ export interface FieldProps {
 }
 
 const mapStateToProps = (state: State) => ({
-  field: state.fieldState,
-  cellSize: state.cellSize,
+  field: state.game.fieldState,
+  cellSize: state.game.cellSize,
 });
 
 export const FieldComponent: FC<FieldProps> = ({ field, cellSize }) => (

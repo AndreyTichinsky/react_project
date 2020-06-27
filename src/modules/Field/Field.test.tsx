@@ -1,10 +1,23 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import { FieldComponent } from "./Field";
-import { store } from "@/redux/store";
 import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import { preloadedState } from "@/redux/store";
+import { reducer } from "@/redux/reducer";
 
 describe("Field", () => {
+  let store: any;
+  beforeEach(() => {
+    store = configureStore({
+      reducer,
+      preloadedState,
+      devTools: true,
+    });
+  });
+  afterEach(() => {
+    store = null;
+  });
   it("empty Field test", () => {
     expect(
       renderer
