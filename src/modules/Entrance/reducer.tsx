@@ -18,6 +18,12 @@ export const entranceSlice = createSlice({
         username: action.payload,
       };
     },
+    logout: (state) => {
+      return {
+        ...state,
+        username: "Guest",
+      };
+    },
   },
 });
 
