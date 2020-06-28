@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { EntranceScreen } from "@/screens/EntranceScreen";
+import EntranceScreen from "@/containers/EntranceScreen";
 import { GameScreenValidation } from "@/screens/GameScreenValidation";
 import { NotLoggedInScreen } from "@/screens/NotLoggedInScreen";
 import { NotMatchScreen } from "@/screens/NotMatchScreen";

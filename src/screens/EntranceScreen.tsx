@@ -1,25 +1,18 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, FC } from "react";
 import { useHistory } from "react-router-dom";
-import { Entrance } from "@/components/Entrance";
+import Entrance from "@/containers/Entrance";
 
-export const EntranceScreen: React.FC<{}> = () => {
-  const [username, setUsername] = useState("Guest");
+export const EntranceScreen: FC<{}> = (props: any) => {
   const history = useHistory();
   const onSubmit = useCallback(
     (ev) => {
       ev.preventDefault();
-      const data = { username };
+      const data = { username: props.username };
       const serialData = JSON.stringify(data);
       localStorage.setItem("GameOfLife", serialData);
-      history.push(`/users/${username}`);
+      history.push(`/users/${props.username}`);
     },
-    [username]
+    [props.username]
   );
-  return (
-    <Entrance
-      username={username}
-      submitHandler={onSubmit}
-      handleUsername={setUsername}
-    />
-  );
+  return <Entrance submitHandler={onSubmit} />;
 };

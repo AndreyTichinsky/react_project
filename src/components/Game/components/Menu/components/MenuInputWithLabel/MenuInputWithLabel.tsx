@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import type { HandlerNameType } from "types/game";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -20,7 +20,7 @@ interface MenuInputWithLabelProps {
   eventHandler: (ev: React.FormEvent, eventName: HandlerNameType) => void;
 }
 
-export const MenuInputWithLabel: React.FC<MenuInputWithLabelProps> = ({
+export const MenuInputWithLabel: FC<MenuInputWithLabelProps> = ({
   labelText,
   eventName,
   eventHandler,

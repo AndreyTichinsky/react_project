@@ -1,6 +1,8 @@
 import React from "react";
-import { EntranceScreen } from "./EntranceScreen";
+import EntranceScreen from "@/containers/EntranceScreen";
 import { mount } from "enzyme";
+import { store } from "@/redux/store";
+import { Provider } from "react-redux";
 
 const mockHistory = { push: jest.fn() };
 
@@ -11,7 +13,11 @@ jest.mock("react-router-dom", () => ({
 describe("EntranceScreen", () => {
   it("submit new user", () => {
     const name = "John Doe";
-    const wrapper = mount(<EntranceScreen />);
+    const wrapper = mount(
+      <Provider store={store}>
+        <EntranceScreen />
+      </Provider>
+    );
 
     wrapper.find("input").simulate("change", { target: { value: name } });
     wrapper.find("form").simulate("submit", { preventDefault: () => null });

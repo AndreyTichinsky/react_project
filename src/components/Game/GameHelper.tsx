@@ -122,7 +122,6 @@ export const assertSizeValue = (value: number): boolean => {
 };
 
 export const assertZero = (value: number | null): boolean => {
-  console.warn("Warning: size must be positive non-zero number");
   return value !== null && value !== 0;
 };
 
@@ -140,6 +139,7 @@ export const generationGenerator = (
       cache[`${i}_${j}`].forEach(([y, x]) => {
         counter += matrix[y][x] ? 1 : 0;
       });
+
       return (
         (cell && (counter === 2 || counter === 3)) || (!cell && counter === 3)
       );
