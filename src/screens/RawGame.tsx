@@ -12,7 +12,7 @@ export const RawGameComponent: React.FC<{}> = ({ dispatch }: any) => {
     ev.preventDefault();
     localStorage.removeItem("GameOfLife");
     history.push(`/`);
-    dispatch(actions.setUsername("Guest"));
+    dispatch(actions.logout());
   }, []);
   return <Game username={username} onLogout={onLogout} />;
 };
