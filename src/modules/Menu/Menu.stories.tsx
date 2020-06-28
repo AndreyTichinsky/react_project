@@ -1,7 +1,7 @@
 import React from "react";
 import type { HandlerControllerEvent } from "types/menu";
 import { action } from "@storybook/addon-actions";
-import { withKnobs, text, number } from "@storybook/addon-knobs";
+import { withKnobs, number } from "@storybook/addon-knobs";
 
 import { MenuComponent } from "./Menu";
 

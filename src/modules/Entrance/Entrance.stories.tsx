@@ -1,4 +1,6 @@
 import React from "react";
+import { Provider } from "react-redux";
+import { store } from "@/redux/store";
 import { action } from "@storybook/addon-actions";
 import { withKnobs, text } from "@storybook/addon-knobs";
 
@@ -10,9 +12,7 @@ export default {
 };
 
 export const instanceEntrance = () => (
-  <Entrance
-    username={text("username", "Guest")}
-    submitHandler={action("onSubmit")}
-    handleUsername={action("onChange")}
-  />
+  <Provider store={store}>
+    <Entrance submitHandler={action("onSubmit")} />
+  </Provider>
 );
