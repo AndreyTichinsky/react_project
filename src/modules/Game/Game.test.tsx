@@ -105,4 +105,34 @@ describe("Game", () => {
     wrapper.find("input.ySize_input").simulate("change", mockEvent);
     expect(store.getState().game.ySize).toEqual(4);
   });
+  it("when simulate change xSize input expect fiedlstate X length equals xSize", () => {
+    const mockEvent = {
+      target: {
+        name: "xSize",
+        value: "4",
+      },
+    } as React.ChangeEvent<HTMLInputElement>;
+    wrapper.find("input.xSize_input").simulate("change", mockEvent);
+    expect(store.getState().game.fieldState[0].length).toEqual(4);
+  });
+  it("when simulate change ySize input expect fiedlstate Y length equals ySize", () => {
+    const mockEvent = {
+      target: {
+        name: "ySize",
+        value: "4",
+      },
+    } as React.ChangeEvent<HTMLInputElement>;
+    wrapper.find("input.ySize_input").simulate("change", mockEvent);
+    expect(store.getState().game.fieldState.length).toEqual(4);
+  });
+  it("when game is started and changed select options then state changed to select option value", () => {
+    expect(store.getState().game.gameInProgress).toBeFalsy();
+    wrapper.find("button.progress_button").simulate("click");
+    expect(store.getState().game.gameInProgress).toBeTruthy();
+    expect(store.getState().game.updateSpeed).toEqual("slow");
+    wrapper
+      .find("select.speed_select")
+      .simulate("change", { target: { value: "fast" } });
+    expect(store.getState().game.updateSpeed).toEqual("fast");
+  });
 });
