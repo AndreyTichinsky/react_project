@@ -37,10 +37,16 @@ export const gameSlice = createSlice({
         fieldState: fieldStateCopy,
       };
     },
-    setProgress: (state, action: PayloadAction<any>) => {
+    stop: (state) => {
       return {
         ...state,
-        gameInProgress: action.payload,
+        gameInProgress: false,
+      };
+    },
+    play: (state) => {
+      return {
+        ...state,
+        gameInProgress: true,
       };
     },
     setInitialPercent: (state, action: PayloadAction<any>) => {

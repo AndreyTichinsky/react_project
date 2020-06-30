@@ -15,8 +15,8 @@ export const preloadedState = {
 };
 
 describe("checkEnd saga", () => {
-  it(`when first time setFieldState dispatched then setProgress not fired,
-       when second time setFieldState dispatched and fieldState equals then setProgress fired`, () => {
+  it(`when first time setFieldState dispatched then stop not fired,
+       when second time setFieldState dispatched and fieldState equals then stop fired`, () => {
     return expectSaga(checkEnd)
       .withState(preloadedState)
       .dispatch(
@@ -30,7 +30,7 @@ describe("checkEnd saga", () => {
         [false, false],
         [false, false],
       ])
-      .not.put(actions.setProgress(true))
+      .not.put(actions.play())
       .dispatch(
         actions.setFieldState([
           [false, false],
@@ -49,7 +49,7 @@ describe("checkEnd saga", () => {
           [false, false],
         ]
       )
-      .put(actions.setProgress(false))
+      .put(actions.stop())
       .silentRun();
   });
 });

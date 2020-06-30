@@ -137,7 +137,11 @@ export class GameComponent extends Component<GameProps, {}> {
 
   handleProgress = (event: HandlerControllerEvent) => {
     event.preventDefault();
-    this.dispatch(actions.setProgress(!this.props.gameInProgress));
+    if (this.props.gameInProgress) {
+      this.dispatch(actions.stop());
+    } else {
+      this.dispatch(actions.play());
+    }
     if (this.props.gameInProgress) {
       this.clearTimer();
       return;

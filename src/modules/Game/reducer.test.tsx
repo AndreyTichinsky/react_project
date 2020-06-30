@@ -32,9 +32,9 @@ describe("Game reducer", () => {
       ],
     });
   });
-  it("setProgress expect to change gameInProgress property", () => {
+  it("play expect to change gameInProgress property", () => {
     expect(initialState.gameInProgress).toEqual(false);
-    expect(reducer(initialState, actions.setProgress(true))).toEqual({
+    expect(reducer(initialState, actions.play())).toEqual({
       ...initialState,
       gameInProgress: true,
     });

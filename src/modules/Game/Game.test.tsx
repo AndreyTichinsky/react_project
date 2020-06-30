@@ -35,8 +35,8 @@ describe("Game", () => {
     store.dispatch(actions.setYSize(5));
     expect(store.getState().game.ySize).toEqual(5);
   });
-  it("when dispatch setProgress action then StartForm button change its text", () => {
-    store.dispatch(actions.setProgress(true));
+  it("when dispatch play action then StartForm button change its text", () => {
+    store.dispatch(actions.play());
     expect(wrapper.find("button.progress_button").text()).toEqual("Stop");
   });
   it("when simulate click to progress button expect gameInProgress to be truthy", () => {
