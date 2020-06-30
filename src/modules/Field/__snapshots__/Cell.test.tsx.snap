@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cell empty cell test 1`] = `
+.emotion-0 {
+  width: 10px;
+  height: 10px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  -webkit-transition: background-color 500ms ease;
+  transition: background-color 500ms ease;
+  background-color: #ffffff;
+}
+
+<div
+  className="cell cell_0_0 emotion-0"
+  onClick={[Function]}
+  x={0}
+  y={0}
+/>
+`;
+
+exports[`Cell filled cell test 1`] = `
+.emotion-0 {
+  width: 10px;
+  height: 10px;
+  top: 0px;
+  left: 0px;
+  position: absolute;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  -webkit-transition: background-color 500ms ease;
+  transition: background-color 500ms ease;
+  background-color: #ffffff;
+}
+
+<div
+  className="cell cell_0_0 emotion-0"
+  onClick={[Function]}
+  x={0}
+  y={0}
+/>
+`;

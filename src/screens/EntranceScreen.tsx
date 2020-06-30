@@ -1,8 +1,14 @@
 import React, { useCallback, FC } from "react";
 import { useHistory } from "react-router-dom";
-import Entrance from "@/containers/Entrance";
+import { Entrance, EntranceState } from "@/modules/Entrance";
+import { connect } from "react-redux";
+import { State } from "@/redux/store";
 
-export const EntranceScreen: FC<{}> = (props: any) => {
+const mapStateToProps = (state: State) => ({
+  username: state.entrance.username,
+});
+
+export const EntranceScreenComponent: FC<{}> = (props: any) => {
   const history = useHistory();
   const onSubmit = useCallback(
     (ev) => {
@@ -16,3 +22,5 @@ export const EntranceScreen: FC<{}> = (props: any) => {
   );
   return <Entrance submitHandler={onSubmit} />;
 };
+
+export const EntranceScreen = connect(mapStateToProps)(EntranceScreenComponent);
