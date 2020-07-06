@@ -1,3 +1,3 @@
 export interface Cache {
-  [index: string]: number[][];
+  [index: string]: number[];
 }

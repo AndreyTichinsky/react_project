@@ -7,10 +7,7 @@ import { checkEnd, checkEquality } from "./saga";
 export const preloadedState = {
   game: {
     gameInProgress: true,
-    fieldState: [
-      [false, false],
-      [false, false],
-    ],
+    fieldState: [0, 0, 0, 0],
   },
 };
 
@@ -19,36 +16,13 @@ describe("checkEnd saga", () => {
        when second time setFieldState dispatched and fieldState equals then stop fired`, () => {
     return expectSaga(checkEnd)
       .withState(preloadedState)
-      .dispatch(
-        actions.setFieldState([
-          [false, false],
-          [false, false],
-        ])
-      )
+      .dispatch(actions.setFieldState([0, 0, 0, 0]))
       .select(getFieldState)
-      .call(checkEquality, null, [
-        [false, false],
-        [false, false],
-      ])
+      .call(checkEquality, null, [0, 0, 0, 0])
       .not.put(actions.play())
-      .dispatch(
-        actions.setFieldState([
-          [false, false],
-          [false, false],
-        ])
-      )
+      .dispatch(actions.setFieldState([0, 0, 0, 0]))
       .select(getFieldState)
-      .call(
-        checkEquality,
-        [
-          [false, false],
-          [false, false],
-        ],
-        [
-          [false, false],
-          [false, false],
-        ]
-      )
+      .call(checkEquality, [0, 0, 0, 0], [0, 0, 0, 0])
       .put(actions.stop())
       .silentRun();
   });

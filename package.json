@@ -10,8 +10,8 @@
     "lint": "npx eslint --ext .js,.jsx,.ts,.tsx --fix src/",
     "start": "npx webpack-dev-server --mode development --open --hot",
     "loki:update": "npm run build-storybook && npx loki update --requireReference --reactUri file:./storybook-static",
-    "loki:approve": "npx loki approve",
     "test:loki": "npm run build-storybook && npx loki --requireReference --reactUri file:./storybook-static",
+    "loki:approve": "npx loki approve",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "check": "npm test && npm run lint && npm run test:loki"

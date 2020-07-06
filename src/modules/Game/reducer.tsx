@@ -28,10 +28,8 @@ export const gameSlice = createSlice({
   reducers: {
     setCellState: (state, action: PayloadAction<any>) => {
       const { payload } = action;
-      const fieldStateCopy = state.fieldState.map((row) => [...row]);
-      fieldStateCopy[payload.y][payload.x] = !fieldStateCopy[payload.y][
-        payload.x
-      ];
+      const fieldStateCopy = state.fieldState.slice();
+      fieldStateCopy[payload] = fieldStateCopy[payload] === 1 ? 0 : 1;
       return {
         ...state,
         fieldState: fieldStateCopy,

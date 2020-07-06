@@ -28,7 +28,7 @@ export const preloadedState: State = {
     cellSize: 10,
     updateSpeed: "slow",
     gameInProgress: false,
-    fieldState: helper.makeMatrix(5, 5, 0),
+    fieldState: helper.makeEmptyMatrix(5, 5),
   },
   entrance: {
     username: "Guest",
@@ -39,7 +39,6 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer,
-  preloadedState,
   middleware: [sagaMiddleware],
   devTools: true,
 });

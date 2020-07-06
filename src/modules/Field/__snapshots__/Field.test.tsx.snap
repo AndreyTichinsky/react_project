@@ -3,58 +3,26 @@
 exports[`Field empty Field test 1`] = `
 .emotion-4 {
   position: relative;
-  width: 100px;
-  height: 100px;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  width: 20px;
+  height: 20px;
   border: 1px solid #000;
 }
 
 .emotion-0 {
-  width: 10px;
-  height: 10px;
-  top: 0px;
-  left: 0px;
-  position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
-  -webkit-transition: background-color 500ms ease;
-  transition: background-color 500ms ease;
-  background-color: #ffffff;
-}
-
-.emotion-1 {
   width: 10px;
   height: 10px;
-  top: 0px;
-  left: 10px;
-  position: absolute;
-  border: 1px solid #000;
-  box-sizing: border-box;
-  -webkit-transition: background-color 500ms ease;
-  transition: background-color 500ms ease;
-  background-color: #ffffff;
-}
-
-.emotion-2 {
-  width: 10px;
-  height: 10px;
-  top: 10px;
-  left: 0px;
-  position: absolute;
-  border: 1px solid #000;
-  box-sizing: border-box;
-  -webkit-transition: background-color 500ms ease;
-  transition: background-color 500ms ease;
-  background-color: #ffffff;
-}
-
-.emotion-3 {
-  width: 10px;
-  height: 10px;
-  top: 10px;
-  left: 10px;
-  position: absolute;
-  border: 1px solid #000;
-  box-sizing: border-box;
   -webkit-transition: background-color 500ms ease;
   transition: background-color 500ms ease;
   background-color: #ffffff;
@@ -70,19 +38,19 @@ exports[`Field empty Field test 1`] = `
     y={0}
   />
   <div
-    className="cell cell_0_1 emotion-1"
+    className="cell cell_0_1 emotion-0"
     onClick={[Function]}
     x={1}
     y={0}
   />
   <div
-    className="cell cell_1_0 emotion-2"
+    className="cell cell_1_0 emotion-0"
     onClick={[Function]}
     x={0}
     y={1}
   />
   <div
-    className="cell cell_1_1 emotion-3"
+    className="cell cell_1_1 emotion-0"
     onClick={[Function]}
     x={1}
     y={1}
@@ -93,58 +61,26 @@ exports[`Field empty Field test 1`] = `
 exports[`Field partial filled cell test 1`] = `
 .emotion-4 {
   position: relative;
-  width: 100px;
-  height: 100px;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  width: 20px;
+  height: 20px;
   border: 1px solid #000;
 }
 
 .emotion-0 {
-  width: 10px;
-  height: 10px;
-  top: 0px;
-  left: 0px;
-  position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
-  -webkit-transition: background-color 500ms ease;
-  transition: background-color 500ms ease;
-  background-color: #ffffff;
-}
-
-.emotion-1 {
   width: 10px;
   height: 10px;
-  top: 0px;
-  left: 10px;
-  position: absolute;
-  border: 1px solid #000;
-  box-sizing: border-box;
-  -webkit-transition: background-color 500ms ease;
-  transition: background-color 500ms ease;
-  background-color: #ffffff;
-}
-
-.emotion-2 {
-  width: 10px;
-  height: 10px;
-  top: 10px;
-  left: 0px;
-  position: absolute;
-  border: 1px solid #000;
-  box-sizing: border-box;
-  -webkit-transition: background-color 500ms ease;
-  transition: background-color 500ms ease;
-  background-color: #ffffff;
-}
-
-.emotion-3 {
-  width: 10px;
-  height: 10px;
-  top: 10px;
-  left: 10px;
-  position: absolute;
-  border: 1px solid #000;
-  box-sizing: border-box;
   -webkit-transition: background-color 500ms ease;
   transition: background-color 500ms ease;
   background-color: #ffffff;
@@ -160,19 +96,19 @@ exports[`Field partial filled cell test 1`] = `
     y={0}
   />
   <div
-    className="cell cell_0_1 emotion-1"
+    className="cell cell_0_1 emotion-0"
     onClick={[Function]}
     x={1}
     y={0}
   />
   <div
-    className="cell cell_1_0 emotion-2"
+    className="cell cell_1_0 emotion-0"
     onClick={[Function]}
     x={0}
     y={1}
   />
   <div
-    className="cell cell_1_1 emotion-3"
+    className="cell cell_1_1 emotion-0"
     onClick={[Function]}
     x={1}
     y={1}

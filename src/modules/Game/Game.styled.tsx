@@ -13,7 +13,7 @@ export const GameWrapper = styled.div`
   position: relative;
   margin: 50px auto 0;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   min-width: ${(props: GameWrapperStyle) => props.xSize * props.cellSize}px;

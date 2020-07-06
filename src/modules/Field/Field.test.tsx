@@ -23,13 +23,7 @@ describe("Field", () => {
       renderer
         .create(
           <Provider store={store}>
-            <FieldComponent
-              field={[
-                [false, false],
-                [false, false],
-              ]}
-              cellSize={50}
-            />
+            <FieldComponent field={[0, 0, 0, 0]} xSize={2} ySize={2} />
           </Provider>
         )
         .toJSON()
@@ -40,13 +34,7 @@ describe("Field", () => {
       renderer
         .create(
           <Provider store={store}>
-            <FieldComponent
-              field={[
-                [true, false],
-                [false, true],
-              ]}
-              cellSize={50}
-            />
+            <FieldComponent field={[1, 0, 0, 1]} xSize={2} ySize={2} />
           </Provider>
         )
         .toJSON()
