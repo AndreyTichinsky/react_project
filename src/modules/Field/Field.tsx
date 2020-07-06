@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { BooleanMatrix } from "types/game";
 import { FieldWrapper } from "./Field.styled";
 import { connect } from "react-redux";
 import { State } from "@/redux/store";
@@ -6,20 +7,22 @@ import { State } from "@/redux/store";
 import { Cell } from "./Cell";
 
 export interface FieldProps {
-  field: boolean[][];
-  cellSize: number;
+  field: BooleanMatrix;
+  ySize: number;
+  xSize: number;
 }
 
 const mapStateToProps = (state: State) => ({
   field: state.game.fieldState,
-  cellSize: state.game.cellSize,
+  ySize: state.game.ySize,
+  xSize: state.game.xSize,
 });
 
-export const FieldComponent: FC<FieldProps> = ({ field, cellSize }) => (
-  <FieldWrapper cellSize={cellSize} field={field}>
-    {field.map((row, y) => [
-      ...row.map((_, x) => <Cell key={`${y}_${x}`} x={x} y={y} />),
-    ])}
+export const FieldComponent: FC<FieldProps> = ({ field, ySize, xSize }) => (
+  <FieldWrapper xSize={xSize} ySize={ySize}>
+    {field.map((_: number, idx: number) => (
+      <Cell idx={idx} key={idx} y={Math.floor(idx / xSize)} x={idx % xSize} />
+    ))}
   </FieldWrapper>
 );
 

@@ -13,8 +13,8 @@ export interface CellProps {
   isAlive: boolean;
   x: number;
   y: number;
-  cellSize: number;
   animationSpeed: number;
+  idx: number;
 }
 
 const makeMapStateToProps = () => {
@@ -22,8 +22,7 @@ const makeMapStateToProps = () => {
   const getAlive = makeGetAlive();
   const mapStateToProps = (state: State, props: any) => {
     return {
-      cellSize: state.game.cellSize,
-      isAlive: getAlive(state, props),
+      isAlive: !!getAlive(state, props),
       animationSpeed: convertSpeedToNumber(state),
     };
   };
@@ -34,15 +33,14 @@ export const CellComponent: FC<CellProps & { dispatch: AppDispatch }> = (
   props
 ) => {
   const onClick = useCallback(() => {
-    props.dispatch(actions.setCellState({ x: props.x, y: props.y }));
+    props.dispatch(actions.setCellState(props.idx));
   }, []);
   return (
     <CellItem
       className={`cell cell_${props.y}_${props.x}`}
       isAlive={props.isAlive}
-      x={props.x}
       y={props.y}
-      cellSize={props.cellSize}
+      x={props.x}
       onClick={onClick}
       animationSpeed={props.animationSpeed}
     />

@@ -2,33 +2,68 @@ import { actions, reducer, initialState } from "./reducer";
 
 describe("Game reducer", () => {
   it("when cell value is false and call setCellState then fiedlState cell change its value", () => {
-    expect(initialState.fieldState[0][0]).toEqual(false);
-    expect(reducer(initialState, actions.setCellState({ x: 0, y: 0 }))).toEqual(
-      {
-        ...initialState,
-        fieldState: [
-          [true, false, false, false, false],
-          [false, false, false, false, false],
-          [false, false, false, false, false],
-          [false, false, false, false, false],
-          [false, false, false, false, false],
-        ],
-      }
-    );
-  });
-  it("when cell value is true and call setCellState then fiedlState cell change its value", () => {
-    const newState = reducer(
-      initialState,
-      actions.setCellState({ x: 0, y: 0 })
-    );
-    expect(reducer(newState, actions.setCellState({ x: 0, y: 0 }))).toEqual({
+    expect(initialState.fieldState[0]).toEqual(0);
+    expect(reducer(initialState, actions.setCellState(0))).toEqual({
       ...initialState,
       fieldState: [
-        [false, false, false, false, false],
-        [false, false, false, false, false],
-        [false, false, false, false, false],
-        [false, false, false, false, false],
-        [false, false, false, false, false],
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ],
+    });
+  });
+  it("when cell value is true and call setCellState then fiedlState cell change its value", () => {
+    const newState = reducer(initialState, actions.setCellState(0));
+    expect(reducer(newState, actions.setCellState(0))).toEqual({
+      ...initialState,
+      fieldState: [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
       ],
     });
   });
@@ -69,26 +104,35 @@ describe("Game reducer", () => {
   });
   it("setFieldState expect to change fieldState property", () => {
     expect(initialState.fieldState).toEqual([
-      [false, false, false, false, false],
-      [false, false, false, false, false],
-      [false, false, false, false, false],
-      [false, false, false, false, false],
-      [false, false, false, false, false],
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
     ]);
-    expect(
-      reducer(
-        initialState,
-        actions.setFieldState([
-          [true, false],
-          [false, true],
-        ])
-      )
-    ).toEqual({
+    expect(reducer(initialState, actions.setFieldState([1, 0, 0, 1]))).toEqual({
       ...initialState,
-      fieldState: [
-        [true, false],
-        [false, true],
-      ],
+      fieldState: [1, 0, 0, 1],
     });
   });
 });

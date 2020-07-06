@@ -1,4 +1,4 @@
-export type BooleanMatrix = boolean[][];
+export type BooleanMatrix = number[];
 
 export type HandlerNameType =
   | "handleXSizeChange"

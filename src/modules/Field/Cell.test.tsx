@@ -28,7 +28,7 @@ describe("Cell", () => {
               isAlive={false}
               x={0}
               y={0}
-              cellSize={50}
+              idx={0}
               dispatch={jest.fn()}
             />
           </Provider>
@@ -46,7 +46,7 @@ describe("Cell", () => {
               isAlive={true}
               x={0}
               y={0}
-              cellSize={50}
+              idx={0}
               dispatch={jest.fn()}
             />
           </Provider>

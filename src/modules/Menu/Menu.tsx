@@ -29,9 +29,9 @@ export const MenuComponent: FC<MenuProps> = (props) => {
             labelText="xSize"
             className="xSize_input"
             name="xSize"
-            type="number"
+            type="range"
             min="0"
-            max="50"
+            max="100"
             value={props.xSize}
             eventName="handleXSizeChange"
             eventHandler={props.eventHandler}
@@ -40,7 +40,7 @@ export const MenuComponent: FC<MenuProps> = (props) => {
             labelText="ySize"
             className="ySize_input"
             name="ySize"
-            type="number"
+            type="range"
             min="0"
             max="50"
             value={props.ySize}

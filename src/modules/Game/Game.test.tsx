@@ -52,17 +52,9 @@ describe("Game", () => {
   it("when invoke handleReset expect fieldState to be empty", () => {
     store.dispatch(actions.setXSize(2));
     store.dispatch(actions.setYSize(2));
-    store.dispatch(
-      actions.setFieldState([
-        [true, true],
-        [true, true],
-      ])
-    );
+    store.dispatch(actions.setFieldState([1, 1, 1, 1]));
     wrapper.find("button.reset_button").simulate("click");
-    expect(store.getState().game.fieldState).toStrictEqual([
-      [false, false],
-      [false, false],
-    ]);
+    expect(store.getState().game.fieldState).toStrictEqual([0, 0, 0, 0]);
   });
   it("when click random generator button expect generated matrix to equals state properties", () => {
     store.dispatch(actions.setXSize(4));
@@ -72,8 +64,7 @@ describe("Game", () => {
     const testMatrix = store.getState().game.fieldState;
     const percent = calculatePercentage(testMatrix);
     expect(percent).toEqual(50);
-    expect(testMatrix.length).toEqual(4);
-    expect(testMatrix[0].length).toEqual(4);
+    expect(testMatrix.length).toEqual(16);
   });
   it("when simulate change filled_percent input expect initialPercent state to equals event target value", () => {
     const mockEvent = {
@@ -105,7 +96,9 @@ describe("Game", () => {
     wrapper.find("input.ySize_input").simulate("change", mockEvent);
     expect(store.getState().game.ySize).toEqual(4);
   });
-  it("when simulate change xSize input expect fiedlstate X length equals xSize", () => {
+  it("when simulate change xSize input expect fiedlstate length equals xSize multiply on ySize", () => {
+    expect(store.getState().game.xSize).toEqual(5);
+    expect(store.getState().game.ySize).toEqual(5);
     const mockEvent = {
       target: {
         name: "xSize",
@@ -113,9 +106,11 @@ describe("Game", () => {
       },
     } as React.ChangeEvent<HTMLInputElement>;
     wrapper.find("input.xSize_input").simulate("change", mockEvent);
-    expect(store.getState().game.fieldState[0].length).toEqual(4);
+    expect(store.getState().game.fieldState.length).toEqual(20);
   });
-  it("when simulate change ySize input expect fiedlstate Y length equals ySize", () => {
+  it("when simulate change ySize input expect fiedlstate length equals xSize multiply on ySize", () => {
+    expect(store.getState().game.xSize).toEqual(5);
+    expect(store.getState().game.ySize).toEqual(5);
     const mockEvent = {
       target: {
         name: "ySize",
@@ -123,7 +118,7 @@ describe("Game", () => {
       },
     } as React.ChangeEvent<HTMLInputElement>;
     wrapper.find("input.ySize_input").simulate("change", mockEvent);
-    expect(store.getState().game.fieldState.length).toEqual(4);
+    expect(store.getState().game.fieldState.length).toEqual(20);
   });
   it("when game is started and changed select options then state changed to select option value", () => {
     expect(store.getState().game.gameInProgress).toBeFalsy();

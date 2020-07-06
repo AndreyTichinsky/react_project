@@ -17,7 +17,6 @@ export const emptyCell = () => {
         isAlive={boolean("isAlive", false)}
         x={number("x", 0)}
         y={number("y", 0)}
-        cellSize={number("cellSize", 25)}
         animationSpeed={number("animationSpeed", 500)}
       />
     </Provider>

@@ -54,7 +54,11 @@ export class GameComponent extends Component<GameProps, {}> {
   }
 
   componentDidMount() {
-    this.cachedNeighbours = helper.cacheNeighbours(this.props.fieldState);
+    this.cachedNeighbours = helper.cacheNeighbours(
+      this.props.fieldState,
+      this.props.ySize,
+      this.props.xSize
+    );
   }
 
   componentWillUnmount() {
@@ -81,8 +85,13 @@ export class GameComponent extends Component<GameProps, {}> {
   }
 
   getMergedMatrix(xSize: number, ySize: number) {
-    const newMatrix = helper.makeMatrix(ySize, xSize, 0);
-    return helper.mergeMatrices(this.props.fieldState, newMatrix);
+    return helper.mergeMatrices(
+      this.props.fieldState,
+      this.props.ySize,
+      this.props.xSize,
+      ySize,
+      xSize
+    );
   }
 
   updateMatrixAndSave(xSize: number, ySize: number) {
@@ -168,6 +177,9 @@ export class GameComponent extends Component<GameProps, {}> {
     if (!helper.isNumber(value)) {
       throw new Error("Not a number");
     }
+    if (!helper.assertSizeValue(value)) {
+      throw new Error("invalid value: size must be positive non-zero number");
+    }
     switch (handlerName) {
       case "handleYSizeChange":
         this.dispatch(actions.setYSize(value));
@@ -175,9 +187,6 @@ export class GameComponent extends Component<GameProps, {}> {
       case "handleXSizeChange":
         this.dispatch(actions.setXSize(value));
         break;
-    }
-    if (!helper.assertSizeValue(value)) {
-      throw new Error("invalid value: size must be positive non-zero number");
     }
     switch (handlerName) {
       case "handleYSizeChange":
@@ -195,7 +204,7 @@ export class GameComponent extends Component<GameProps, {}> {
 
   updateStateMatrix(x: number, y: number) {
     const matrix = this.getMergedMatrix(x, y);
-    this.cachedNeighbours = helper.cacheNeighbours(matrix);
+    this.cachedNeighbours = helper.cacheNeighbours(matrix, y, x);
     return matrix;
   }
 

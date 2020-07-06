@@ -12,7 +12,7 @@ export function* checkEnd() {
     if (result) {
       yield put(actions.stop());
     }
-    lastFieldState = curFieldState.map((row: any) => [...row]);
+    lastFieldState = curFieldState.slice();
   }
 }
 
@@ -21,13 +21,9 @@ export const checkEquality = (
   curState: BooleanMatrix
 ): boolean => {
   const checkLastState =
-    lastState !== null &&
-    lastState[0].length === curState[0].length &&
-    lastState.length === curState.length;
+    lastState !== null && lastState.length === curState.length;
   return (
     checkLastState &&
-    curState.every((row: any, i: number) =>
-      row.every((cell: boolean, j: number) => cell === lastState[i][j])
-    )
+    curState.every((cellValue: number, i: number) => cellValue === lastState[i])
   );
 };
