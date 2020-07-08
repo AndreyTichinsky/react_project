@@ -71,6 +71,12 @@ export const gameSlice = createSlice({
     setFieldState: (state, action: PayloadAction<any>) => {
       return { ...state, fieldState: action.payload };
     },
+    reset: (state, action: PayloadAction<any>) => {
+      return { ...state, fieldState: action.payload, initialPercent: 0 };
+    },
+    updateFieldState: (state, action: PayloadAction<any>) => {
+      return { ...state, fieldState: action.payload };
+    },
     setAnyState: (state, action: PayloadAction<any>) => {
       return { ...state, ...action.payload };
     },
