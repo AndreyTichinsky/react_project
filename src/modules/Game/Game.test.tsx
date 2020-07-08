@@ -70,9 +70,9 @@ describe("Game", () => {
     const mockEvent = {
       target: {
         name: "filledPercent",
-        value: "50",
+        value: 50,
       },
-    } as React.ChangeEvent<HTMLInputElement>;
+    };
     wrapper.find("input.filled_percent").simulate("change", mockEvent);
     expect(store.getState().game.initialPercent).toEqual(50);
   });
