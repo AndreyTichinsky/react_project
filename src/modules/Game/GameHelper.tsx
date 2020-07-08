@@ -100,16 +100,12 @@ export const calculatePercentage = (matrix: BooleanMatrix): number => {
   return Math.floor((matrixSum(matrix) / matrix.length) * 100);
 };
 
-export const isNumber = (item: number): boolean => {
-  return !Number.isNaN(item);
+export const isNumber = (item: any): boolean => {
+  return Number.isFinite(item);
 };
 
 export const assertSizeValue = (value: number): boolean => {
   return isNumber(value) && value > 0;
-};
-
-export const assertZero = (value: number | null): boolean => {
-  return value !== null && value !== 0;
 };
 
 export const assertPercentValue = (value: number): boolean => {
