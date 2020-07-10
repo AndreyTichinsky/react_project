@@ -1,5 +1,5 @@
 import { reducer } from "./reducer";
-import { BooleanMatrix } from "types/game";
+import { FieldData } from "types/game";
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { rootSaga } from "@/modules/Game/saga";
@@ -13,7 +13,7 @@ export interface State {
     initialPercent: number;
     gameInProgress: boolean;
     cellSize: number;
-    fieldState: BooleanMatrix;
+    fieldState: FieldData;
   };
   entrance: {
     username: string;

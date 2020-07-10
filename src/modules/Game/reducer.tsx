@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BooleanMatrix } from "types/game";
+import { FieldData } from "types/game";
 import * as helper from "@/modules/Game/GameHelper";
 
 export type GameState = {
@@ -9,7 +9,7 @@ export type GameState = {
   initialPercent: number;
   gameInProgress: boolean;
   cellSize: number;
-  fieldState: BooleanMatrix;
+  fieldState: FieldData;
 };
 
 export const initialState: GameState = {

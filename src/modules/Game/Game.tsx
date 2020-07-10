@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Field, Menu, LogoutForm, StartForm } from "@/modules";
 import * as helper from "./GameHelper";
 import { Cache } from "./Game.interface";
-import type { BooleanMatrix, HandlerNameType } from "types/game";
+import type { FieldData, HandlerNameType } from "types/game";
 import type { HandlerControllerEvent } from "types/menu";
 import { GameWrapper } from "./Game.styled";
 import { AppDispatch, State } from "@/redux/store";
@@ -26,7 +26,7 @@ interface GameProps {
   initialPercent: number;
   gameInProgress: boolean;
   cellSize: number;
-  fieldState: BooleanMatrix;
+  fieldState: FieldData;
   dispatch: AppDispatch;
   onLogout: (ev: React.FormEvent) => void;
   [index: string]: any;
