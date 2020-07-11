@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 import { State } from "@/redux/store";
-import { BooleanMatrix } from "types/game";
+import { FieldData } from "types/game";
 
 export const getFieldUpdateSpeed = (state: State) => state.game.updateSpeed;
 export const getFieldState = (state: State) => state.game.fieldState;
@@ -25,7 +25,7 @@ export const makeConvertSpeedToNumber = () => {
 export const makeGetAlive = () => {
   return createSelector(
     [getFieldState, getCellProps, getXSizeState],
-    (fieldState: BooleanMatrix, props: any, xSize: number) => {
+    (fieldState: FieldData, props: any, xSize: number) => {
       return fieldState[props.y * xSize + props.x];
     }
   );

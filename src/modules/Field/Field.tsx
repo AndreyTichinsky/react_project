@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { BooleanMatrix } from "types/game";
+import { FieldData } from "types/game";
 import { FieldWrapper } from "./Field.styled";
 import { connect } from "react-redux";
 import { State } from "@/redux/store";
@@ -7,7 +7,7 @@ import { State } from "@/redux/store";
 import { Cell } from "./Cell";
 
 export interface FieldProps {
-  field: BooleanMatrix;
+  field: FieldData;
   ySize: number;
   xSize: number;
 }

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Field, Menu, LogoutForm, StartForm } from "@/modules";
 import * as helper from "./GameHelper";
 import { Cache } from "./Game.interface";
-import type { BooleanMatrix, HandlerNameType } from "types/game";
+import type { FieldData, HandlerNameType } from "types/game";
 import type { HandlerControllerEvent } from "types/menu";
 import { GameWrapper } from "./Game.styled";
 import { AppDispatch, State } from "@/redux/store";
@@ -26,7 +26,7 @@ interface GameProps {
   initialPercent: number;
   gameInProgress: boolean;
   cellSize: number;
-  fieldState: BooleanMatrix;
+  fieldState: FieldData;
   dispatch: AppDispatch;
   onLogout: (ev: React.FormEvent) => void;
   [index: string]: any;
@@ -73,7 +73,7 @@ export class GameComponent extends Component<GameProps, {}> {
 
   setNewGeneration() {
     this.dispatch(
-      actions.setFieldState(
+      actions.updateFieldState(
         helper.generationGenerator(this.props.fieldState, this.cachedNeighbours)
       )
     );
@@ -122,10 +122,10 @@ export class GameComponent extends Component<GameProps, {}> {
 
   handleFilledPercent = (event: HandlerControllerEvent) => {
     const target = event.target as HTMLFormElement;
-    if (!helper.isNumber(target.value)) {
+    if (!helper.isNumber(Number(target.value))) {
       throw new Error("Not a number");
     }
-    if (!helper.assertPercentValue(target.value)) {
+    if (!helper.assertPercentValue(Number(target.value))) {
       throw new Error("Value must be between 0 and 100");
     }
     this.dispatch(actions.setInitialPercent(Number(target.value)));
@@ -223,10 +223,7 @@ export class GameComponent extends Component<GameProps, {}> {
   handleReset = (event: HandlerControllerEvent) => {
     event.preventDefault();
     this.dispatch(
-      actions.setAnyState({
-        fieldState: helper.makeMatrix(this.props.ySize, this.props.xSize, 0),
-        initialPercent: 0,
-      })
+      actions.reset(helper.makeMatrix(this.props.ySize, this.props.xSize, 0))
     );
   };
 

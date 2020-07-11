@@ -1,4 +1,4 @@
-export type BooleanMatrix = number[];
+export type FieldData = number[];
 
 export type HandlerNameType =
   | "handleXSizeChange"

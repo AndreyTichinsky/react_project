@@ -1,11 +1,11 @@
-import type { BooleanMatrix } from "types/game";
+import type { FieldData } from "types/game";
 import { Cache } from "./Game.interface";
 
 export const makeMatrix = (
   y: number,
   x: number,
   filledPercent: number
-): BooleanMatrix => {
+): FieldData => {
   if (filledPercent === 0) {
     return makeEmptyMatrix(y, x);
   }
@@ -16,7 +16,7 @@ export const makeFilledMatrix = (
   y: number,
   x: number,
   filledPercent: number
-): BooleanMatrix => {
+): FieldData => {
   const cellsAmount = x * y;
   const filledCellsAmount = Math.round((filledPercent * cellsAmount) / 100);
   const arrayOfIdxs: number[] = [];
@@ -51,19 +51,19 @@ export const shuffle = (arr: number[], filledCellsAmount: number) => {
   return arrayCopy.slice(0, filledCellsAmount);
 };
 
-export const makeEmptyMatrix = (y: number, x: number): BooleanMatrix => {
+export const makeEmptyMatrix = (y: number, x: number): FieldData => {
   return Array.from({ length: x * y }).map(() => {
     return 0;
   });
 };
 
 export const mergeMatrices = (
-  oldMatrix: BooleanMatrix,
+  oldMatrix: FieldData,
   oldY: number,
   oldX: number,
   newY: number,
   newX: number
-): BooleanMatrix => {
+): FieldData => {
   const copyOld = oldMatrix.slice();
   if (oldY >= newY) {
     copyOld.splice(newY * oldX);
@@ -90,26 +90,22 @@ export const mergeMatrices = (
   return copyOld;
 };
 
-export const matrixSum = (matrix: BooleanMatrix): number => {
+export const matrixSum = (matrix: FieldData): number => {
   return matrix.reduce((acc, el) => {
     return acc + el;
   }, 0);
 };
 
-export const calculatePercentage = (matrix: BooleanMatrix): number => {
+export const calculatePercentage = (matrix: FieldData): number => {
   return Math.floor((matrixSum(matrix) / matrix.length) * 100);
 };
 
-export const isNumber = (item: number): boolean => {
-  return !Number.isNaN(item);
+export const isNumber = (item: any): boolean => {
+  return Number.isFinite(item);
 };
 
 export const assertSizeValue = (value: number): boolean => {
   return isNumber(value) && value > 0;
-};
-
-export const assertZero = (value: number | null): boolean => {
-  return value !== null && value !== 0;
 };
 
 export const assertPercentValue = (value: number): boolean => {
@@ -117,10 +113,10 @@ export const assertPercentValue = (value: number): boolean => {
 };
 
 export const generationGenerator = (
-  matrix: BooleanMatrix,
+  matrix: FieldData,
   cache: Cache
-): BooleanMatrix => {
-  const nextGenMatrix: BooleanMatrix = matrix.map((cell, cellIdx) => {
+): FieldData => {
+  const nextGenMatrix: FieldData = matrix.map((cell, cellIdx) => {
     let counter = 0;
     let i = 0;
     while (counter <= 4 && i < 8) {
@@ -135,11 +131,7 @@ export const generationGenerator = (
   return nextGenMatrix;
 };
 
-export const cacheNeighbours = (
-  matrix: BooleanMatrix,
-  y: number,
-  x: number
-) => {
+export const cacheNeighbours = (matrix: FieldData, y: number, x: number) => {
   const cache: Cache = {};
   matrix.forEach((_, idx) => {
     cache[idx] = getNeighbours(Math.floor(idx / x), idx % x, y, x);

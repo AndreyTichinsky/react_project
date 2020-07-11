@@ -1,70 +1,27 @@
 import { actions, reducer, initialState } from "./reducer";
+import type { GameState } from "./reducer";
 
 describe("Game reducer", () => {
-  it("when cell value is false and call setCellState then fiedlState cell change its value", () => {
-    expect(initialState.fieldState[0]).toEqual(0);
-    expect(reducer(initialState, actions.setCellState(0))).toEqual({
+  let cloneInitialState: GameState;
+  beforeEach(() => {
+    cloneInitialState = {
       ...initialState,
-      fieldState: [
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-      ],
+      fieldState: [0, 0, 0, 0],
+    };
+  });
+
+  it("when cell value is false and call setCellState then fiedlState cell change its value", () => {
+    expect(cloneInitialState.fieldState[0]).toEqual(0);
+    expect(reducer(cloneInitialState, actions.setCellState(0))).toEqual({
+      ...cloneInitialState,
+      fieldState: [1, 0, 0, 0],
     });
   });
   it("when cell value is true and call setCellState then fiedlState cell change its value", () => {
-    const newState = reducer(initialState, actions.setCellState(0));
+    const newState = reducer(cloneInitialState, actions.setCellState(0));
     expect(reducer(newState, actions.setCellState(0))).toEqual({
-      ...initialState,
-      fieldState: [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-      ],
+      ...cloneInitialState,
+      fieldState: [0, 0, 0, 0],
     });
   });
   it("play expect to change gameInProgress property", () => {
@@ -72,6 +29,14 @@ describe("Game reducer", () => {
     expect(reducer(initialState, actions.play())).toEqual({
       ...initialState,
       gameInProgress: true,
+    });
+  });
+  it("stop expect to change gameInProgress property", () => {
+    const newState = reducer(cloneInitialState, actions.play());
+    expect(newState.gameInProgress).toEqual(true);
+    expect(reducer(newState, actions.stop())).toEqual({
+      ...newState,
+      gameInProgress: false,
     });
   });
   it("setInitialPercent expect to change initialPercent property", () => {
@@ -103,36 +68,32 @@ describe("Game reducer", () => {
     });
   });
   it("setFieldState expect to change fieldState property", () => {
-    expect(initialState.fieldState).toEqual([
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-    ]);
-    expect(reducer(initialState, actions.setFieldState([1, 0, 0, 1]))).toEqual({
-      ...initialState,
+    expect(cloneInitialState.fieldState).toEqual([0, 0, 0, 0]);
+    expect(
+      reducer(cloneInitialState, actions.setFieldState([1, 0, 0, 1]))
+    ).toEqual({
+      ...cloneInitialState,
       fieldState: [1, 0, 0, 1],
+    });
+  });
+  it("updateFieldState expect to change fieldState property", () => {
+    expect(cloneInitialState.fieldState).toEqual([0, 0, 0, 0]);
+    expect(
+      reducer(cloneInitialState, actions.updateFieldState([1, 0, 0, 1]))
+    ).toEqual({
+      ...cloneInitialState,
+      fieldState: [1, 0, 0, 1],
+    });
+  });
+  it("reset expect to change fieldState property", () => {
+    const newState = reducer(
+      cloneInitialState,
+      actions.setFieldState([1, 0, 0, 1])
+    );
+    expect(newState.fieldState).toEqual([1, 0, 0, 1]);
+    expect(reducer(newState, actions.reset([0, 0, 0, 0]))).toEqual({
+      ...newState,
+      fieldState: [0, 0, 0, 0],
     });
   });
 });
