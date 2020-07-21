@@ -1,5 +1,5 @@
 import React from "react";
-import { action } from "@storybook/addon-actions";
+import { dispatch } from "@/redux/store";
 import { withKnobs, number } from "@storybook/addon-knobs";
 
 import { MenuInputWithLabel } from "./MenuInputWithLabel";
@@ -8,8 +8,6 @@ export default {
   title: "MenuInputWithLabel",
   decorators: [withKnobs],
 };
-
-const onChange = action("change (element)");
 
 export const instanceMenuInputWithLabel = () => (
   <MenuInputWithLabel
@@ -20,7 +18,7 @@ export const instanceMenuInputWithLabel = () => (
     min="0"
     max="100"
     value={number("value", 10)}
-    eventName="handleFilledPercent"
-    eventHandler={action("eventHandler invoke")}
+    dispatch={dispatch}
+    action="dummy"
   />
 );

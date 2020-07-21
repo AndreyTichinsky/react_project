@@ -2,11 +2,13 @@ import React, { FC } from "react";
 import { MenuProps } from "./Menu.interface";
 import { MenuButton } from "@/components/MenuButton";
 import { MenuInputWithLabel } from "@/components/MenuInputWithLabel";
+import { AppDispatch } from "@/redux/store";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { menuForm, disabledForm, MenuWrapper } from "./Menu.styled";
 import { connect } from "react-redux";
 import { State } from "@/redux/store";
+import { actions } from "@/modules/Game/reducer";
 
 const mapStateToProps = (state: State) => ({
   initialPercent: state.game.initialPercent,
@@ -15,7 +17,9 @@ const mapStateToProps = (state: State) => ({
   isDisabled: state.game.gameInProgress,
 });
 
-export const MenuComponent: FC<MenuProps> = (props) => {
+export const MenuComponent: FC<MenuProps & { dispatch: AppDispatch }> = (
+  props
+) => {
   return (
     <MenuWrapper>
       <fieldset disabled={props.isDisabled}>
@@ -33,8 +37,8 @@ export const MenuComponent: FC<MenuProps> = (props) => {
             min="0"
             max="100"
             value={props.xSize}
-            eventName="handleXSizeChange"
-            eventHandler={props.eventHandler}
+            dispatch={props.dispatch}
+            action={actions.setXSize.type}
           />
           <MenuInputWithLabel
             labelText="ySize"
@@ -44,8 +48,8 @@ export const MenuComponent: FC<MenuProps> = (props) => {
             min="0"
             max="50"
             value={props.ySize}
-            eventName="handleYSizeChange"
-            eventHandler={props.eventHandler}
+            dispatch={props.dispatch}
+            action={actions.setYSize.type}
           />
           <MenuInputWithLabel
             labelText="Filled %"
@@ -55,19 +59,19 @@ export const MenuComponent: FC<MenuProps> = (props) => {
             min="0"
             max="100"
             value={props.initialPercent}
-            eventName="handleFilledPercent"
-            eventHandler={props.eventHandler}
+            dispatch={props.dispatch}
+            action={actions.setInitialPercent.type}
           />
           <MenuButton
             className="generator_button"
-            eventHandler={props.eventHandler}
-            eventName="handleGenerator"
+            action={actions.generateRandomField.type}
+            dispatch={props.dispatch}
             buttonText="Random generation"
           />
           <MenuButton
             className="reset_button"
-            eventHandler={props.eventHandler}
-            eventName="handleReset"
+            action={actions.reset.type}
+            dispatch={props.dispatch}
             buttonText="Reset"
           />
         </form>

@@ -85,15 +85,4 @@ describe("Game reducer", () => {
       fieldState: [1, 0, 0, 1],
     });
   });
-  it("reset expect to change fieldState property", () => {
-    const newState = reducer(
-      cloneInitialState,
-      actions.setFieldState([1, 0, 0, 1])
-    );
-    expect(newState.fieldState).toEqual([1, 0, 0, 1]);
-    expect(reducer(newState, actions.reset([0, 0, 0, 0]))).toEqual({
-      ...newState,
-      fieldState: [0, 0, 0, 0],
-    });
-  });
 });

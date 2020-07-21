@@ -3,6 +3,10 @@ import { FieldData } from "types/game";
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { rootSaga } from "@/modules/Game/saga";
+import {
+  filledPercentValidation,
+  sizeValidation,
+} from "@/modules/Game/middlewares";
 import * as helper from "@/modules/Game/GameHelper";
 
 export interface State {
@@ -39,10 +43,11 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer,
-  middleware: [sagaMiddleware],
+  middleware: [filledPercentValidation, sizeValidation, sagaMiddleware],
   devTools: true,
 });
 
 sagaMiddleware.run(rootSaga);
 
+export const { dispatch } = store;
 export type AppDispatch = typeof store.dispatch;

@@ -1,5 +1,5 @@
 import React from "react";
-import { action } from "@storybook/addon-actions";
+import { dispatch } from "@/redux/store";
 import { withKnobs } from "@storybook/addon-knobs";
 
 import { MenuButton } from "./MenuButton";
@@ -12,8 +12,8 @@ export default {
 export const instanceMenuButton = () => (
   <MenuButton
     className="button"
-    eventName="handleGenerator"
     buttonText={"MenuButton"}
-    eventHandler={action("on submit")}
+    action="dummy action"
+    dispatch={dispatch}
   />
 );

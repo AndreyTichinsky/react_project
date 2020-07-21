@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { AppDispatch } from "@/redux/store";
 import { gameFieldset, progressButton } from "./StartForm.styled";
 import { StartFormProps } from "./StartForm.interface";
 import { connect } from "react-redux";
@@ -9,13 +10,18 @@ const mapStateToProps = (state: State) => ({
   updateSpeed: state.game.updateSpeed,
 });
 
-export const StartFormComponent: FC<StartFormProps> = (props) => {
+export const StartFormComponent: FC<
+  StartFormProps & { dispatch: AppDispatch }
+> = (props) => {
   return (
     <fieldset css={gameFieldset}>
       <form>
         <button
           className="progress_button"
-          onClick={props.handleProgress}
+          onClick={(ev) => {
+            ev.preventDefault();
+            props.dispatch({ type: props.actionProgress });
+          }}
           css={progressButton}
         >
           {props.gameInProgress ? "Stop" : "Start"}
@@ -25,7 +31,12 @@ export const StartFormComponent: FC<StartFormProps> = (props) => {
           <select
             className="speed_select"
             value={props.updateSpeed}
-            onChange={props.selectHandler}
+            onChange={(event) =>
+              props.dispatch({
+                type: props.actionSelect,
+                payload: event.target.value,
+              })
+            }
           >
             <option value="slow">slow</option>
             <option value="normal">normal</option>

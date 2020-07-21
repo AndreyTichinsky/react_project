@@ -35,6 +35,9 @@ export const gameSlice = createSlice({
         fieldState: fieldStateCopy,
       };
     },
+    setProgress: (state) => {
+      return { ...state };
+    },
     stop: (state) => {
       return {
         ...state,
@@ -71,8 +74,11 @@ export const gameSlice = createSlice({
     setFieldState: (state, action: PayloadAction<any>) => {
       return { ...state, fieldState: action.payload };
     },
-    reset: (state, action: PayloadAction<any>) => {
-      return { ...state, fieldState: action.payload, initialPercent: 0 };
+    reset: (state) => {
+      return { ...state };
+    },
+    generateRandomField: (state) => {
+      return { ...state };
     },
     updateFieldState: (state, action: PayloadAction<any>) => {
       return { ...state, fieldState: action.payload };
