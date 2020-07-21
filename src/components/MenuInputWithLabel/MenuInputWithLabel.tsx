@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import type { HandlerNameType } from "types/game";
+import { AppDispatch } from "@/redux/store";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import {
@@ -16,17 +16,12 @@ interface MenuInputWithLabelProps {
   min: string;
   max: string;
   value: number;
-  eventName: HandlerNameType;
-  eventHandler: (ev: React.FormEvent, eventName: HandlerNameType) => void;
+  action: string;
 }
 
-export const MenuInputWithLabel: FC<MenuInputWithLabelProps> = ({
-  labelText,
-  eventName,
-  eventHandler,
-  value,
-  ...props
-}) => {
+export const MenuInputWithLabel: FC<
+  MenuInputWithLabelProps & { dispatch: AppDispatch }
+> = ({ labelText, action, value, dispatch, ...props }) => {
   return (
     <fieldset
       css={css`
@@ -39,7 +34,9 @@ export const MenuInputWithLabel: FC<MenuInputWithLabelProps> = ({
         <input
           {...props}
           value={Number(value).toString()}
-          onChange={(ev) => eventHandler(ev, eventName)}
+          onChange={(ev) =>
+            dispatch({ type: action, payload: Number(ev.target.value) })
+          }
         />
       </label>
     </fieldset>

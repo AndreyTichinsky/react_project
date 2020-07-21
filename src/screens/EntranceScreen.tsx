@@ -1,6 +1,6 @@
 import React, { useCallback, FC } from "react";
 import { useHistory } from "react-router-dom";
-import { Entrance, EntranceState } from "@/modules/Entrance";
+import { Entrance } from "@/modules/Entrance";
 import { connect } from "react-redux";
 import { State } from "@/redux/store";
 

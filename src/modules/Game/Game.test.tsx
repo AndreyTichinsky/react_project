@@ -7,15 +7,24 @@ import { Provider } from "react-redux";
 import { actions } from "./reducer";
 import { preloadedState } from "@/redux/store";
 import { reducer } from "@/redux/reducer";
+import createSagaMiddleware from "redux-saga";
+import { rootSaga } from "@/modules/Game/saga";
+import {
+  filledPercentValidation,
+  sizeValidation,
+} from "@/modules/Game/middlewares";
 
 describe("Game", () => {
   let store: any, wrapper: any;
   beforeEach(() => {
+    const sagaMiddleware = createSagaMiddleware();
     store = configureStore({
       reducer,
+      middleware: [filledPercentValidation, sizeValidation, sagaMiddleware],
       preloadedState,
       devTools: true,
     });
+    sagaMiddleware.run(rootSaga);
     wrapper = mount(
       <Provider store={store}>
         <Game />

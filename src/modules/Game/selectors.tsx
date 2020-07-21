@@ -4,7 +4,10 @@ import { FieldData } from "types/game";
 
 export const getFieldUpdateSpeed = (state: State) => state.game.updateSpeed;
 export const getFieldState = (state: State) => state.game.fieldState;
+export const getGameInProgress = (state: State) => state.game.gameInProgress;
+export const getInitialPercent = (state: State) => state.game.initialPercent;
 export const getXSizeState = (state: State) => state.game.xSize;
+export const getYSizeState = (state: State) => state.game.ySize;
 export const getCellProps = (_: State, props: any) => props;
 
 interface Speed {

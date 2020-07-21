@@ -1,26 +1,28 @@
 import React, { FC } from "react";
-import type { HandlerNameType } from "types/game";
+import { AppDispatch } from "@/redux/store";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { menuButton } from "./MenuButton.styled";
 
 interface MenuButtonProps {
   className: string;
-  eventName: HandlerNameType;
   buttonText: string;
-  eventHandler: (ev: React.FormEvent, eventName: HandlerNameType) => void;
+  action: string;
 }
 
-export const MenuButton: FC<MenuButtonProps> = ({
+export const MenuButton: FC<MenuButtonProps & { dispatch: AppDispatch }> = ({
   className,
-  eventHandler,
-  eventName,
+  action,
   buttonText,
+  dispatch,
 }) => {
   return (
     <button
       className={className}
-      onClick={(ev) => eventHandler(ev, eventName)}
+      onClick={(ev) => {
+        ev.preventDefault();
+        dispatch({ type: action });
+      }}
       css={menuButton}
     >
       {buttonText}
