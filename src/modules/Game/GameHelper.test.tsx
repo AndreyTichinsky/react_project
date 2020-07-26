@@ -15,7 +15,7 @@ describe("Game helpers testing", () => {
     const shuffleArray = helper.shuffle([1, 2, 3, 4, 5, 6], 3);
     expect(shuffleArray.length).toEqual(3);
   });
-  it("mergeMatrices test", () => {
+  it("mergeMatrices increase x and y size", () => {
     const matrixMain = [0, 1, 1, 1, 0, 1, 1, 1, 0];
     expect(helper.mergeMatrices(matrixMain, 3, 3, 4, 4)).toStrictEqual([
       0,
@@ -30,6 +30,23 @@ describe("Game helpers testing", () => {
       1,
       0,
       0,
+      0,
+      0,
+      0,
+      0,
+    ]);
+  });
+  it("mergeMatrices reduce x size", () => {
+    const matrixMain = [0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0];
+    expect(helper.mergeMatrices(matrixMain, 4, 4, 4, 3)).toStrictEqual([
+      0,
+      1,
+      1,
+      1,
+      0,
+      1,
+      1,
+      1,
       0,
       0,
       0,
