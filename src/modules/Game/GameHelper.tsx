@@ -84,7 +84,8 @@ export const mergeMatrices = (
     }
   } else if (newX < oldX) {
     for (let y = newY; 1 <= y; y--) {
-      copyOld.splice(y * newX, oldX - newX);
+      const diff = oldX - newX;
+      copyOld.splice(y * oldX - diff, diff);
     }
   }
   return copyOld;
