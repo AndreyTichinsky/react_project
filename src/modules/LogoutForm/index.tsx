@@ -1,2 +1,2 @@
 export { LogoutForm } from "./LogoutForm";
-export { LogoutFormProps } from "./LogoutForm.interface";
+export type { LogoutFormProps } from "./LogoutForm.interface";
