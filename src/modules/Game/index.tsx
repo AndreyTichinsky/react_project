@@ -1,2 +1,2 @@
 export { Game } from "./Game";
-export { Cache } from "./Game.interface";
+export type { Cache } from "./Game.interface";

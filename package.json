@@ -6,6 +6,9 @@
   "scripts": {
     "build": "npx webpack --mode development",
     "test": "jest",
+    "next:dev": "next dev -p 8081",
+    "next:build": "next build",
+    "next:start": "next start",
     "calc": "npx ts-node src/lesson2",
     "lint": "npx eslint --ext .js,.jsx,.ts,.tsx --fix src/",
     "start": "npx webpack-dev-server --mode development --open --hot",
@@ -93,6 +96,7 @@
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@reduxjs/toolkit": "^1.4.0",
+    "next": "^9.5.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
