@@ -15,7 +15,10 @@
       ]
     },
     "types": [
-      "@emotion/core"
+      "@emotion/core",
+      "puppeteer",
+      "jest-environment-puppeteer",
+      "expect-puppeteer"
     ],
     "target": "es5",
     "jsx": "preserve",
