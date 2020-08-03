@@ -21,3 +21,7 @@ dist
 coverage
 
 .next
+
+# stryker temp files
+.stryker-tmp
+reports
