@@ -26,7 +26,7 @@ export const sizeValidation: Middleware = ({ dispatch, getState }) => (
   next
 ) => (action) => {
   if (
-    action.type !== actions.setXSize.type ||
+    action.type !== actions.setXSize.type &&
     action.type !== actions.setYSize.type
   ) {
     return next(action);
