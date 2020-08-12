@@ -1,2 +1,2 @@
 export { Menu, MenuComponent } from "./Menu";
-export { MenuProps } from "./Menu.interface";
+export type { MenuProps } from "./Menu.interface";

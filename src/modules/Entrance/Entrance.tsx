@@ -23,7 +23,7 @@ export interface EntranceProps {
 
 export const EntranceComponent: FC<EntranceProps> = (props) => (
   <BaseEntrance>
-    <form onSubmit={props.submitHandler}>
+    <form onSubmit={props.submitHandler} name="login">
       <label
         css={css`
           ${entranceLabelColor}
