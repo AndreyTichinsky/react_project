@@ -120,10 +120,11 @@ export const generationGenerator = (
   const nextGenMatrix: FieldData = matrix.map((cell, cellIdx) => {
     let counter = 0;
     let i = 0;
-    while (counter <= 4 && i < 8) {
+    while (counter < 4 && i < 8) {
       counter += matrix[cache[cellIdx][i]];
       i++;
     }
+
     return (cell === 1 && (counter === 2 || counter === 3)) ||
       (cell === 0 && counter === 3)
       ? 1
