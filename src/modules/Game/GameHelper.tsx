@@ -101,7 +101,7 @@ export const calculatePercentage = (matrix: FieldData): number => {
   return Math.floor((matrixSum(matrix) / matrix.length) * 100);
 };
 
-export const isNumber = (item: any): boolean => {
+export const isNumber = (item: number): boolean => {
   return Number.isFinite(item);
 };
 
