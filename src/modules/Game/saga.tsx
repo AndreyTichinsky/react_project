@@ -78,7 +78,7 @@ export function* checkSize() {
     const oldY = yield select(getYSizeState);
     let newFieldState;
     if (action.type === actions.setXSize.type) {
-      newFieldState = updateStateMatrix({
+      newFieldState = yield call(updateStateMatrix, {
         newY: oldY,
         newX: action.payload,
         fieldState,
@@ -86,7 +86,7 @@ export function* checkSize() {
         oldY,
       });
     } else if (action.type === actions.setYSize.type) {
-      newFieldState = updateStateMatrix({
+      newFieldState = yield call(updateStateMatrix, {
         newY: action.payload,
         newX: oldX,
         fieldState,
