@@ -13,6 +13,10 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("EntranceScreen", () => {
+  window.localStorage.setItem(
+    "GameOfLife",
+    JSON.stringify({ username: "Andrey" })
+  );
   let store: any, wrapper: any;
   beforeEach(() => {
     store = configureStore({
@@ -29,6 +33,13 @@ describe("EntranceScreen", () => {
   afterEach(() => {
     wrapper.unmount();
     store = null;
+    window.localStorage.clear();
+  });
+  it("submit logged in user", () => {
+    wrapper.find("form").simulate("submit", {
+      preventDefault: () => null,
+    });
+    expect(mockHistory.push).toHaveBeenCalledWith(`/users/Andrey`);
   });
   it("submit new user", () => {
     const name = "John Doe";
