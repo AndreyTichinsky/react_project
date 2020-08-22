@@ -1,13 +1,9 @@
 import React, { FC, useCallback } from "react";
-import { CellItem } from "./CellItem";
 import { connect } from "react-redux";
-import { AppDispatch } from "@/redux/store";
-import { State } from "@/redux/store";
-import { actions } from "@/modules/Game/reducer";
-import {
-  makeConvertSpeedToNumber,
-  makeGetAlive,
-} from "@/modules/Game/selectors";
+
+import { AppDispatch, State } from "@/redux";
+import { gameActions, makeConvertSpeedToNumber, makeGetAlive } from "@/modules";
+import { CellItem } from "./CellItem";
 
 interface CellProps {
   isAlive: boolean;
@@ -31,7 +27,7 @@ const makeMapStateToProps = () => {
 
 const CellComponent: FC<CellProps & { dispatch: AppDispatch }> = (props) => {
   const onClick = useCallback(() => {
-    props.dispatch(actions.setCellState(props.idx));
+    props.dispatch(gameActions.setCellState(props.idx));
   }, []);
   return (
     <CellItem

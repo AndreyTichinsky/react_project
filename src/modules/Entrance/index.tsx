@@ -1,2 +1,2 @@
 export { Entrance } from "./Entrance";
-export { entranceSlice } from "./reducer";
+export { entranceSlice, actions as entranceActions } from "./reducer";

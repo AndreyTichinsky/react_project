@@ -1,4 +1,4 @@
-export { Entrance, entranceSlice } from "./Entrance";
+export { Entrance, entranceSlice, entranceActions } from "./Entrance";
 export { Field, Cell } from "./Field";
 export {
   Game,
@@ -6,6 +6,11 @@ export {
   sizeValidation,
   makeEmptyMatrix,
   makeGetAlive,
+  makeConvertSpeedToNumber,
+  gameSlice,
+  gameActions,
+  rootSaga,
+  helper,
 } from "./Game";
 export { LogoutForm } from "./LogoutForm";
 export { Menu } from "./Menu";

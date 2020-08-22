@@ -1,14 +1,13 @@
 import React, { FC } from "react";
-import { MenuProps } from "./Menu.interface";
-import { MenuButton } from "@/components/MenuButton";
-import { MenuInputWithLabel } from "@/components/MenuInputWithLabel";
-import { AppDispatch } from "@/redux/store";
+import { connect } from "react-redux";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+
+import { MenuButton, MenuInputWithLabel } from "@/components";
+import { AppDispatch, State } from "@/redux";
+import { gameActions } from "@/modules";
 import { menuForm, disabledForm, MenuWrapper } from "./Menu.styled";
-import { connect } from "react-redux";
-import { State } from "@/redux/store";
-import { actions } from "@/modules/Game/reducer";
+import { MenuProps } from "./Menu.interface";
 
 const mapStateToProps = (state: State) => ({
   initialPercent: state.game.initialPercent,
@@ -38,7 +37,7 @@ export const MenuComponent: FC<MenuProps & { dispatch: AppDispatch }> = (
             max="100"
             value={props.xSize}
             dispatch={props.dispatch}
-            action={actions.setXSize.type}
+            action={gameActions.setXSize.type}
           />
           <MenuInputWithLabel
             labelText="ySize"
@@ -49,7 +48,7 @@ export const MenuComponent: FC<MenuProps & { dispatch: AppDispatch }> = (
             max="50"
             value={props.ySize}
             dispatch={props.dispatch}
-            action={actions.setYSize.type}
+            action={gameActions.setYSize.type}
           />
           <MenuInputWithLabel
             labelText="Filled %"
@@ -60,17 +59,17 @@ export const MenuComponent: FC<MenuProps & { dispatch: AppDispatch }> = (
             max="100"
             value={props.initialPercent}
             dispatch={props.dispatch}
-            action={actions.setInitialPercent.type}
+            action={gameActions.setInitialPercent.type}
           />
           <MenuButton
             className="generator_button"
-            action={actions.generateRandomField.type}
+            action={gameActions.generateRandomField.type}
             dispatch={props.dispatch}
             buttonText="Random generation"
           />
           <MenuButton
             className="reset_button"
-            action={actions.reset.type}
+            action={gameActions.reset.type}
             dispatch={props.dispatch}
             buttonText="Reset"
           />

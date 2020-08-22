@@ -1,10 +1,10 @@
 import React from "react";
-import renderer from "react-test-renderer";
-import { Cell } from "./Cell";
 import { Provider } from "react-redux";
+import renderer from "react-test-renderer";
 import { configureStore } from "@reduxjs/toolkit";
-import { preloadedState } from "@/redux/store";
-import { reducer } from "@/redux/reducer";
+
+import { preloadedState, reducer } from "@/redux";
+import { Cell } from "./Cell";
 
 describe("Cell", () => {
   let store: any;

@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import { AppDispatch } from "@/redux/store";
+import { connect } from "react-redux";
+
+import { AppDispatch, State } from "@/redux";
 import { gameFieldset, progressButton } from "./StartForm.styled";
 import { StartFormProps } from "./StartForm.interface";
-import { connect } from "react-redux";
-import { State } from "@/redux/store";
 
 const mapStateToProps = (state: State) => ({
   gameInProgress: state.game.gameInProgress,

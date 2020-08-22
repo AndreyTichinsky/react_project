@@ -1,10 +1,11 @@
 import React, { FC } from "react";
+import { connect } from "react-redux";
+
 import { Field, Menu, LogoutForm, StartForm } from "@/modules";
 import type { FieldData } from "types/index";
 import { GameWrapper } from "./Game.styled";
 import { AppDispatch, State } from "@/redux";
 import { actions } from "./reducer";
-import { connect } from "react-redux";
 
 const mapStateToProps = (state: State) => ({
   xSize: state.game.xSize,

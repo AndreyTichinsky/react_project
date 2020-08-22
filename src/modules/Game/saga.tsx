@@ -1,6 +1,7 @@
 import { select, take, put, call, fork, delay } from "redux-saga/effects";
+
 import * as helper from "./GameHelper";
-import { Cache } from "@/modules/Game/Game.interface";
+import { Cache } from "./Game.interface";
 import {
   getFieldState,
   getXSizeState,
@@ -10,7 +11,7 @@ import {
   getFieldUpdateSpeed,
 } from "./selectors";
 import { actions } from "./reducer";
-import { FieldData } from "@/types/game";
+import { FieldData } from "types/game";
 
 export type SessionType = {
   [key: string]: boolean;

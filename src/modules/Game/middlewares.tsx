@@ -1,11 +1,11 @@
 import type { Middleware } from "redux";
-import { actions } from "@/modules/Game/reducer";
-import * as helper from "@/modules/Game/GameHelper";
+import { gameActions } from "@/modules";
+import * as helper from "./GameHelper";
 
 export const filledPercentValidation: Middleware = ({ dispatch, getState }) => (
   next
 ) => (action) => {
-  if (action.type !== actions.setInitialPercent.type) {
+  if (action.type !== gameActions.setInitialPercent.type) {
     return next(action);
   }
   let ifPassValidation = true;
@@ -26,8 +26,8 @@ export const sizeValidation: Middleware = ({ dispatch, getState }) => (
   next
 ) => (action) => {
   if (
-    action.type !== actions.setXSize.type &&
-    action.type !== actions.setYSize.type
+    action.type !== gameActions.setXSize.type &&
+    action.type !== gameActions.setYSize.type
   ) {
     return next(action);
   }

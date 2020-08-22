@@ -1,12 +1,12 @@
 import React from "react";
 import { render } from "react-dom";
 import { act } from "react-dom/test-utils";
-import { RawGame } from "@/screens/RawGame";
 import { MemoryRouter, Route } from "react-router";
 import { Provider } from "react-redux";
-import { preloadedState } from "@/redux/store";
-import { reducer } from "@/redux/reducer";
+import { preloadedState, reducer } from "@/redux";
 import { configureStore } from "@reduxjs/toolkit";
+
+import { RawGame } from "@/screens";
 
 describe("RawGame test", () => {
   let store: any;

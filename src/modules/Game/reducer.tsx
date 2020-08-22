@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import { FieldData } from "types/game";
-import * as helper from "@/modules/Game/GameHelper";
+import * as helper from "./GameHelper";
 
 export type GameState = {
   xSize: number;

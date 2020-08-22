@@ -1,9 +1,9 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { store } from "@/redux/store";
 import { action } from "@storybook/addon-actions";
 import { withKnobs } from "@storybook/addon-knobs";
 
+import { store } from "@/redux";
 import { Entrance } from "./Entrance";
 
 export default {
