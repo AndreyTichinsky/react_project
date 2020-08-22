@@ -1,6 +1,7 @@
 import React from "react";
 import { withKnobs, number } from "@storybook/addon-knobs";
 
+import "styles/global.scss";
 import { dispatch } from "@/redux";
 import { MenuComponent } from "./Menu";
 

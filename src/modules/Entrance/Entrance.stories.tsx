@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { action } from "@storybook/addon-actions";
 import { withKnobs } from "@storybook/addon-knobs";
 
+import "styles/global.scss";
 import { store } from "@/redux";
 import { Entrance } from "./Entrance";
 
