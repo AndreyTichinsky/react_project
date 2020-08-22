@@ -6,7 +6,7 @@ import { State } from "@/redux/store";
 
 import { Cell } from "./Cell";
 
-export interface FieldProps {
+interface FieldProps {
   field: FieldData;
   ySize: number;
   xSize: number;

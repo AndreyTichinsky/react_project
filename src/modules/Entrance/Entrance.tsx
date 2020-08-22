@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => ({
   handleUsername: (username: string) => dispatch(actions.setUsername(username)),
 });
 
-export interface EntranceProps {
+interface EntranceProps {
   username: string;
   submitHandler: (ev: HandlerControllerEvent) => void;
   handleUsername: (name: string) => void;

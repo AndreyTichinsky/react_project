@@ -10,9 +10,9 @@ const mapStateToProps = (state: State) => ({
   updateSpeed: state.game.updateSpeed,
 });
 
-export const StartFormComponent: FC<
-  StartFormProps & { dispatch: AppDispatch }
-> = (props) => {
+const StartFormComponent: FC<StartFormProps & { dispatch: AppDispatch }> = (
+  props
+) => {
   return (
     <fieldset css={gameFieldset}>
       <form>

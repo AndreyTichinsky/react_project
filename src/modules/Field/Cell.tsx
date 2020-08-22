@@ -9,7 +9,7 @@ import {
   makeGetAlive,
 } from "@/modules/Game/selectors";
 
-export interface CellProps {
+interface CellProps {
   isAlive: boolean;
   x: number;
   y: number;
@@ -29,9 +29,7 @@ const makeMapStateToProps = () => {
   return mapStateToProps;
 };
 
-export const CellComponent: FC<CellProps & { dispatch: AppDispatch }> = (
-  props
-) => {
+const CellComponent: FC<CellProps & { dispatch: AppDispatch }> = (props) => {
   const onClick = useCallback(() => {
     props.dispatch(actions.setCellState(props.idx));
   }, []);

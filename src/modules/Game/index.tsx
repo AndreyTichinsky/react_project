@@ -1,2 +1,4 @@
 export { Game } from "./Game";
-export type { Cache } from "./Game.interface";
+export { filledPercentValidation, sizeValidation } from "./middlewares";
+export { makeEmptyMatrix } from "./GameHelper";
+export { makeGetAlive } from "./selectors";
