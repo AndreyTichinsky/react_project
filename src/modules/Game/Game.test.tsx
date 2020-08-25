@@ -1,21 +1,17 @@
 import React from "react";
-import { mount } from "enzyme";
+import { Provider } from "react-redux";
+import { mount, ReactWrapper } from "enzyme";
+import { configureStore, EnhancedStore } from "@reduxjs/toolkit";
+import createSagaMiddleware from "redux-saga";
+
 import { Game } from "./Game";
 import { calculatePercentage } from "./GameHelper";
-import { configureStore } from "@reduxjs/toolkit";
-import { Provider } from "react-redux";
 import { actions } from "./reducer";
-import { preloadedState } from "@/redux/store";
-import { reducer } from "@/redux/reducer";
-import createSagaMiddleware from "redux-saga";
-import { rootSaga } from "@/modules/Game/saga";
-import {
-  filledPercentValidation,
-  sizeValidation,
-} from "@/modules/Game/middlewares";
+import { preloadedState, reducer, State } from "@/redux";
+import { filledPercentValidation, sizeValidation, rootSaga } from "@/modules";
 
 describe("Game", () => {
-  let store: any, wrapper: any;
+  let store: EnhancedStore<State>, wrapper: ReactWrapper;
   beforeEach(() => {
     const sagaMiddleware = createSagaMiddleware();
     store = configureStore({
@@ -33,7 +29,6 @@ describe("Game", () => {
   });
   afterEach(() => {
     wrapper.unmount();
-    store = null;
   });
 
   it("when dispatch setXSize action then state equals to expect value", () => {

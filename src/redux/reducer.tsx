@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { gameSlice } from "@/modules/Game/reducer";
-import { entranceSlice } from "@/modules/Entrance/reducer";
+
+import { gameSlice, entranceSlice } from "@/modules";
 
 export const reducer = combineReducers({
   entrance: entranceSlice.reducer,

@@ -1,21 +1,26 @@
 import React, { useCallback, FC } from "react";
 import { useHistory } from "react-router-dom";
-import { Entrance } from "@/modules/Entrance";
-import { actions } from "@/modules/Entrance/reducer";
 import { connect } from "react-redux";
-import { State } from "@/redux/store";
+
+import { Entrance, entranceActions } from "@/modules";
+import { State, AppDispatch } from "@/redux";
+
+type EntranceProps = {
+  username: string;
+  dispatch: AppDispatch;
+};
 
 const mapStateToProps = (state: State) => ({
   username: state.entrance.username,
 });
 
-export const EntranceScreenComponent: FC<{}> = (props: any) => {
+export const EntranceScreenComponent: FC<EntranceProps> = (props) => {
   const history = useHistory();
   const lastUser = localStorage.getItem("GameOfLife");
   if (lastUser) {
     const parsedData = JSON.parse(lastUser);
     if (props.username !== parsedData.username) {
-      props.dispatch(actions.setUsername(parsedData.username));
+      props.dispatch(entranceActions.setUsername(parsedData.username));
     }
   }
   const onSubmit = useCallback(

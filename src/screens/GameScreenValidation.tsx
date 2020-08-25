@@ -1,6 +1,7 @@
 import React from "react";
-import { RawGame } from "@/screens/RawGame";
 import { Route, useParams, Redirect } from "react-router-dom";
+
+import { RawGame } from "@/screens";
 
 export const GameScreenValidation: React.FC<{}> = () => {
   const { username } = useParams();

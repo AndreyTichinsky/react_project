@@ -1,13 +1,17 @@
 import React, { useCallback } from "react";
-import { Game } from "@/modules/Game";
-import { actions } from "@/modules/Entrance/reducer";
-import { actions as gameActions } from "@/modules/Game/reducer";
 import { useParams, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
-export const RawGameComponent: React.FC<{}> = ({ dispatch }: any) => {
+import { Game, entranceActions, gameActions } from "@/modules";
+import { AppDispatch } from "@/redux";
+
+type RawGameProps = {
+  dispatch: AppDispatch;
+};
+
+export const RawGameComponent: React.FC<RawGameProps> = ({ dispatch }) => {
   const { username } = useParams();
-  dispatch(actions.setUsername(username));
+  dispatch(entranceActions.setUsername(username));
   const history = useHistory();
   const onLogout = useCallback((ev) => {
     ev.preventDefault();
@@ -17,9 +21,9 @@ export const RawGameComponent: React.FC<{}> = ({ dispatch }: any) => {
     dispatch(gameActions.reset());
     dispatch(gameActions.setXSize(5));
     dispatch(gameActions.setYSize(5));
-    dispatch(actions.logout());
+    dispatch(entranceActions.logout());
   }, []);
-  return <Game username={username} onLogout={onLogout} />;
+  return <Game onLogout={onLogout} />;
 };
 
 export const RawGame = connect()(RawGameComponent);

@@ -1,13 +1,14 @@
-import { reducer } from "./reducer";
-import { FieldData } from "types/game";
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import { rootSaga } from "@/modules/Game/saga";
+
+import { reducer } from "./reducer";
+import { FieldData } from "types/game";
 import {
   filledPercentValidation,
   sizeValidation,
-} from "@/modules/Game/middlewares";
-import * as helper from "@/modules/Game/GameHelper";
+  rootSaga,
+  helper,
+} from "@/modules";
 
 export interface State {
   game: {

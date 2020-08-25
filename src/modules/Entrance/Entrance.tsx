@@ -1,11 +1,12 @@
 import React, { FC } from "react";
-import type { HandlerControllerEvent } from "types/menu";
-import { BaseEntrance, entranceLabelColor } from "./Entrance.styled";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { connect } from "react-redux";
+
 import { actions } from "./reducer";
-import { AppDispatch, State } from "@/redux/store";
+import { AppDispatch, State } from "@/redux";
+import type { HandlerControllerEvent } from "types/menu";
+import { BaseEntrance, entranceLabelColor } from "./Entrance.styled";
 
 const mapStateToProps = (state: State) => ({
   username: state.entrance.username,
@@ -15,7 +16,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => ({
   handleUsername: (username: string) => dispatch(actions.setUsername(username)),
 });
 
-export interface EntranceProps {
+interface EntranceProps {
   username: string;
   submitHandler: (ev: HandlerControllerEvent) => void;
   handleUsername: (name: string) => void;

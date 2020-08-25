@@ -1,4 +1,5 @@
 import { expectSaga } from "redux-saga-test-plan";
+
 import { Cache } from "@/modules/Game/Game.interface";
 import {
   getFieldState,
@@ -10,7 +11,6 @@ import {
 } from "./selectors";
 import { actions } from "./reducer";
 import type { State } from "@/redux/store";
-
 import {
   checkEnd,
   checkRepeat,
@@ -25,7 +25,6 @@ import {
   generator,
 } from "./saga";
 import type { DataType } from "./saga";
-import { preloadedState } from "../../../.history/src/modules/Game/saga.test_20200818202446";
 
 describe("Sagas test", () => {
   let preloadedState: State;

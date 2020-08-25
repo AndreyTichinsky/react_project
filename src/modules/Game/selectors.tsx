@@ -1,5 +1,7 @@
 import { createSelector } from "reselect";
-import { State } from "@/redux/store";
+import { CellProps } from "@/modules";
+
+import { State } from "@/redux";
 import { FieldData } from "types/game";
 
 export const getFieldUpdateSpeed = (state: State) => state.game.updateSpeed;
@@ -8,7 +10,7 @@ export const getGameInProgress = (state: State) => state.game.gameInProgress;
 export const getInitialPercent = (state: State) => state.game.initialPercent;
 export const getXSizeState = (state: State) => state.game.xSize;
 export const getYSizeState = (state: State) => state.game.ySize;
-export const getCellProps = (_: State, props: any) => props;
+export const getCellProps = (_: State, props: CellProps) => props;
 
 interface Speed {
   [index: string]: number;
@@ -28,7 +30,7 @@ export const makeConvertSpeedToNumber = () => {
 export const makeGetAlive = () => {
   return createSelector(
     [getFieldState, getCellProps, getXSizeState],
-    (fieldState: FieldData, props: any, xSize: number) => {
+    (fieldState: FieldData, props: CellProps, xSize: number) => {
       return fieldState[props.y * xSize + props.x];
     }
   );

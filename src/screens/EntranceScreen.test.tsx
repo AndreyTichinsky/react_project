@@ -1,10 +1,10 @@
 import React from "react";
-import { EntranceScreen } from "@/screens/EntranceScreen";
-import { mount } from "enzyme";
-import { configureStore } from "@reduxjs/toolkit";
+import { mount, ReactWrapper } from "enzyme";
+import { configureStore, EnhancedStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import { preloadedState } from "@/redux/store";
-import { reducer } from "@/redux/reducer";
+
+import { EntranceScreen } from "@/screens";
+import { preloadedState, reducer, State } from "@/redux";
 
 import "mock-local-storage";
 Object.defineProperty(window, "localStorage", {
@@ -22,7 +22,7 @@ jest.mock("react-router-dom", () => ({
 
 describe("EntranceScreen", () => {
   localStorage.setItem("GameOfLife", JSON.stringify({ username: "Andrey" }));
-  let store: any, wrapper: any;
+  let store: EnhancedStore<State>, wrapper: ReactWrapper;
   beforeEach(() => {
     store = configureStore({
       reducer,

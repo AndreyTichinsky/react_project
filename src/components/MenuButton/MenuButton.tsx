@@ -1,7 +1,6 @@
 import React, { FC } from "react";
-import { AppDispatch } from "@/redux/store";
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+
+import { AppDispatch } from "@/redux";
 import { menuButton } from "./MenuButton.styled";
 
 interface MenuButtonProps {
