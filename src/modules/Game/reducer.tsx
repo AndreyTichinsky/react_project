@@ -83,9 +83,6 @@ export const gameSlice = createSlice({
     updateFieldState: (state, action: PayloadAction<any>) => {
       return { ...state, fieldState: action.payload };
     },
-    setAnyState: (state, action: PayloadAction<any>) => {
-      return { ...state, ...action.payload };
-    },
   },
 });
 

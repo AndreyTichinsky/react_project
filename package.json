@@ -85,6 +85,7 @@
     "jest": "^25.5.4",
     "jest-emotion": "^10.0.32",
     "loki": "^0.21.1",
+    "mock-local-storage": "^1.1.15",
     "prettier": "2.0.2",
     "puppeteer": "^5.2.1",
     "react-docgen-typescript-loader": "^3.7.2",
