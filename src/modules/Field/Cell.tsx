@@ -5,7 +5,7 @@ import { AppDispatch, State } from "@/redux";
 import { gameActions, makeConvertSpeedToNumber, makeGetAlive } from "@/modules";
 import { CellItem } from "./CellItem";
 
-interface CellProps {
+export interface CellProps {
   isAlive: boolean;
   x: number;
   y: number;
@@ -16,7 +16,7 @@ interface CellProps {
 const makeMapStateToProps = () => {
   const convertSpeedToNumber = makeConvertSpeedToNumber();
   const getAlive = makeGetAlive();
-  const mapStateToProps = (state: State, props: any) => {
+  const mapStateToProps = (state: State, props: CellProps) => {
     return {
       isAlive: !!getAlive(state, props),
       animationSpeed: convertSpeedToNumber(state),

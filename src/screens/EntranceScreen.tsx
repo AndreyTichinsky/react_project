@@ -3,13 +3,18 @@ import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { Entrance, entranceActions } from "@/modules";
-import { State } from "@/redux";
+import { State, AppDispatch } from "@/redux";
+
+type EntranceProps = {
+  username: string;
+  dispatch: AppDispatch;
+};
 
 const mapStateToProps = (state: State) => ({
   username: state.entrance.username,
 });
 
-export const EntranceScreenComponent: FC<{}> = (props: any) => {
+export const EntranceScreenComponent: FC<EntranceProps> = (props) => {
   const history = useHistory();
   const lastUser = localStorage.getItem("GameOfLife");
   if (lastUser) {

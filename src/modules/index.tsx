@@ -1,5 +1,6 @@
 export { Entrance, entranceSlice, entranceActions } from "./Entrance";
 export { Field, Cell } from "./Field";
+export type { CellProps } from "./Field";
 export {
   Game,
   filledPercentValidation,

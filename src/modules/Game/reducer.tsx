@@ -27,7 +27,7 @@ export const gameSlice = createSlice({
   name: "GAME",
   initialState,
   reducers: {
-    setCellState: (state, action: PayloadAction<any>) => {
+    setCellState: (state, action: PayloadAction<number>) => {
       const { payload } = action;
       const fieldStateCopy = state.fieldState.slice();
       fieldStateCopy[payload] = fieldStateCopy[payload] === 1 ? 0 : 1;
@@ -51,28 +51,28 @@ export const gameSlice = createSlice({
         gameInProgress: true,
       };
     },
-    setInitialPercent: (state, action: PayloadAction<any>) => {
+    setInitialPercent: (state, action: PayloadAction<number>) => {
       return {
         ...state,
         initialPercent: action.payload,
       };
     },
-    setXSize: (state, action: PayloadAction<any>) => {
+    setXSize: (state, action: PayloadAction<number>) => {
       return {
         ...state,
         xSize: action.payload,
       };
     },
-    setYSize: (state, action: PayloadAction<any>) => {
+    setYSize: (state, action: PayloadAction<number>) => {
       return {
         ...state,
         ySize: action.payload,
       };
     },
-    setSpeed: (state, action: PayloadAction<any>) => {
+    setSpeed: (state, action: PayloadAction<string>) => {
       return { ...state, updateSpeed: action.payload };
     },
-    setFieldState: (state, action: PayloadAction<any>) => {
+    setFieldState: (state, action: PayloadAction<FieldData>) => {
       return { ...state, fieldState: action.payload };
     },
     reset: (state) => {
@@ -81,7 +81,7 @@ export const gameSlice = createSlice({
     generateRandomField: (state) => {
       return { ...state };
     },
-    updateFieldState: (state, action: PayloadAction<any>) => {
+    updateFieldState: (state, action: PayloadAction<FieldData>) => {
       return { ...state, fieldState: action.payload };
     },
   },
