@@ -1,10 +1,11 @@
 import React, { FC } from "react";
-import { Field, Menu, LogoutForm, StartForm } from "@/modules";
-import type { FieldData } from "types/game";
-import { GameWrapper } from "./Game.styled";
-import { AppDispatch, State } from "@/redux/store";
-import { actions } from "./reducer";
 import { connect } from "react-redux";
+
+import { Field, Menu, LogoutForm, StartForm } from "@/modules";
+import type { FieldData } from "types/index";
+import { GameWrapper } from "./Game.styled";
+import { AppDispatch, State } from "@/redux";
+import { actions } from "./reducer";
 
 const mapStateToProps = (state: State) => ({
   xSize: state.game.xSize,
@@ -29,7 +30,7 @@ interface GameProps {
   [index: string]: any;
 }
 
-export const GameComponent: FC<GameProps> = (props) => (
+const GameComponent: FC<GameProps> = (props) => (
   <GameWrapper cellSize={props.cellSize} xSize={props.xSize}>
     <LogoutForm onLogout={props.onLogout} />
     <Menu />

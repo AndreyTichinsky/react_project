@@ -1,8 +1,8 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { store } from "@/redux/store";
 import { withKnobs, number, boolean } from "@storybook/addon-knobs";
 
+import { store } from "@/redux";
 import { Cell } from "./Cell";
 
 export default {

@@ -1,5 +1,6 @@
 import { createSelector } from "reselect";
-import { State } from "@/redux/store";
+
+import { State } from "@/redux";
 import { FieldData } from "types/game";
 
 export const getFieldUpdateSpeed = (state: State) => state.game.updateSpeed;

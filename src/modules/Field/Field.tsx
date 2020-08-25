@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import { FieldData } from "types/game";
-import { FieldWrapper } from "./Field.styled";
 import { connect } from "react-redux";
-import { State } from "@/redux/store";
 
+import { FieldWrapper } from "./Field.styled";
+import { FieldData } from "types/game";
+import { State } from "@/redux";
 import { Cell } from "./Cell";
 
-export interface FieldProps {
+interface FieldProps {
   field: FieldData;
   ySize: number;
   xSize: number;

@@ -12,7 +12,7 @@ export const makeMatrix = (
   return makeFilledMatrix(y, x, filledPercent);
 };
 
-export const makeFilledMatrix = (
+const makeFilledMatrix = (
   y: number,
   x: number,
   filledPercent: number

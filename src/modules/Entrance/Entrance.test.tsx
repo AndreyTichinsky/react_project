@@ -1,5 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
+
 import { EntranceComponent } from "./Entrance";
 
 const defaultProps = {

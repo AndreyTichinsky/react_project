@@ -1,18 +1,14 @@
 import React from "react";
+import { Provider } from "react-redux";
 import { mount } from "enzyme";
+import { configureStore } from "@reduxjs/toolkit";
+import createSagaMiddleware from "redux-saga";
+
 import { Game } from "./Game";
 import { calculatePercentage } from "./GameHelper";
-import { configureStore } from "@reduxjs/toolkit";
-import { Provider } from "react-redux";
 import { actions } from "./reducer";
-import { preloadedState } from "@/redux/store";
-import { reducer } from "@/redux/reducer";
-import createSagaMiddleware from "redux-saga";
-import { rootSaga } from "@/modules/Game/saga";
-import {
-  filledPercentValidation,
-  sizeValidation,
-} from "@/modules/Game/middlewares";
+import { preloadedState, reducer } from "@/redux";
+import { filledPercentValidation, sizeValidation, rootSaga } from "@/modules";
 
 describe("Game", () => {
   let store: any, wrapper: any;

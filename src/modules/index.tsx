@@ -1,10 +1,17 @@
-export { Entrance } from "./Entrance/index";
-export { Field, Cell } from "./Field/index";
-export { Game } from "./Game/index";
-export type { Cache } from "./Game/index";
-export { LogoutForm } from "./LogoutForm/index";
-export type { LogoutFormProps } from "./LogoutForm/index";
-export { Menu, MenuComponent } from "./Menu/index";
-export type { MenuProps } from "./Menu/index";
-export { StartForm, StartFormComponent } from "./StartForm/index";
-export type { StartFormProps } from "./StartForm/index";
+export { Entrance, entranceSlice, entranceActions } from "./Entrance";
+export { Field, Cell } from "./Field";
+export {
+  Game,
+  filledPercentValidation,
+  sizeValidation,
+  makeEmptyMatrix,
+  makeGetAlive,
+  makeConvertSpeedToNumber,
+  gameSlice,
+  gameActions,
+  rootSaga,
+  helper,
+} from "./Game";
+export { LogoutForm } from "./LogoutForm";
+export { Menu } from "./Menu";
+export { StartForm } from "./StartForm";

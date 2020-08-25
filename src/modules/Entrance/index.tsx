@@ -1,2 +1,2 @@
 export { Entrance } from "./Entrance";
-export type { EntranceState } from "./reducer";
+export { entranceSlice, actions as entranceActions } from "./reducer";

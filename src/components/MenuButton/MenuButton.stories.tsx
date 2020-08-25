@@ -1,7 +1,7 @@
 import React from "react";
-import { dispatch } from "@/redux/store";
 import { withKnobs } from "@storybook/addon-knobs";
 
+import { dispatch } from "@/redux";
 import { MenuButton } from "./MenuButton";
 
 export default {

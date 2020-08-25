@@ -1,6 +1,7 @@
+import { Middleware } from "redux";
+
 import { filledPercentValidation, sizeValidation } from "./middlewares";
 import { actions } from "./reducer";
-import { Middleware } from "redux";
 
 const create = (middleware: Middleware) => {
   const store = {

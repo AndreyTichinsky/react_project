@@ -1,7 +1,8 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { store } from "@/redux/store";
 import { withKnobs } from "@storybook/addon-knobs";
+
+import { store } from "@/redux";
 import { Field } from "./Field";
 
 export default {

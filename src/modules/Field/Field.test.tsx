@@ -1,10 +1,10 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { FieldComponent } from "./Field";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import { preloadedState } from "@/redux/store";
-import { reducer } from "@/redux/reducer";
+
+import { preloadedState, reducer } from "@/redux";
+import { FieldComponent } from "./Field";
 
 describe("Field", () => {
   let store: any;
