@@ -52,6 +52,23 @@ module.exports = {
       exclude: [/node_modules/],
       enforce: 'pre',
     });
+    config.module.rules.push({
+      test: /\.(sass|scss)$/,
+      use: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader'],
+      include: path.resolve(__dirname, '../'),
+    });
+    config.module.rules.push({
+      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      use: [
+        {
+          loader: 'file-loader',
+          query: {
+            name: '[name].[ext]',
+          },
+        },
+      ],
+      include: path.resolve(__dirname, '../'),
+    });
 
     return {
       ...config,

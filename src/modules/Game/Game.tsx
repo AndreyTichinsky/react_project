@@ -27,7 +27,6 @@ interface GameProps {
   fieldState: FieldData;
   dispatch: AppDispatch;
   onLogout: (ev: React.FormEvent) => void;
-  [index: string]: any;
 }
 
 const GameComponent: FC<GameProps> = (props) => (
