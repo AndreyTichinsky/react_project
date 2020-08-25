@@ -14,6 +14,7 @@ const create = (middleware: Middleware) => {
 
   return { store, next, invoke };
 };
+
 describe("filledPercentValidation test", () => {
   it("when invoke setInitialPercent action expect next called with setInitialPercent action", () => {
     const { next, invoke } = create(filledPercentValidation);
