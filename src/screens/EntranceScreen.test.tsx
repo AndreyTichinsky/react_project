@@ -6,6 +6,14 @@ import { Provider } from "react-redux";
 import { EntranceScreen } from "@/screens";
 import { preloadedState, reducer, State } from "@/redux";
 
+import "mock-local-storage";
+Object.defineProperty(window, "localStorage", {
+  value: localStorage,
+  configurable: true,
+  enumerable: true,
+  writable: true,
+});
+
 const mockHistory = { push: jest.fn() };
 
 jest.mock("react-router-dom", () => ({
@@ -13,10 +21,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("EntranceScreen", () => {
-  window.localStorage.setItem(
-    "GameOfLife",
-    JSON.stringify({ username: "Andrey" })
-  );
+  localStorage.setItem("GameOfLife", JSON.stringify({ username: "Andrey" }));
   let store: EnhancedStore<State>, wrapper: ReactWrapper;
   beforeEach(() => {
     store = configureStore({
@@ -32,7 +37,8 @@ describe("EntranceScreen", () => {
   });
   afterEach(() => {
     wrapper.unmount();
-    window.localStorage.clear();
+    store = null;
+    localStorage.clear();
   });
   it("submit logged in user", () => {
     wrapper.find("form").simulate("submit", {
