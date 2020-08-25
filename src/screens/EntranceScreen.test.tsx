@@ -1,10 +1,10 @@
 import React from "react";
-import { mount } from "enzyme";
-import { configureStore } from "@reduxjs/toolkit";
+import { mount, ReactWrapper } from "enzyme";
+import { configureStore, EnhancedStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 
 import { EntranceScreen } from "@/screens";
-import { preloadedState, reducer } from "@/redux";
+import { preloadedState, reducer, State } from "@/redux";
 
 const mockHistory = { push: jest.fn() };
 
@@ -17,7 +17,7 @@ describe("EntranceScreen", () => {
     "GameOfLife",
     JSON.stringify({ username: "Andrey" })
   );
-  let store: any, wrapper: any;
+  let store: EnhancedStore<State>, wrapper: ReactWrapper;
   beforeEach(() => {
     store = configureStore({
       reducer,
@@ -32,7 +32,6 @@ describe("EntranceScreen", () => {
   });
   afterEach(() => {
     wrapper.unmount();
-    store = null;
     window.localStorage.clear();
   });
   it("submit logged in user", () => {

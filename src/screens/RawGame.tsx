@@ -3,8 +3,13 @@ import { useParams, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { Game, entranceActions, gameActions } from "@/modules";
+import { AppDispatch } from "@/redux";
 
-export const RawGameComponent: React.FC<{}> = ({ dispatch }: any) => {
+type RawGameProps = {
+  dispatch: AppDispatch;
+};
+
+export const RawGameComponent: React.FC<RawGameProps> = ({ dispatch }) => {
   const { username } = useParams();
   dispatch(entranceActions.setUsername(username));
   const history = useHistory();
@@ -18,7 +23,7 @@ export const RawGameComponent: React.FC<{}> = ({ dispatch }: any) => {
     dispatch(gameActions.setYSize(5));
     dispatch(entranceActions.logout());
   }, []);
-  return <Game username={username} onLogout={onLogout} />;
+  return <Game onLogout={onLogout} />;
 };
 
 export const RawGame = connect()(RawGameComponent);

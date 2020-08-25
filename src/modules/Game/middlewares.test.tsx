@@ -1,4 +1,4 @@
-import { Middleware } from "redux";
+import { Middleware, AnyAction } from "redux";
 
 import { filledPercentValidation, sizeValidation } from "./middlewares";
 import { actions } from "./reducer";
@@ -10,7 +10,7 @@ const create = (middleware: Middleware) => {
   };
   const next = jest.fn();
 
-  const invoke = (action: any) => middleware(store)(next)(action);
+  const invoke = (action: AnyAction) => middleware(store)(next)(action);
 
   return { store, next, invoke };
 };
