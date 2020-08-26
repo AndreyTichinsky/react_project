@@ -23,7 +23,7 @@ describe("Game", () => {
     sagaMiddleware.run(rootSaga);
     wrapper = mount(
       <Provider store={store}>
-        <Game />
+        <Game onLogout={jest.fn()} />
       </Provider>
     );
   });

@@ -6,10 +6,8 @@ import { gameActions, makeConvertSpeedToNumber, makeGetAlive } from "@/modules";
 import { CellItem } from "./CellItem";
 
 export interface CellProps {
-  isAlive: boolean;
   x: number;
   y: number;
-  animationSpeed: number;
   idx: number;
 }
 
@@ -25,7 +23,13 @@ const makeMapStateToProps = () => {
   return mapStateToProps;
 };
 
-const CellComponent: FC<CellProps & { dispatch: AppDispatch }> = (props) => {
+const CellComponent: FC<
+  CellProps & {
+    isAlive: boolean;
+    animationSpeed: number;
+    dispatch: AppDispatch;
+  }
+> = (props) => {
   const onClick = useCallback(() => {
     props.dispatch(gameActions.setCellState(props.idx));
   }, []);

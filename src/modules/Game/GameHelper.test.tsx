@@ -129,12 +129,6 @@ describe("asserts", () => {
     expect(helper.isNumber(NaN)).toBeFalsy();
     expect(helper.isNumber(Infinity)).toBeFalsy();
     expect(helper.isNumber(-Infinity)).toBeFalsy();
-    expect(helper.isNumber(null)).toBeFalsy();
-    expect(helper.isNumber(undefined)).toBeFalsy();
-    expect(helper.isNumber("")).toBeFalsy();
-    expect(helper.isNumber("random string")).toBeFalsy();
-    expect(helper.isNumber({})).toBeFalsy();
-    expect(helper.isNumber([])).toBeFalsy();
     expect(helper.isNumber(-1)).toBeTruthy();
     expect(helper.isNumber(0)).toBeTruthy();
     expect(helper.isNumber(42)).toBeTruthy();
