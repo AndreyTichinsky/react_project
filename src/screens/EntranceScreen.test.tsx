@@ -37,7 +37,6 @@ describe("EntranceScreen", () => {
   });
   afterEach(() => {
     wrapper.unmount();
-    store = null;
     localStorage.clear();
   });
   it("submit logged in user", () => {
