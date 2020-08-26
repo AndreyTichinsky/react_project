@@ -20,14 +20,7 @@ describe("Cell", () => {
       renderer
         .create(
           <Provider store={store}>
-            <Cell
-              animationSpeed={500}
-              isAlive={false}
-              x={0}
-              y={0}
-              idx={0}
-              dispatch={jest.fn()}
-            />
+            <Cell x={0} y={0} idx={0} />
           </Provider>
         )
         .toJSON()
@@ -38,14 +31,7 @@ describe("Cell", () => {
       renderer
         .create(
           <Provider store={store}>
-            <Cell
-              animationSpeed={500}
-              isAlive={true}
-              x={0}
-              y={0}
-              idx={0}
-              dispatch={jest.fn()}
-            />
+            <Cell x={0} y={0} idx={0} />
           </Provider>
         )
         .toJSON()

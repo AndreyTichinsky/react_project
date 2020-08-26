@@ -14,15 +14,6 @@ export default {
 
 export const instanceGame = () => (
   <Provider store={store}>
-    <Game
-      xSize={number("xSize", 10)}
-      ySize={number("ySize", 10)}
-      cellSize={number("cellSize", 50)}
-      updateSpeed={text("updateSpeed", "slow")}
-      gameInProgress={boolean("gameInProgress", false)}
-      nameIsSubmited={boolean("nameIsSubmited", false)}
-      username={"Guest"}
-      onLogout={action("Logged out")}
-    />
+    <Game onLogout={action("Logged out")} />
   </Provider>
 );

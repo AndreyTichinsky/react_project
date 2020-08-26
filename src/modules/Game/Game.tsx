@@ -25,11 +25,14 @@ interface GameProps {
   gameInProgress: boolean;
   cellSize: number;
   fieldState: FieldData;
-  dispatch: AppDispatch;
   onLogout: (ev: React.FormEvent) => void;
 }
 
-const GameComponent: FC<GameProps> = (props) => (
+export const GameComponent: FC<
+  GameProps & {
+    dispatch: AppDispatch;
+  }
+> = (props) => (
   <GameWrapper cellSize={props.cellSize} xSize={props.xSize}>
     <LogoutForm onLogout={props.onLogout} />
     <Menu />
